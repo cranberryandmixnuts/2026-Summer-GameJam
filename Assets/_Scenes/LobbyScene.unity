@@ -849,8 +849,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD589\uBCF5\uD55C <Flow>\uAC8C\uC784\uC7BC</Flow> \uB418\uC138\uC694!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: aac04ea35a1481c4e94abcd398af0571, type: 2}
-  m_sharedMaterial: {fileID: 7281264267541959324, guid: aac04ea35a1481c4e94abcd398af0571, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 010fa0fcc7cb94647967a45a9aa72799, type: 2}
+  m_sharedMaterial: {fileID: 4427854510054463112, guid: 010fa0fcc7cb94647967a45a9aa72799, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
