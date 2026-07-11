@@ -5,122 +5,125 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-namespace Extension {
-    [RequireComponent(typeof(TMP_Text))]
-    public partial class MoreEffectTMP: MonoBehaviour {
+[RequireComponent(typeof(TMP_Text))]
+public partial class MoreEffectTMP : MonoBehaviour
+{
+    private const float X_MOVE_RANGE = 0.08f;
 
-        //==================================================||Fields 
-        private const float X_MOVE_RANGE = 0.08f;
-        [SerializeField] private float _rowInterval = 0.3f;
-        private TMP_Text _text;
-        private List<TagPoint> _tagPoints = new();
-        private List<FixPoint> _fixPoints = new();
-        private bool _preProcess = false;
-        private float _timer = 0;
-        private string _prevValue = "";
+    [SerializeField] private float rowInterval = 0.1f;
 
-        public TMP_Text Text => _text; 
-        
-        public IEnumerator Typing(string pContext, float pInterval, float pCallBackTerm, Action pCallback = null,
-            Func<bool> pBreakCondition = null) {
-            
-            var cur = _text.text;
-            var originCnt = cur.Length;
-            
-            //GetFixPoints
-            _text.text += pContext;
-            var length = _text.text.Length;
+    private TMP_Text text;
+    private List<TagPoint> tagPoints = new();
+    private readonly List<FixPoint> _fixPoints = new();
+    private bool preProcess;
+    private float timer;
+    private string prevValue = "";
+
+    public TMP_Text Text => text;
+
+    public IEnumerator Typing(
+        string pContext,
+        float pInterval,
+        float pCallBackTerm,
+        Action pCallback = null,
+        Func<bool> pBreakCondition = null)
+    {
+        string cur = text.text;
+        int originCnt = cur.Length;
+
+        text.text += pContext;
+        Update();
+        List<FixPoint> fixPoints = _fixPoints.ToList();
+
+        int idx = -1;
+        int fixPointIdx = 0;
+
+        foreach (TMP_CharacterInfo charInfo in text.textInfo.characterInfo.Take(text.textInfo.characterCount).Skip(originCnt))
+        {
+            if (pBreakCondition?.Invoke() ?? false)
+            {
+                text.text = pContext;
+                pCallback?.Invoke();
+                yield break;
+            }
+
+            idx++;
+            cur += charInfo.character;
+            bool remainFixPoint = fixPoints.Count > fixPointIdx;
+
+            if (remainFixPoint && idx >= fixPoints[fixPointIdx].Start && idx < fixPoints[fixPointIdx].End) continue;
+            if (!charInfo.isVisible) continue;
+
+            text.text = cur;
             Update();
-            var fixPoints = _fixPoints.ToList();
-            
-            var idx = -1;
-            var fixPointIdx = 0;
-            foreach (var charInfo in _text.textInfo.characterInfo.Take(_text.textInfo.characterCount).Skip(originCnt)) {
-                if (pBreakCondition?.Invoke() ?? false) {
-                    _text.text = pContext;
-                    pCallback?.Invoke();
-                    yield break;
-                }
-                
-                idx++;
-                cur += charInfo.character;
-                var remainFixPoint = fixPoints.Count > fixPointIdx;
-                if (remainFixPoint && idx >= fixPoints[fixPointIdx].Start && idx < fixPoints[fixPointIdx].End) {
-                    continue;
-                }
-                if(!charInfo.isVisible)
-                    continue;
-
-                _text.text = cur;
-                Update();
-                yield return new WaitForSeconds(pInterval);
-            }
-
-            yield return new WaitForSeconds(pCallBackTerm);
-            pCallback?.Invoke();
+            yield return new WaitForSeconds(pInterval);
         }
 
-        private void Apply() {
-
-            if (_tagPoints is { Count: < 1 }) 
-                return;
-            
-            var prevTime = _timer;
-            _timer += Time.deltaTime / Time.timeScale;
-            
-            var textInfo = _text.textInfo;
-            var idx = _tagPoints[0].Start;
-
-            var charInfos = textInfo.characterInfo;
-            foreach (var tag in _tagPoints) {
-                for (; idx <= tag.End && idx < textInfo.characterCount; idx++) {
-                    var charInfo = charInfos[idx];
-
-                    if (!charInfo.isVisible)
-                        continue;
-                        
-                    var vertices = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
-                    var func = _changePosFunc[tag.Type];
-                    var prevPos = Vector3.zero;
-                    var prevRotation = Vector3.zero;
-                    if (!_preProcess)
-                        (prevPos, prevRotation) = func(prevTime, idx, tag.Arg);
-                    var (pos, rotation) = func.Invoke(_timer, idx, tag.Arg);
-                    pos -= prevPos;
-                    rotation -= prevRotation;
-                    pos.y *= charInfo.pointSize * _rowInterval;
-                    pos.x *= charInfo.pointSize * charInfo.aspectRatio * X_MOVE_RANGE;
-                    
-                    for (int vertex = 0; vertex < 4; vertex++) {
-                        var vertexIdx = charInfos[idx].vertexIndex + vertex;
-                        vertices[vertexIdx] += pos;
-                    }   
-                }
-            }
-            
-            _preProcess = false;
-            TMPUpdate();
-        }
-        
-       //==================================================||Unity 
-        private void Update() {
-            if (_text.text != _prevValue) {
-                _prevValue = _text.text;
-                _text.ForceMeshUpdate(true);
-                Setting();
-            }
-            
-            Apply();
-        }
-
-        private void OnEnable() {
-            _prevValue = "";
-        }
-
-        private void Awake() {
-            _text = GetComponent<TMP_Text>();
-            _text.textWrappingMode = TextWrappingModes.NoWrap;
-        }
+        yield return new WaitForSeconds(pCallBackTerm);
+        pCallback?.Invoke();
     }
-    
+
+    private void Apply()
+    {
+        if (tagPoints.Count < 1) return;
+
+        float prevTime = timer;
+        timer += Time.deltaTime / Time.timeScale;
+
+        TMP_TextInfo textInfo = text.textInfo;
+        int idx = tagPoints[0].Start;
+        TMP_CharacterInfo[] charInfos = textInfo.characterInfo;
+
+        foreach (TagPoint tag in tagPoints)
+        {
+            for (; idx <= tag.End && idx < textInfo.characterCount; idx++)
+            {
+                TMP_CharacterInfo charInfo = charInfos[idx];
+
+                if (!charInfo.isVisible) continue;
+
+                Vector3[] vertices = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
+                Func<float, int, float, (Vector3, Vector3)> func = _changePosFunc[tag.Type];
+                Vector3 prevPos = Vector3.zero;
+                Vector3 prevRotation = Vector3.zero;
+
+                if (!preProcess) (prevPos, prevRotation) = func(prevTime, idx, tag.Arg);
+
+                (Vector3 pos, Vector3 rotation) = func(timer, idx, tag.Arg);
+                pos -= prevPos;
+                rotation -= prevRotation;
+                pos.y *= charInfo.pointSize * rowInterval;
+                pos.x *= charInfo.pointSize * charInfo.aspectRatio * X_MOVE_RANGE;
+
+                for (int vertex = 0; vertex < 4; vertex++)
+                {
+                    int vertexIdx = charInfos[idx].vertexIndex + vertex;
+                    vertices[vertexIdx] += pos;
+                }
+            }
+        }
+
+        preProcess = false;
+        TMPUpdate();
+    }
+
+    private void Update()
+    {
+        if (text.text != prevValue)
+        {
+            prevValue = text.text;
+            text.ForceMeshUpdate(true);
+            Setting();
+        }
+
+        Apply();
+    }
+
+    private void OnEnable() => prevValue = "";
+
+    private void Awake()
+    {
+        text = GetComponent<TMP_Text>();
+        text.textWrappingMode = TextWrappingModes.NoWrap;
+    }
 }

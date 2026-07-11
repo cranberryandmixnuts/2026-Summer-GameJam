@@ -6,13 +6,13 @@ public static class SceneTypeMap
     private static readonly string[] SceneNames =
     {
         "",
-        "TestScene",
+        "TitleScene",
     };
 
     private static readonly string[] ScenePaths =
     {
         "",
-        "Assets/Core/File_cogus/Test/TestScene.unity",
+        "Assets/Core/Scenes/TitleScene.unity",
     };
 
     private static readonly bool[] EnabledInBuildSettings =
@@ -23,7 +23,7 @@ public static class SceneTypeMap
 
     private static readonly Dictionary<string, SceneType> NameToType = new(StringComparer.Ordinal)
     {
-        { "TestScene", SceneType.TestScene },
+        { "TitleScene", SceneType.TitleScene },
     };
 
     public static int TotalCount => SceneNames.Length;

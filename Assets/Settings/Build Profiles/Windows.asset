@@ -23,8 +23,8 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/Core/File_cogus/Test/TestScene.unity
-    m_guid: 8ccf9472524e29d4c82b24c04d91d99a
+    m_path: Assets/Core/Scenes/TitleScene.unity
+    m_guid: 97ce69723ea1f43409db8a8bed316d60
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:

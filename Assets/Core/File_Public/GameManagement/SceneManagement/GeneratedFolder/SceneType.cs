@@ -1,5 +1,5 @@
 public enum SceneType
 {
     None = 0,
-    TestScene = 1,
+    TitleScene = 1,
 }
