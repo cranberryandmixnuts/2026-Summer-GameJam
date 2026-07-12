@@ -19,6 +19,7 @@ public sealed class EnemySpawner : MonoBehaviour
     [SerializeField, Required] private Transform player;
     [SerializeField, Required] private Collider2D playerCollider;
     [SerializeField, Required] private PlayerHealth playerHealth;
+    [SerializeField, Required] private CombatBridge combatBridge;
     [SerializeField, Required] private EnemyProjectilePool projectilePool;
     [SerializeField, Required] private DespawnBounds despawnBounds;
     [SerializeField, ValidateInput(nameof(HasSpawnEntries), "적 프리팹을 하나 이상 등록해야 합니다.")]
@@ -34,6 +35,7 @@ public sealed class EnemySpawner : MonoBehaviour
     private Coroutine spawnRoutine;
     private EnemyRuntimeContext runtimeContext;
     private float totalWeight;
+    private bool hasPlayerDied;
 
     private void Awake()
     {
@@ -41,28 +43,27 @@ public sealed class EnemySpawner : MonoBehaviour
             player,
             playerCollider,
             playerHealth,
+            combatBridge,
             projectilePool,
             despawnBounds);
 
         for (int i = 0; i < spawnEntries.Length; i++) totalWeight += spawnEntries[i].Weight;
+
+        combatBridge.PlayerDied += HandlePlayerDied;
     }
 
     private void OnEnable()
     {
-        playerHealth.Died += HandlePlayerDied;
-
-        if (spawnOnEnable && runtimeContext.IsCombatActive) StartSpawning();
+        if (spawnOnEnable && !hasPlayerDied) StartSpawning();
     }
 
-    private void OnDisable()
-    {
-        playerHealth.Died -= HandlePlayerDied;
-        StopSpawning();
-    }
+    private void OnDisable() => StopSpawning();
+
+    private void OnDestroy() => combatBridge.PlayerDied -= HandlePlayerDied;
 
     public void StartSpawning()
     {
-        if (spawnRoutine != null || !runtimeContext.IsCombatActive) return;
+        if (spawnRoutine != null || hasPlayerDied) return;
 
         spawnRoutine = StartCoroutine(SpawnSequence());
     }
@@ -77,7 +78,7 @@ public sealed class EnemySpawner : MonoBehaviour
 
     public GameObject SpawnImmediately()
     {
-        if (!runtimeContext.IsCombatActive) return null;
+        if (hasPlayerDied) return null;
 
         SpawnEntry entry = SelectSpawnEntry();
         Bounds bounds = spawnArea.bounds;
@@ -127,7 +128,11 @@ public sealed class EnemySpawner : MonoBehaviour
         if (component is IEnemyRuntimeInitializable initializable) initializable.Initialize(runtimeContext);
     }
 
-    private void HandlePlayerDied() => StopSpawning();
+    private void HandlePlayerDied()
+    {
+        hasPlayerDied = true;
+        StopSpawning();
+    }
 
     private bool HasSpawnEntries(SpawnEntry[] value) => value != null && value.Length > 0;
 }

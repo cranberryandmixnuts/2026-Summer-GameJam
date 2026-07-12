@@ -14,12 +14,15 @@ public sealed class EnemyMover : MonoBehaviour, IEnemyRuntimeInitializable
     private EnemyRuntimeContext runtimeContext;
     private float fixedX;
     private bool isInitialized;
+    private bool canMove;
 
     public void Initialize(in EnemyRuntimeContext context)
     {
         runtimeContext = context;
         fixedX = body.position.x;
+        canMove = true;
         isInitialized = true;
+        runtimeContext.CombatBridge.PlayerDied += HandlePlayerDied;
     }
 
     private void Awake()
@@ -30,7 +33,7 @@ public sealed class EnemyMover : MonoBehaviour, IEnemyRuntimeInitializable
 
     private void FixedUpdate()
     {
-        if (!isInitialized || !runtimeContext.IsCombatActive)
+        if (!isInitialized || !canMove)
         {
             StopMovement();
             return;
@@ -61,6 +64,13 @@ public sealed class EnemyMover : MonoBehaviour, IEnemyRuntimeInitializable
 
     private void OnDisable() => StopMovement();
 
+    private void OnDestroy()
+    {
+        if (!isInitialized) return;
+
+        runtimeContext.CombatBridge.PlayerDied -= HandlePlayerDied;
+    }
+
     private bool IsPlayerInside(Collider2D detectionArea) =>
         detectionArea.Distance(runtimeContext.PlayerCollider).isOverlapped;
 
@@ -74,6 +84,12 @@ public sealed class EnemyMover : MonoBehaviour, IEnemyRuntimeInitializable
     {
         body.linearVelocity = Vector2.zero;
         body.angularVelocity = 0f;
+    }
+
+    private void HandlePlayerDied()
+    {
+        canMove = false;
+        StopMovement();
     }
 
     private void Reset() => body = GetComponent<Rigidbody2D>();

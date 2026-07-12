@@ -13,17 +13,20 @@ public sealed class EnemyAimedShooter : MonoBehaviour, IEnemyRuntimeInitializabl
     private EnemyRuntimeContext runtimeContext;
     private float remainingShotCooldown;
     private bool isInitialized;
+    private bool canShoot;
 
     public void Initialize(in EnemyRuntimeContext context)
     {
         runtimeContext = context;
         remainingShotCooldown = initialDelay;
+        canShoot = true;
         isInitialized = true;
+        runtimeContext.CombatBridge.PlayerDied += HandlePlayerDied;
     }
 
     private void Update()
     {
-        if (!isInitialized || !runtimeContext.IsCombatActive) return;
+        if (!isInitialized || !canShoot) return;
 
         remainingShotCooldown -= Time.deltaTime;
         if (remainingShotCooldown > 0f) return;
@@ -41,4 +44,13 @@ public sealed class EnemyAimedShooter : MonoBehaviour, IEnemyRuntimeInitializabl
 
         remainingShotCooldown = shotInterval;
     }
+
+    private void OnDestroy()
+    {
+        if (!isInitialized) return;
+
+        runtimeContext.CombatBridge.PlayerDied -= HandlePlayerDied;
+    }
+
+    private void HandlePlayerDied() => canShoot = false;
 }

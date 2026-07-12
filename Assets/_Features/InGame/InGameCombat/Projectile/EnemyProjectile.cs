@@ -12,10 +12,12 @@ public sealed class EnemyProjectile : MonoBehaviour
 
     private Action<EnemyProjectile> release;
     private EnemyRuntimeContext runtimeContext;
+    private CombatBridge combatBridge;
     private GameObject source;
     private Vector2 direction;
     private int damage;
     private bool isLaunched;
+    private bool isSubscribedToPlayerDied;
 
     public void Initialize(Action<EnemyProjectile> releaseAction) => release = releaseAction;
 
@@ -28,10 +30,14 @@ public sealed class EnemyProjectile : MonoBehaviour
         in EnemyRuntimeContext context)
     {
         runtimeContext = context;
+        combatBridge = context.CombatBridge;
         direction = launchDirection;
         damage = damageAmount;
         source = damageSource;
         isLaunched = true;
+
+        combatBridge.PlayerDied += HandlePlayerDied;
+        isSubscribedToPlayerDied = true;
 
         body.position = position;
         body.rotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
@@ -41,23 +47,14 @@ public sealed class EnemyProjectile : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isLaunched) return;
+        if (runtimeContext.DespawnBounds.Overlaps(bodyCollider)) return;
 
-        if (!runtimeContext.DespawnBounds.Overlaps(bodyCollider))
-        {
-            Despawn();
-            return;
-        }
-
-        if (!runtimeContext.IsCombatActive)
-        {
-            StopMovement();
-            return;
-        }
+        Despawn();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!isLaunched || !runtimeContext.IsCombatActive || !targetLayers.Contains(other.gameObject.layer)) return;
+        if (!isLaunched || !targetLayers.Contains(other.gameObject.layer)) return;
 
         IDamageable damageable = other.GetComponentInParent<IDamageable>();
         if (damageable == null) return;
@@ -74,6 +71,7 @@ public sealed class EnemyProjectile : MonoBehaviour
         if (!isLaunched) return;
 
         isLaunched = false;
+        UnsubscribeFromPlayerDied();
         StopMovement();
         release(this);
     }
@@ -81,9 +79,21 @@ public sealed class EnemyProjectile : MonoBehaviour
     private void OnDisable()
     {
         isLaunched = false;
+        UnsubscribeFromPlayerDied();
         StopMovement();
         runtimeContext = default;
+        combatBridge = null;
         source = null;
+    }
+
+    private void HandlePlayerDied() => Despawn();
+
+    private void UnsubscribeFromPlayerDied()
+    {
+        if (!isSubscribedToPlayerDied) return;
+
+        combatBridge.PlayerDied -= HandlePlayerDied;
+        isSubscribedToPlayerDied = false;
     }
 
     private void StopMovement()

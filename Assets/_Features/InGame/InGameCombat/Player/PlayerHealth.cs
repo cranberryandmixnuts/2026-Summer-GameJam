@@ -11,20 +11,19 @@ public sealed class PlayerHealth : MonoBehaviour, IDamageable
 
     public int MaxHealth => maxHealth;
     public int CurrentHealth { get; private set; }
-    public bool IsDead { get; private set; }
-    public bool IsInvulnerable => !IsDead && Time.time < invulnerableUntil;
+    public bool IsInvulnerable => !isDead && Time.time < invulnerableUntil;
 
     public event Action<int, int> HealthChanged;
     public event Action<DamageInfo> Damaged;
-    public event Action Died;
 
     private float invulnerableUntil;
+    private bool isDead;
 
     private void Awake() => ResetHealth();
 
     public bool TryTakeDamage(in DamageInfo damageInfo)
     {
-        if (damageInfo.Amount <= 0 || IsDead || IsInvulnerable) return false;
+        if (damageInfo.Amount <= 0 || isDead || IsInvulnerable) return false;
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - damageInfo.Amount);
         invulnerableUntil = Time.time + invulnerabilityDuration;
@@ -35,15 +34,14 @@ public sealed class PlayerHealth : MonoBehaviour, IDamageable
 
         if (CurrentHealth > 0) return true;
 
-        IsDead = true;
-        Died?.Invoke();
+        isDead = true;
         combatBridge.PublishPlayerDied();
         return true;
     }
 
     public void Heal(int amount)
     {
-        if (amount <= 0 || IsDead || CurrentHealth >= MaxHealth) return;
+        if (amount <= 0 || isDead || CurrentHealth >= MaxHealth) return;
 
         CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
         HealthChanged?.Invoke(CurrentHealth, MaxHealth);
@@ -52,7 +50,7 @@ public sealed class PlayerHealth : MonoBehaviour, IDamageable
     public void ResetHealth()
     {
         CurrentHealth = MaxHealth;
-        IsDead = false;
+        isDead = false;
         invulnerableUntil = 0f;
         HealthChanged?.Invoke(CurrentHealth, MaxHealth);
     }

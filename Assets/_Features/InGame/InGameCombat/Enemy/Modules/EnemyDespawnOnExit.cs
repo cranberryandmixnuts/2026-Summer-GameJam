@@ -26,15 +26,11 @@ public sealed class EnemyDespawnOnExit : MonoBehaviour, IEnemyRuntimeInitializab
 
         hasExited = true;
 
-        if (runtimeContext.IsCombatActive)
-        {
-            Vector2 hitPoint = runtimeContext.PlayerCollider.ClosestPoint(transform.position);
-            Vector2 direction = ((Vector2)runtimeContext.Player.position - (Vector2)transform.position).normalized;
-            DamageInfo damageInfo = new(escapeDamage, gameObject, hitPoint, direction);
+        Vector2 hitPoint = runtimeContext.PlayerCollider.ClosestPoint(transform.position);
+        Vector2 direction = ((Vector2)runtimeContext.Player.position - (Vector2)transform.position).normalized;
+        DamageInfo damageInfo = new(escapeDamage, gameObject, hitPoint, direction);
 
-            runtimeContext.PlayerHealth.TryTakeDamage(damageInfo);
-        }
-
+        runtimeContext.PlayerHealth.TryTakeDamage(damageInfo);
         Destroy(gameObject);
     }
 }

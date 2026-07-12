@@ -9,14 +9,18 @@ public sealed class PlayerMovement : MonoBehaviour
     [SerializeField, Required] private Rigidbody2D body;
     [SerializeField, Required] private Collider2D bodyCollider;
     [SerializeField, Required] private PlayerInputReader inputReader;
-    [SerializeField, Required] private PlayerHealth health;
+    [SerializeField, Required] private CombatBridge combatBridge;
     [FormerlySerializedAs("movementBounds")]
     [SerializeField, Required] private CombatBounds combatBounds;
     [SerializeField, MinValue(0f)] private float moveSpeed = 7f;
 
+    private bool canMove = true;
+
+    private void Awake() => combatBridge.PlayerDied += HandlePlayerDied;
+
     private void FixedUpdate()
     {
-        if (health.IsDead)
+        if (!canMove)
         {
             body.linearVelocity = Vector2.zero;
             return;
@@ -34,11 +38,18 @@ public sealed class PlayerMovement : MonoBehaviour
 
     private void OnDisable() => body.linearVelocity = Vector2.zero;
 
+    private void OnDestroy() => combatBridge.PlayerDied -= HandlePlayerDied;
+
+    private void HandlePlayerDied()
+    {
+        canMove = false;
+        body.linearVelocity = Vector2.zero;
+    }
+
     private void Reset()
     {
         body = GetComponent<Rigidbody2D>();
         bodyCollider = GetComponent<Collider2D>();
         inputReader = GetComponent<PlayerInputReader>();
-        health = GetComponent<PlayerHealth>();
     }
 }
