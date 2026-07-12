@@ -5,6 +5,7 @@ using UnityEngine;
 public sealed class EnemyAimedShooter : MonoBehaviour, IEnemyRuntimeInitializable
 {
     [SerializeField, Required] private Transform muzzle;
+    [SerializeField, Required] private EnemyProjectile projectilePrefab;
     [SerializeField, MinValue(1)] private int projectileDamage = 1;
     [SerializeField, MinValue(0.01f)] private float projectileSpeed = 6f;
     [SerializeField, MinValue(0f)] private float initialDelay = 0.5f;
@@ -34,7 +35,8 @@ public sealed class EnemyAimedShooter : MonoBehaviour, IEnemyRuntimeInitializabl
         Vector2 direction = runtimeContext.Player.position - muzzle.position;
         if (direction.sqrMagnitude <= Mathf.Epsilon) return;
 
-        runtimeContext.ProjectilePool.Spawn(
+        EnemyProjectile projectile = Instantiate(projectilePrefab, muzzle.position, Quaternion.identity);
+        projectile.Launch(
             muzzle.position,
             direction.normalized,
             projectileSpeed,

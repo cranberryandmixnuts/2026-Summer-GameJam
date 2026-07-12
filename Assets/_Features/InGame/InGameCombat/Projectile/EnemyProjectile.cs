@@ -1,92 +1,73 @@
-using System;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
-[DisallowMultipleComponent]
-[RequireComponent(typeof(Rigidbody2D))]
-public sealed class EnemyProjectile : MonoBehaviour
+public abstract class EnemyProjectile : MonoBehaviour
 {
-    [SerializeField, Required] private Rigidbody2D body;
-    [SerializeField, Required] private Collider2D bodyCollider;
-    [SerializeField] private LayerMask targetLayers;
-
-    private Action<EnemyProjectile> release;
-    private EnemyRuntimeContext runtimeContext;
     private CombatBridge combatBridge;
     private GameObject source;
-    private Vector2 direction;
     private int damage;
-    private bool isLaunched;
     private bool isSubscribedToPlayerDied;
 
-    public void Initialize(Action<EnemyProjectile> releaseAction) => release = releaseAction;
+    protected EnemyRuntimeContext RuntimeContext { get; private set; }
+    protected Vector2 Direction { get; set; }
+    protected bool IsActive { get; private set; }
 
     public void Launch(
         Vector2 position,
-        Vector2 launchDirection,
+        Vector2 direction,
         float speed,
         int damageAmount,
         GameObject damageSource,
         in EnemyRuntimeContext context)
     {
-        runtimeContext = context;
+        RuntimeContext = context;
         combatBridge = context.CombatBridge;
-        direction = launchDirection;
+        Direction = direction;
         damage = damageAmount;
         source = damageSource;
-        isLaunched = true;
+        IsActive = true;
 
         combatBridge.PlayerDied += HandlePlayerDied;
         isSubscribedToPlayerDied = true;
 
-        body.position = position;
-        body.rotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-        body.linearVelocity = direction * speed;
+        OnLaunched(position, direction, speed);
     }
 
-    private void FixedUpdate()
-    {
-        if (!isLaunched) return;
-        if (runtimeContext.DespawnBounds.Overlaps(bodyCollider)) return;
+    protected abstract void OnLaunched(Vector2 position, Vector2 direction, float speed);
 
-        Despawn();
-    }
+    protected abstract void StopMovement();
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected bool TryDamageTarget(Collider2D other, LayerMask targetLayers, Vector2 projectilePosition)
     {
-        if (!isLaunched || !targetLayers.Contains(other.gameObject.layer)) return;
+        if (!IsActive || !targetLayers.Contains(other.gameObject.layer)) return false;
 
         IDamageable damageable = other.GetComponentInParent<IDamageable>();
-        if (damageable == null) return;
+        if (damageable == null) return false;
 
-        Vector2 hitPoint = other.ClosestPoint(body.position);
-        DamageInfo damageInfo = new(damage, source, hitPoint, direction);
-
+        Vector2 hitPoint = other.ClosestPoint(projectilePosition);
+        DamageInfo damageInfo = new(damage, source, hitPoint, Direction);
         damageable.TryTakeDamage(damageInfo);
-        Despawn();
+        return true;
     }
 
-    private void Despawn()
+    protected void DestroyProjectile()
     {
-        if (!isLaunched) return;
+        if (!IsActive) return;
 
-        isLaunched = false;
+        IsActive = false;
+        UnsubscribeFromPlayerDied();
+        Destroy(gameObject);
+    }
+
+    protected virtual void OnDestroy() => UnsubscribeFromPlayerDied();
+
+    private void HandlePlayerDied()
+    {
+        if (!IsActive) return;
+
+        IsActive = false;
         UnsubscribeFromPlayerDied();
         StopMovement();
-        release(this);
     }
-
-    private void OnDisable()
-    {
-        isLaunched = false;
-        UnsubscribeFromPlayerDied();
-        StopMovement();
-        runtimeContext = default;
-        combatBridge = null;
-        source = null;
-    }
-
-    private void HandlePlayerDied() => Despawn();
 
     private void UnsubscribeFromPlayerDied()
     {
@@ -94,17 +75,5 @@ public sealed class EnemyProjectile : MonoBehaviour
 
         combatBridge.PlayerDied -= HandlePlayerDied;
         isSubscribedToPlayerDied = false;
-    }
-
-    private void StopMovement()
-    {
-        body.linearVelocity = Vector2.zero;
-        body.angularVelocity = 0f;
-    }
-
-    private void Reset()
-    {
-        body = GetComponent<Rigidbody2D>();
-        bodyCollider = GetComponent<Collider2D>();
     }
 }

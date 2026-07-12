@@ -404,6 +404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAimedShooter
   muzzle: {fileID: 7803959532690787280}
+  projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
   projectileDamage: 1
   projectileSpeed: 6
   initialDelay: 0.5

@@ -1271,7 +1271,6 @@ MonoBehaviour:
   playerCollider: {fileID: 468861013}
   playerHealth: {fileID: 468861015}
   combatBridge: {fileID: 278272978}
-  projectilePool: {fileID: 1953499574}
   despawnBounds: {fileID: 1480896908}
   spawnEntries:
   - Prefab: {fileID: 8775158816998203423, guid: 34f68240febe14a4998ff890cef4d180, type: 3}
@@ -1279,54 +1278,6 @@ MonoBehaviour:
   initialDelay: 1
   spawnInterval: 1.5
   spawnOnEnable: 1
---- !u!1 &1953499573
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1953499575}
-  - component: {fileID: 1953499574}
-  m_Layer: 0
-  m_Name: EnemyProjectilePool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1953499574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1953499573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04ab6a2a900dda64f9f389ddd30923f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectilePool
-  projectilePrefab: {fileID: 4695335764967653299, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
-  poolRoot: {fileID: 1953499575}
-  initialSize: 32
-  maxSize: 256
---- !u!4 &1953499575
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1953499573}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1979276958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,6 +1581,5 @@ SceneRoots:
   - {fileID: 540481626}
   - {fileID: 1480896910}
   - {fileID: 468861010}
-  - {fileID: 1953499575}
   - {fileID: 1926242956}
   - {fileID: 1979276961}
