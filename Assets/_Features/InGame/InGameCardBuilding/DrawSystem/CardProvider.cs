@@ -16,17 +16,17 @@ public class CardProvider : SingletonBehaviour<CardProvider, SceneScope> {
 
 	public Card GetAnyCardInstance() {
 		int index = Random.Range(0, _database.Cards.Count);
-		return _database.Cards[index];
+		return Instantiate(_database.Cards[index]);
 	}
 
 	public Card GetAnyNormalCardInstance() {
 		int index = Random.Range(0, _database.NormalCards.Count);
-		return _database.NormalCards[index];
+		return Instantiate(_database.NormalCards[index]);
 	}
 
 	public Card GetAnySpecialCardInstance() {
 		int index = Random.Range(0, _database.SpecialCards.Count);
-		return _database.SpecialCards[index];
+		return Instantiate(_database.SpecialCards[index]);
 	}
 
 }

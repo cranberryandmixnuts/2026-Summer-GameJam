@@ -10,6 +10,7 @@ public abstract class Card : MonoBehaviour {
 	//======================================================================| Properties
 
 	public CardBaseStatus BaseStatus => _baseStatus;
+	public bool IsHovered { get; private set; }
 
 	//======================================================================| Methods
 

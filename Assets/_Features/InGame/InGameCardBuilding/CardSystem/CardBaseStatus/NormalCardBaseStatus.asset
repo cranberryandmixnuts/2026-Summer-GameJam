@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d7e112a6128ff45913cde698d44ccf, type: 3}
   m_Name: NormalCardBaseStatus
   m_EditorClassIdentifier: Assembly-CSharp::CardBaseStatus
-  _baseDamage: 1
+  _baseDamage: 10
+  _additionalMultiplier: 0
   _isJoker: 0
   _isSpecial: 0
