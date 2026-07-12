@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public sealed class DestroyBelowWorldY : MonoBehaviour
+public sealed class EnemyDespawnOnExit : MonoBehaviour
 {
     [SerializeField] private float destroyY = -8f;
 

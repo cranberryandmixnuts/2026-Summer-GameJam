@@ -3,7 +3,7 @@ using UnityEngine;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(BoxCollider2D))]
-public sealed class MovementBounds2D : MonoBehaviour
+public sealed class CombatBounds2D : MonoBehaviour
 {
     [SerializeField, Required] private BoxCollider2D area;
 

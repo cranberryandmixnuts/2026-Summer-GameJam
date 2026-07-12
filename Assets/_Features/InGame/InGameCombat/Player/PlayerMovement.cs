@@ -9,7 +9,7 @@ public sealed class PlayerMovement : MonoBehaviour
     [SerializeField, Required] private Collider2D bodyCollider;
     [SerializeField, Required] private PlayerInputReader inputReader;
     [SerializeField, Required] private PlayerHealth health;
-    [SerializeField, Required] private MovementBounds2D movementBounds;
+    [SerializeField, Required] private CombatBounds2D movementBounds;
     [SerializeField, MinValue(0f)] private float moveSpeed = 7f;
 
     private void FixedUpdate()

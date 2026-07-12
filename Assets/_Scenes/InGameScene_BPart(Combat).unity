@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 540481625}
   - component: {fileID: 540481624}
   m_Layer: 0
-  m_Name: MovementBounds
+  m_Name: CombatBounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
