@@ -7,12 +7,13 @@ using UnityEngine;
 public sealed class EnemyProjectile : MonoBehaviour
 {
     [SerializeField, Required] private Rigidbody2D body;
+    [SerializeField, Required] private Collider2D bodyCollider;
     [SerializeField] private LayerMask targetLayers;
 
     private Action<EnemyProjectile> release;
+    private EnemyRuntimeContext runtimeContext;
     private GameObject source;
     private Vector2 direction;
-    private float remainingLifetime;
     private int damage;
     private bool isLaunched;
 
@@ -23,12 +24,12 @@ public sealed class EnemyProjectile : MonoBehaviour
         Vector2 launchDirection,
         float speed,
         int damageAmount,
-        float lifetime,
-        GameObject damageSource)
+        GameObject damageSource,
+        in EnemyRuntimeContext context)
     {
+        runtimeContext = context;
         direction = launchDirection;
         damage = damageAmount;
-        remainingLifetime = lifetime;
         source = damageSource;
         isLaunched = true;
 
@@ -37,17 +38,26 @@ public sealed class EnemyProjectile : MonoBehaviour
         body.linearVelocity = direction * speed;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!isLaunched) return;
 
-        remainingLifetime -= Time.deltaTime;
-        if (remainingLifetime <= 0f) Despawn();
+        if (!runtimeContext.DespawnBounds.Overlaps(bodyCollider))
+        {
+            Despawn();
+            return;
+        }
+
+        if (!runtimeContext.IsCombatActive)
+        {
+            StopMovement();
+            return;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!isLaunched || !targetLayers.Contains(other.gameObject.layer)) return;
+        if (!isLaunched || !runtimeContext.IsCombatActive || !targetLayers.Contains(other.gameObject.layer)) return;
 
         IDamageable damageable = other.GetComponentInParent<IDamageable>();
         if (damageable == null) return;
@@ -64,16 +74,27 @@ public sealed class EnemyProjectile : MonoBehaviour
         if (!isLaunched) return;
 
         isLaunched = false;
-        body.linearVelocity = Vector2.zero;
+        StopMovement();
         release(this);
     }
 
     private void OnDisable()
     {
         isLaunched = false;
-        body.linearVelocity = Vector2.zero;
+        StopMovement();
+        runtimeContext = default;
         source = null;
     }
 
-    private void Reset() => body = GetComponent<Rigidbody2D>();
+    private void StopMovement()
+    {
+        body.linearVelocity = Vector2.zero;
+        body.angularVelocity = 0f;
+    }
+
+    private void Reset()
+    {
+        body = GetComponent<Rigidbody2D>();
+        bodyCollider = GetComponent<Collider2D>();
+    }
 }

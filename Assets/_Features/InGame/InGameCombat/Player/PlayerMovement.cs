@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -9,7 +10,8 @@ public sealed class PlayerMovement : MonoBehaviour
     [SerializeField, Required] private Collider2D bodyCollider;
     [SerializeField, Required] private PlayerInputReader inputReader;
     [SerializeField, Required] private PlayerHealth health;
-    [SerializeField, Required] private CombatBounds2D movementBounds;
+    [FormerlySerializedAs("movementBounds")]
+    [SerializeField, Required] private CombatBounds combatBounds;
     [SerializeField, MinValue(0f)] private float moveSpeed = 7f;
 
     private void FixedUpdate()
@@ -25,7 +27,7 @@ public sealed class PlayerMovement : MonoBehaviour
 
         Vector2 currentPosition = body.position;
         Vector2 targetPosition = currentPosition + movement * (moveSpeed * Time.fixedDeltaTime);
-        targetPosition = movementBounds.Clamp(currentPosition, targetPosition, bodyCollider);
+        targetPosition = combatBounds.Clamp(currentPosition, targetPosition, bodyCollider);
 
         body.MovePosition(targetPosition);
     }

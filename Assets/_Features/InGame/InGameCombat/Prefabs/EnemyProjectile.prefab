@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectile
   body: {fileID: 7240211108271905143}
+  bodyCollider: {fileID: 284608286195004216}
   targetLayers:
     serializedVersion: 2
     m_Bits: 8

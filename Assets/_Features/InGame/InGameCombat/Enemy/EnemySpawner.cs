@@ -17,7 +17,10 @@ public sealed class EnemySpawner : MonoBehaviour
     [SerializeField, Required] private BoxCollider2D spawnArea;
     [SerializeField, Required] private Transform enemiesRoot;
     [SerializeField, Required] private Transform player;
+    [SerializeField, Required] private Collider2D playerCollider;
+    [SerializeField, Required] private PlayerHealth playerHealth;
     [SerializeField, Required] private EnemyProjectilePool projectilePool;
+    [SerializeField, Required] private DespawnBounds despawnBounds;
     [SerializeField, ValidateInput(nameof(HasSpawnEntries), "적 프리팹을 하나 이상 등록해야 합니다.")]
     private SpawnEntry[] spawnEntries;
     [SerializeField, MinValue(0f)] private float initialDelay = 1f;
@@ -34,21 +37,32 @@ public sealed class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
-        runtimeContext = new EnemyRuntimeContext(player, projectilePool);
+        runtimeContext = new EnemyRuntimeContext(
+            player,
+            playerCollider,
+            playerHealth,
+            projectilePool,
+            despawnBounds);
 
         for (int i = 0; i < spawnEntries.Length; i++) totalWeight += spawnEntries[i].Weight;
     }
 
     private void OnEnable()
     {
-        if (spawnOnEnable) StartSpawning();
+        playerHealth.Died += HandlePlayerDied;
+
+        if (spawnOnEnable && runtimeContext.IsCombatActive) StartSpawning();
     }
 
-    private void OnDisable() => StopSpawning();
+    private void OnDisable()
+    {
+        playerHealth.Died -= HandlePlayerDied;
+        StopSpawning();
+    }
 
     public void StartSpawning()
     {
-        if (spawnRoutine != null) return;
+        if (spawnRoutine != null || !runtimeContext.IsCombatActive) return;
 
         spawnRoutine = StartCoroutine(SpawnSequence());
     }
@@ -63,6 +77,8 @@ public sealed class EnemySpawner : MonoBehaviour
 
     public GameObject SpawnImmediately()
     {
+        if (!runtimeContext.IsCombatActive) return null;
+
         SpawnEntry entry = SelectSpawnEntry();
         Bounds bounds = spawnArea.bounds;
         Vector2 position = new(
@@ -110,6 +126,8 @@ public sealed class EnemySpawner : MonoBehaviour
     {
         if (component is IEnemyRuntimeInitializable initializable) initializable.Initialize(runtimeContext);
     }
+
+    private void HandlePlayerDied() => StopSpawning();
 
     private bool HasSpawnEntries(SpawnEntry[] value) => value != null && value.Length > 0;
 }

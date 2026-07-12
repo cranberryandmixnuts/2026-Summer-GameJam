@@ -35,11 +35,11 @@ public sealed class EnemyProjectilePool : MonoBehaviour
         Vector2 direction,
         float speed,
         int damage,
-        float lifetime,
-        GameObject source)
+        GameObject source,
+        in EnemyRuntimeContext context)
     {
         EnemyProjectile projectile = pool.Get();
-        projectile.Launch(position, direction, speed, damage, lifetime, source);
+        projectile.Launch(position, direction, speed, damage, source, context);
         return projectile;
     }
 

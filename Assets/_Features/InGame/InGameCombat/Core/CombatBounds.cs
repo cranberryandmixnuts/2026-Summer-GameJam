@@ -1,9 +1,11 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 
+[MovedFrom(false, sourceClassName: "MovementBounds2D")]
 [DisallowMultipleComponent]
 [RequireComponent(typeof(BoxCollider2D))]
-public sealed class CombatBounds2D : MonoBehaviour
+public sealed class CombatBounds : MonoBehaviour
 {
     [SerializeField, Required] private BoxCollider2D area;
 
