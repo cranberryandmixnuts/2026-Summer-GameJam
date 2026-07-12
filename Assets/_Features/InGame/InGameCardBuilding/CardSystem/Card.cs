@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public abstract class Card : MonoBehaviour {
+public abstract class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
 
 	//======================================================================| Fields
 
@@ -14,12 +15,10 @@ public abstract class Card : MonoBehaviour {
 
 	//======================================================================| Methods
 
-	public virtual float CalculateDamage() {
-		return _baseStatus.BaseDamage;
-	}
+	public virtual float CalculateDamage() => _baseStatus.BaseDamage;
+	public virtual float CalculateAdditionalMultiplier() => _baseStatus.AdditionalMultiplier;
 
-	public virtual float CalculateAdditionalMultiplier() {
-		return _baseStatus.AdditionalMultiplier;
-	}
+	public void OnPointerEnter(PointerEventData eventData) => IsHovered = true;
+	public void OnPointerExit(PointerEventData eventData) => IsHovered = false;
 
 }

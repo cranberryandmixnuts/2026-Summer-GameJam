@@ -1,5 +1,7 @@
 using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
@@ -16,19 +18,65 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 
 	[Space]
 	[SerializeField] private float _hoverHeight;
+	[SerializeField] private float _hoverScale;
 	[SerializeField] private float _hoverAdditionalPosition;
 
 	[Header("Animation")]
-	[SerializeField] private float _cardAnimationDuration;
-	[SerializeField] private Ease _cardAnimationEase;
+	[SerializeField] private float _hoverAnimationSpreadingDuration;
+	[SerializeField] private float _drawAnimationDuration;
+	[SerializeField] private Ease _drawAnimationEase;
+
+	private Card _previousHoveredCard = null;
 
 	private readonly List<Card> _cards = new();
 	private readonly Dictionary<Card, float> _cardPosition = new();
+
+	private readonly HashSet<Tween> _killableTweens = new();
 
 	//======================================================================| Properties
 
 	public int HandCardLimit => _handCardLimit;
 	public IReadOnlyList<Card> Cards => _cards;
+
+	public int HoveredCardIndex { get; private set; } = -1;
+	public Card HoveredCard { get; private set; } = null;
+
+	//======================================================================| Unity Methods
+
+	private void Update() {
+
+		HoveredCard = _cards.FirstOrDefault(card => card.IsHovered);
+		
+		HoveredCardIndex = HoveredCard != null
+			? _cards.IndexOf(HoveredCard)
+			: -1;
+
+		if (HoveredCard != _previousHoveredCard) {
+
+			var startCard = HoveredCard == null
+				? _previousHoveredCard
+				: HoveredCard;
+
+			CalculateCardPosition();
+			MoveCards(HoveredCardIndex, _hoverAnimationSpreadingDuration / _cards.Count);
+
+			if (HoveredCard != null) {
+				HoveredCard.transform
+					.DOScale(_hoverScale, _drawAnimationDuration)
+					.SetEase(_drawAnimationEase);
+			}
+
+			if (_previousHoveredCard != null) {
+				_previousHoveredCard.transform
+					.DOScale(1f, _drawAnimationDuration)
+					.SetEase(_drawAnimationEase);
+			}
+
+			_previousHoveredCard = HoveredCard;
+
+		}
+
+	}
 
 	//======================================================================| Methods
 
@@ -40,7 +88,7 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 		_cardPosition.Add(card, default);
 
 		CalculateCardPosition();
-		MoveCards();
+		MoveCards(_cards.Count - 1, 0f);
 
 	}
 
@@ -53,38 +101,78 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 	
 		var range = Mathf.Min(
 			_displayMaxRange,
-			(_cards.Count - 1) * _displayNormalInterval + _hoverAdditionalPosition
+			(_cards.Count - 1) * _displayNormalInterval
 		);
 
-		float position = 0f;
+		var rawRange = range;
+		if (HoveredCard != null) range += _hoverAdditionalPosition;
 
 		for (int i = 0; i < _cards.Count; i++) {
 
 			var card = _cards[i];
+			var position = i * rawRange / (_cards.Count - 1);
 
-			var factor = position * range / (_cards.Count - 1);
-			_cardPosition[card] = factor - range / 2f;
+			if (HoveredCard != null) {
 
-			position++;
+				if (i > HoveredCardIndex)
+					position += _hoverAdditionalPosition;
+
+				else if (i == HoveredCardIndex)
+					position += _hoverAdditionalPosition / 2f;
+
+			}
+
+			_cardPosition[card] = position - range / 2f;
 
 		}
 
 	}
 
-	private void MoveCards() {
+	private void MoveCards(int startPosition, float timeInterval) {
 		
-		foreach (var card in _cards) {
+		foreach (var tween in _killableTweens) {
+			tween.Kill();
+		}
 
-			card.transform.DOKill();
+		_killableTweens.Clear();
 
-			card.transform
-				.DOLocalMove(GetCardPosition(card), _cardAnimationDuration)
-				.SetEase(_cardAnimationEase);
+		StartCoroutine(Routine());
+		IEnumerator Routine() {
 
-			card.transform
-				.DOLocalRotate(Vector3.forward * GetCardAngle(card), _cardAnimationDuration)
-				.SetEase(_cardAnimationEase);
+  			int leftIndex = startPosition;
+			int rightIndex = startPosition;
 
+			while (leftIndex >= 0 || rightIndex < _cards.Count) {
+			
+				if (leftIndex >= 0) {
+					PlayAnimation(_cards[leftIndex]);
+				} 
+
+				if (rightIndex < _cards.Count && rightIndex != leftIndex) {
+					PlayAnimation(_cards[rightIndex]);
+				}
+
+				leftIndex--;
+				rightIndex++;
+
+				if (timeInterval != 0f)
+					yield return new WaitForSeconds(timeInterval);
+
+			}
+
+			void PlayAnimation(Card card) {
+
+				_killableTweens.Add(card.transform
+					.DOLocalMove(GetCardPosition(card), _drawAnimationDuration)
+					.SetEase(_drawAnimationEase)
+				);
+
+				_killableTweens.Add(card.transform
+					.DOLocalRotate(Vector3.forward * GetCardAngle(card), _drawAnimationDuration)
+					.SetEase(_drawAnimationEase)
+				);
+
+			}
 		}
 
 	}
@@ -99,11 +187,17 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 			y: Mathf.Sin(angle)
 		);
 
+		if (card.IsHovered) {
+			position += Vector3.up * _hoverHeight;
+		}
+
 		return position + Vector3.down * _displayRadius;
 	}
 
 	private float GetCardAngle(Card card) {
 			
+		if (card.IsHovered) return 0f;
+
 		var unitAngle = 1f / _displayRadius;
 		var angle = -_cardPosition[card] * unitAngle + Mathf.PI / 2f;
 

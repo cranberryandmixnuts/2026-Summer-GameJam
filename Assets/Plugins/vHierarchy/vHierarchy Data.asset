@@ -30,6 +30,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-74fa0b7cb61d5824fb90eeee29b11052-9093377-0
         - globalObjectIdString: GlobalObjectId_V1-2-74fa0b7cb61d5824fb90eeee29b11052-1711194065-0
         - globalObjectIdString: GlobalObjectId_V1-2-74fa0b7cb61d5824fb90eeee29b11052-977107246-0
+        - globalObjectIdString: GlobalObjectId_V1-2-74fa0b7cb61d5824fb90eeee29b11052-870867458-0
         values:
         - colorIndex: 0
           iconNameOrGuid: Camera Icon
@@ -53,6 +54,10 @@ MonoBehaviour:
           isColorRecursive: 0
         - colorIndex: 1
           iconNameOrGuid: Folder Icon
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: Settings Icon
           isIconRecursive: 0
           isColorRecursive: 0
         - colorIndex: 0
