@@ -902,8 +902,8 @@ MonoBehaviour:
   _displayNormalInterval: 150
   _displayMaxRange: 1050
   _hoverHeight: 100
-  _hoverScale: 1.5
-  _hoverAdditionalPosition: 100
+  _hoverScale: 1.3
+  _hoverAdditionalPosition: 80
   _hoverAnimationSpreadingDuration: 0.1
   _drawAnimationDuration: 0.5
   _drawAnimationEase: 15
