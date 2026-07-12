@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
@@ -14,6 +13,10 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 	[SerializeField] private float _displayRadius;
 	[SerializeField] private float _displayNormalInterval;
 	[SerializeField] private float _displayMaxRange;
+
+	[Space]
+	[SerializeField] private float _hoverHeight;
+	[SerializeField] private float _hoverAdditionalPosition;
 
 	[Header("Animation")]
 	[SerializeField] private float _cardAnimationDuration;
@@ -48,14 +51,21 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 			return;
 		}
 	
-		var range = Mathf.Min(_displayMaxRange, _cards.Count * _displayNormalInterval);
+		var range = Mathf.Min(
+			_displayMaxRange,
+			(_cards.Count - 1) * _displayNormalInterval + _hoverAdditionalPosition
+		);
+
+		float position = 0f;
 
 		for (int i = 0; i < _cards.Count; i++) {
 
 			var card = _cards[i];
 
-			var factor = i * range / (_cards.Count - 1);
+			var factor = position * range / (_cards.Count - 1);
 			_cardPosition[card] = factor - range / 2f;
+
+			position++;
 
 		}
 
@@ -81,7 +91,7 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 
 	private Vector3 GetCardPosition(Card card) {
 		
-		var unitAngle = 1f / (2f * _displayRadius);
+		var unitAngle = 1f / _displayRadius;
 		var angle = -_cardPosition[card] * unitAngle + Mathf.PI / 2f;
 
 		var position = _displayRadius * new Vector3(
@@ -94,7 +104,7 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 
 	private float GetCardAngle(Card card) {
 			
-		var unitAngle = 1f / (2f * _displayRadius);
+		var unitAngle = 1f / _displayRadius;
 		var angle = -_cardPosition[card] * unitAngle + Mathf.PI / 2f;
 
 		var direction = new Vector2(
@@ -111,7 +121,16 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 	private void OnDrawGizmos() {
 
 		Gizmos.color = Color.limeGreen;
-		Gizmos.DrawWireSphere(transform.position - Vector3.up * _displayRadius, _displayRadius);
+
+		var previousMatrix = Gizmos.matrix;
+		Gizmos.matrix = transform.localToWorldMatrix;
+
+		Gizmos.DrawWireSphere(
+			Vector3.down * _displayRadius,
+			_displayRadius
+		);
+
+		Gizmos.matrix = previousMatrix;
 
 	}
 

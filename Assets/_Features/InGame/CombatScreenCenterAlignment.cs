@@ -31,11 +31,13 @@ public class CombatScreenCenterAlignment : MonoBehaviour {
 			transform.position.z
 		);
 
-		_mainCamera.transform.position = _targetPosition.ToVector3WithZ(_mainCamera.transform.position.z);
 	}
 
-	private void FixedUpdate() {
-		
+	private void LateUpdate() {
+
+		_mainCamera.transform.position =
+			_targetPosition.ToVector3WithZ(_mainCamera.transform.position.z);
+
 	}
 
 }
