@@ -21,11 +21,15 @@ public class CardBaseStatus : ScriptableObject {
 	[SerializeField]
 	private bool _isSpecial;
 
+	[SerializeField]
+	private bool _isBlockingAttachment;
+
 	//======================================================================| Properties
 
 	public float BaseDamage => _baseDamage;
 	public float AdditionalMultiplier => _additionalMultiplier;
 	public bool IsJoker => _isJoker;
 	public bool IsSpecial => _isSpecial;
+	public bool IsBlockingAttachment => _isBlockingAttachment;
 
 }
