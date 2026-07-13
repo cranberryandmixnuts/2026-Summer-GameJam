@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af6b725e44c6dc4e90faab5b1ac3c46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 3
+  maxHealth: 50000
   invulnerabilityDuration: 0.6
   combatBridge: {fileID: 278272978}
 --- !u!114 &468861016
@@ -1273,7 +1273,7 @@ MonoBehaviour:
   combatBridge: {fileID: 278272978}
   despawnBounds: {fileID: 1480896908}
   spawnEntries:
-  - Prefab: {fileID: 8775158816998203423, guid: 34f68240febe14a4998ff890cef4d180, type: 3}
+  - Prefab: {fileID: 7952293206075562448, guid: f510f2af65cfbba4b84206cdaf6eb419, type: 3}
     Weight: 1
   initialDelay: 1
   spawnInterval: 1.5
