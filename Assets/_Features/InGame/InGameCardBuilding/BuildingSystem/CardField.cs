@@ -1,116 +1,104 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardField : SingletonBehaviour<CardField, SceneScope> {
+public class CardField : SingletonBehaviour<CardField, SceneScope>
+{
+    [SerializeField]
+    private GameObject _slotPrefab;
 
-	//======================================================================| Fields
+    [SerializeField]
+    private Vector2 _gridSize;
 
-	[SerializeField]
-	private GameObject _slotPrefab;
+    private readonly Dictionary<Vector2Int, Card> _placedCards = new();
+    private readonly HashSet<Vector2Int> _activeSlots = new();
+    private readonly Dictionary<Vector2Int, GameObject> _slotInstances = new();
 
-	[SerializeField]
-	private Vector2 _gridSize;
+    public event Action CardsChanged;
 
-	private readonly Dictionary<Vector2Int, Card> _placedCard = new();
-	private readonly HashSet<Vector2Int> _activeSlots = new();
+    public IEnumerable<Vector2Int> ActiveSlots => _activeSlots;
+    public IReadOnlyDictionary<Vector2Int, Card> PlacedCards => _placedCards;
+    public IReadOnlyDictionary<Vector2Int, GameObject> SlotInstances => _slotInstances;
 
-	private readonly Dictionary<Vector2Int, GameObject> _slotInstances = new();
+    private void Start()
+    {
+        CalculateSlotPositions();
+        RedrawSlots();
+        CardsChanged?.Invoke();
+    }
 
-	//======================================================================| Properties
+    private void OnEnable()
+    {
+        CardBuildingManager.OnRestarted += OnReset;
+    }
 
-	public IEnumerable<Vector2Int> ActiveSlots => _activeSlots;
-	public IReadOnlyDictionary<Vector2Int, GameObject> SlotInstances => _slotInstances;
+    private void OnDisable()
+    {
+        CardBuildingManager.OnRestarted -= OnReset;
+    }
 
-	//======================================================================| Unity Methods
+    public bool PlaceCard(Vector2Int position, Card card)
+    {
+        if (!_activeSlots.Contains(position)) return false;
 
-	private void Start() {
-		CalculateSlotPosition();
-		RedrawSlots();
-	}
+        _placedCards[position] = card;
 
-	private void OnEnable() {
-		CardBuildingManager.OnRestarted += OnReset;		
-	}
+        CalculateSlotPositions();
+        RedrawSlots();
+        CardsChanged?.Invoke();
 
-	private void OnDisable() {
-		CardBuildingManager.OnRestarted -= OnReset;		
-	}
+        return true;
+    }
 
-	//======================================================================| Methods
+    private void OnReset()
+    {
+        _placedCards.Clear();
 
-	public bool PlaceCard(Vector2Int position, Card card) {
-	
-		if (!_activeSlots.Contains(position)) return false;
+        CalculateSlotPositions();
+        RedrawSlots();
+        CardsChanged?.Invoke();
+    }
 
-		_placedCard[position] = card;
+    private void CalculateSlotPositions()
+    {
+        _activeSlots.Clear();
 
-		CalculateSlotPosition();
-		RedrawSlots();
+        if (_placedCards.Count == 0)
+        {
+            _activeSlots.Add(Vector2Int.zero);
+            return;
+        }
 
-		return true;
+        foreach (KeyValuePair<Vector2Int, Card> pair in _placedCards)
+        {
+            if (pair.Value.BaseStatus.IsBlockingAttachment) continue;
 
-	}
+            AddSlotIfAvailable(pair.Key + Vector2Int.up);
+            AddSlotIfAvailable(pair.Key + Vector2Int.down);
+            AddSlotIfAvailable(pair.Key + Vector2Int.left);
+            AddSlotIfAvailable(pair.Key + Vector2Int.right);
+        }
+    }
 
-	private void OnReset() {
-		_placedCard.Clear();
-		_activeSlots.Clear();
-		_slotInstances.Clear();
-	}
+    private void AddSlotIfAvailable(Vector2Int position)
+    {
+        if (_placedCards.ContainsKey(position)) return;
 
-	private void CalculateSlotPosition() {
-		
-		_activeSlots.Clear();
-		
-		if (_placedCard.Count == 0) {
-			_activeSlots.Add(new(0, 0));
-			print(_activeSlots.Count);
-			return;
-		}
+        _activeSlots.Add(position);
+    }
 
-		foreach (var (position, card) in _placedCard) {
-		
-			if (card.BaseStatus.IsBlockingAttachment) continue;
+    private void RedrawSlots()
+    {
+        foreach (GameObject instance in _slotInstances.Values) Destroy(instance);
 
-			int[] dx = { 0, 0, -1, 1 };
-			int[] dy = { 1, -1, 0, 0 };
+        _slotInstances.Clear();
 
-			for (int d = 0; d < 4; d++) {
-	
-				Vector2Int slotPosition = new(
-					position.x + dx[d],
-					position.y + dy[d]
-				);
+        foreach (Vector2Int position in _activeSlots)
+        {
+            GameObject instance = Instantiate(_slotPrefab, transform, false);
+            instance.transform.localPosition = _gridSize * position;
 
-				if (_placedCard.ContainsKey(slotPosition)) continue;
-
-				_activeSlots.Add(slotPosition);
-
-			}
-
-		}
-
-	}
-
-	private void RedrawSlots() {
-
-		foreach (var (_, instance) in _slotInstances) {
-			Destroy(instance);
-		}
-
-		_slotInstances.Clear();
-
-		foreach (var position in _activeSlots) {
-
-			print(position);
-
-			var instance = Instantiate(_slotPrefab);
-			instance.transform.SetParent(transform, false);
-			instance.transform.localPosition = _gridSize * position;
-
-			_slotInstances[position] = instance;
-
-		}
-
-	}
-
+            _slotInstances[position] = instance;
+        }
+    }
 }

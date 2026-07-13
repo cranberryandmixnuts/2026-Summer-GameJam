@@ -1,24 +1,18 @@
 using UnityEngine;
 
-public class NormalCard : Card {
+public class NormalCard : Card, IPokerHandCard
+{
+    [SerializeField]
+    private CardPatternType _pattern;
 
-	//======================================================================| Fields
+    [SerializeField]
+    [Range(PokerCardProfile.MinimumRank, PokerCardProfile.MaximumRank)]
+    private int _number = PokerCardProfile.MinimumRank;
 
-	[SerializeField]
-	private CardPatternType _pattern;
+    public CardPatternType Pattern => _pattern;
+    public int Number => _number;
+    public PokerHandParticipationMode PokerHandParticipation => PokerHandParticipationMode.Participant;
+    public PokerCardProfile PokerProfile => PokerCardProfile.CreateStandard(_number, _pattern);
 
-	[SerializeField]
-	private int _number;
-
-	//======================================================================| Properties
-
-	public CardPatternType Pattern => _pattern;
-	public int Number => _number;
-
-	//======================================================================| Methods
-
-	public override float CalculateDamage() {
-		return base.CalculateDamage() * (1 + _number / 13f);
-	}
-
+    public override float CalculateDamage() => base.CalculateDamage() * (1 + _number / 13f);
 }
