@@ -108,7 +108,8 @@ public sealed class AimedShootEnemyAction : EnemyAction
             projectileSpeed,
             projectileDamage,
             context.Owner,
-            context.Brain.RuntimeContext);
+            context.Brain.RuntimeContext,
+            context.Player);
     }
 
     private float GetRandomShotInterval() => Random.Range(minimumShotInterval, maximumShotInterval);
