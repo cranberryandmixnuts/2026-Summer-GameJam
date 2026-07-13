@@ -72,10 +72,13 @@ public abstract class Card : MonoBehaviour,
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {
+		if (AttachedSlot != null) return;
 		IsGrabed = true;
 	}
 
 	public void OnPointerUp(PointerEventData eventData) {
+
+		if (AttachedSlot != null) return;
 
 		IsGrabed = false;
 		IsHovered = false;
