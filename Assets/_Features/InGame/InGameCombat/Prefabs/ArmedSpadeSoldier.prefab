@@ -330,8 +330,8 @@ MonoBehaviour:
   projectileDamage: 1
   projectileSpeed: 6
   initialDelay: 0.5
-  minimumShotInterval: 0.5
-  maximumShotInterval: 1.5
+  minimumShotInterval: 3
+  maximumShotInterval: 6
   burstCount: 2
   burstInterval: 0.1
   multishotCount: 3

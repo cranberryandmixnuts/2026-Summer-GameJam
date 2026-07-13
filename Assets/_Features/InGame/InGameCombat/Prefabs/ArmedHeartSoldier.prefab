@@ -413,8 +413,8 @@ MonoBehaviour:
   - angle: 180
   - angle: 270
   initialDelay: 0.5
-  minimumShotInterval: 0.5
-  maximumShotInterval: 1.5
+  minimumShotInterval: 3
+  maximumShotInterval: 6
 --- !u!114 &6884140542187831867
 MonoBehaviour:
   m_ObjectHideFlags: 0
