@@ -8,6 +8,7 @@ public abstract class EnemyProjectile : MonoBehaviour
     private bool isSubscribedToPlayerDied;
 
     protected EnemyRuntimeContext RuntimeContext { get; private set; }
+    protected Transform Target { get; private set; }
     protected Vector2 Direction { get; set; }
     protected bool IsActive { get; private set; }
 
@@ -17,9 +18,27 @@ public abstract class EnemyProjectile : MonoBehaviour
         float speed,
         int damageAmount,
         GameObject damageSource,
-        in EnemyRuntimeContext context)
+        in EnemyRuntimeContext context) =>
+        Launch(
+            position,
+            direction,
+            speed,
+            damageAmount,
+            damageSource,
+            context,
+            null);
+
+    public void Launch(
+        Vector2 position,
+        Vector2 direction,
+        float speed,
+        int damageAmount,
+        GameObject damageSource,
+        in EnemyRuntimeContext context,
+        Transform target)
     {
         RuntimeContext = context;
+        Target = target;
         combatBridge = context.CombatBridge;
         Direction = direction;
         damage = damageAmount;

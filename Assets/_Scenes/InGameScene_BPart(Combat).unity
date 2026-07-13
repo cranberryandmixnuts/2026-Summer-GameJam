@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af6b725e44c6dc4e90faab5b1ac3c46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 50000
+  maxHealth: 5000
   invulnerabilityDuration: 0.6
   combatBridge: {fileID: 278272978}
 --- !u!114 &468861016
@@ -498,7 +498,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5.5, z: 0}
-  m_LocalScale: {x: 0.62, y: 0.62, z: 0.62}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1926242956}
@@ -1271,12 +1271,13 @@ MonoBehaviour:
   playerCollider: {fileID: 468861013}
   playerHealth: {fileID: 468861015}
   combatBridge: {fileID: 278272978}
+  combatBounds: {fileID: 540481624}
   despawnBounds: {fileID: 1480896908}
   spawnEntries:
-  - Prefab: {fileID: 8775158816998203423, guid: 34f68240febe14a4998ff890cef4d180, type: 3}
+  - Prefab: {fileID: 3773766357352750942, guid: a7f926acecb69304da4e822a8597dfc1, type: 3}
     Weight: 1
-  initialDelay: 1
-  spawnInterval: 1.5
+  initialDelay: 0
+  spawnInterval: 1e+23
   spawnOnEnable: 1
 --- !u!1 &1979276958
 GameObject:

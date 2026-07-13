@@ -20,6 +20,7 @@ public sealed class EnemySpawner : MonoBehaviour
     [SerializeField, Required] private Collider2D playerCollider;
     [SerializeField, Required] private PlayerHealth playerHealth;
     [SerializeField, Required] private CombatBridge combatBridge;
+    [SerializeField, Required] private CombatBounds combatBounds;
     [SerializeField, Required] private DespawnBounds despawnBounds;
     [SerializeField, ValidateInput(nameof(HasSpawnEntries), "적 프리팹을 하나 이상 등록해야 합니다.")]
     private SpawnEntry[] spawnEntries;
@@ -43,6 +44,7 @@ public sealed class EnemySpawner : MonoBehaviour
             playerCollider,
             playerHealth,
             combatBridge,
+            combatBounds,
             despawnBounds);
 
         for (int i = 0; i < spawnEntries.Length; i++) totalWeight += spawnEntries[i].Weight;

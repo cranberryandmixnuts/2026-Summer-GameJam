@@ -1,192 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1835772589670428163
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6174878229765398574}
-  - component: {fileID: 7931248101356063639}
-  m_Layer: 6
-  m_Name: keepRange
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6174878229765398574
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835772589670428163}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4843542327885399348}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &7931248101356063639
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835772589670428163}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -2}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 4, y: 4}
-  m_EdgeRadius: 0
---- !u!1 &3402953512076415093
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7803959532690787280}
-  m_Layer: 6
-  m_Name: Muzzle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7803959532690787280
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3402953512076415093}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4843542327885399348}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6740306430909217782
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 440122720083738694}
-  - component: {fileID: 7699769293051833915}
-  m_Layer: 6
-  m_Name: backwalkRange
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &440122720083738694
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6740306430909217782}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4843542327885399348}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &7699769293051833915
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6740306430909217782}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -1}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 4, y: 2}
-  m_EdgeRadius: 0
 --- !u!1 &8775158816998203423
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,10 +34,7 @@ Transform:
   m_LocalPosition: {x: 5, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 7803959532690787280}
-  - {fileID: 440122720083738694}
-  - {fileID: 6174878229765398574}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &48802899546798504
@@ -392,22 +202,85 @@ MonoBehaviour:
     globalTransitions: []
     states:
     - id: 72b328b748754ce1a82a04e8fd2fb5d4
-      name: Move
-      editorPosition: {x: 105.333374, y: 236.00006}
+      name: Move&Fire
+      editorPosition: {x: 30.666779, y: 179.33334}
       executionMode: 0
       loopSequence: 0
       actions:
-      - rid: 4264142786137686093
-      - rid: 4264142786137686092
-      - rid: 4264142785469743189
-      transitions: []
+      - rid: 4264142789152604245
+      - rid: 4264142789152604252
+      transitions:
+      - targetStateId: 0e7f2d13d84f475b97ae1cf1688a03b0
+        minimumStateDuration: 0
+        allowSelfTransition: 0
+        evaluationMode: 0
+        conditions:
+        - inverted: 0
+          condition:
+            rid: 4264142789152604246
+    - id: 0e7f2d13d84f475b97ae1cf1688a03b0
+      name: FanMeleeAttack
+      editorPosition: {x: 272.66666, y: 207.33325}
+      executionMode: 0
+      loopSequence: 0
+      actions:
+      - rid: 4264142789152604247
+      transitions:
+      - targetStateId: 72b328b748754ce1a82a04e8fd2fb5d4
+        minimumStateDuration: 0
+        allowSelfTransition: 0
+        evaluationMode: 0
+        conditions:
+        - inverted: 0
+          condition:
+            rid: 4264142789152604248
+      - targetStateId: 0e7f2d13d84f475b97ae1cf1688a03b0
+        minimumStateDuration: 0
+        allowSelfTransition: 1
+        evaluationMode: 0
+        conditions:
+        - inverted: 0
+          condition:
+            rid: 4264142789152604249
   references:
     version: 2
     RefIds:
-    - rid: 4264142785469743189
+    - rid: 4264142789152604245
+      type: {class: MoveDirectionEnemyAction, ns: , asm: Assembly-CSharp}
+      data:
+        direction: {x: 0, y: -1}
+        speed: 1
+        directionSpace: 0
+        useDuration: 0
+        duration: 1
+    - rid: 4264142789152604246
+      type: {class: PlayerDistanceEnemyCondition, ns: , asm: Assembly-CSharp}
+      data:
+        comparison: 0
+        distance: 1
+        measurement: 0
+    - rid: 4264142789152604247
+      type: {class: FanMeleeEnemyAction, ns: , asm: Assembly-CSharp}
+      data:
+        attackOrigin: {fileID: 4843542327885399348}
+        damage: 1
+        range: 1
+        angle: 130
+        windupDuration: 0.3
+        recoveryDuration: 0.2
+    - rid: 4264142789152604248
+      type: {class: PlayerDistanceEnemyCondition, ns: , asm: Assembly-CSharp}
+      data:
+        comparison: 1
+        distance: 1
+        measurement: 0
+    - rid: 4264142789152604249
+      type: {class: ActionsCompleteEnemyCondition, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 4264142789152604252
       type: {class: AimedShootEnemyAction, ns: , asm: Assembly-CSharp}
       data:
-        muzzle: {fileID: 7803959532690787280}
+        muzzle: {fileID: 4843542327885399348}
         projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
         projectileDamage: 1
         projectileSpeed: 6
@@ -418,29 +291,6 @@ MonoBehaviour:
         burstInterval: 0.1
         multishotCount: 1
         spreadAngle: 30
-    - rid: 4264142786137686092
-      type: {class: PatternShootEnemyAction, ns: , asm: Assembly-CSharp}
-      data:
-        muzzle: {fileID: 7803959532690787280}
-        projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
-        projectileDamage: 1
-        projectileSpeed: 6
-        projectileShots:
-        - angle: 0
-        - angle: 90
-        - angle: 180
-        - angle: 270
-        initialDelay: 0.5
-        minimumShotInterval: 3
-        maximumShotInterval: 6
-    - rid: 4264142786137686093
-      type: {class: MoveDirectionEnemyAction, ns: , asm: Assembly-CSharp}
-      data:
-        direction: {x: 0, y: -1}
-        speed: 1
-        directionSpace: 0
-        useDuration: 0
-        duration: 1
 --- !u!114 &5171296244792463833
 MonoBehaviour:
   m_ObjectHideFlags: 0
