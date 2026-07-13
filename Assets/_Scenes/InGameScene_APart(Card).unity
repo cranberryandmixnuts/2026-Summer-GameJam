@@ -211,12 +211,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 476660898}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 870867461}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &476660900
 MonoBehaviour:
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardHandDetector
   _cardField: {fileID: 1061635685}
-  _ruleCatalog: {fileID: 11400000, guid: 3709f32d245672246996104be14bab05, type: 2}
+  _ruleCatalog: {fileID: 11400000, guid: 1ae2726c103223849bd8830c22833c62, type: 2}
 --- !u!114 &476660901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,8 +583,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 476660899}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &925638965
@@ -1176,6 +1175,7 @@ SceneRoots:
   - {fileID: 1576183365}
   - {fileID: 977107247}
   - {fileID: 870867461}
+  - {fileID: 476660899}
   - {fileID: 925638966}
   - {fileID: 492117851}
   - {fileID: 492045091}
