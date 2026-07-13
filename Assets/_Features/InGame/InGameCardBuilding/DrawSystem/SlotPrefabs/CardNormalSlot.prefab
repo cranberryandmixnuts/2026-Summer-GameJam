@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7695874770870938478}
   m_Layer: 5
   m_Name: CardNormalSlot
-  m_TagString: Untagged
+  m_TagString: CardSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

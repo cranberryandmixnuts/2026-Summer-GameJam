@@ -625,7 +625,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 32.96489}
+  m_AnchoredPosition: {x: 0, y: 32.964905}
   m_SizeDelta: {x: -19.999992, y: -201.45023}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1061635682
@@ -692,7 +692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardField
   _slotPrefab: {fileID: 3779973572255755819, guid: e88490382ba4ab94a9caf145ec76dd4f, type: 3}
-  _gridSize: {x: 60, y: 130}
+  _gridSize: {x: 170, y: 235}
 --- !u!1 &1101605709
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,7 +860,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 7.1
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: 1
   m_CullingMask:

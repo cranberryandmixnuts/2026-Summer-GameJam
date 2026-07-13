@@ -72,8 +72,8 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 
 			if (_previousHoveredCard != null) {
 				_previousHoveredCard.transform
-					.DOScale(1f, _hoverAnimationDuration)
-					.SetEase(_hoverAnimationEase);
+					.DOScale(1f, _drawAnimationDuration)
+					.SetEase(_drawAnimationEase);
 			}
 
 			_previousHoveredCard = HoveredCard;
@@ -88,12 +88,24 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 
 		card.transform.SetParent(transform, false);
 
-		_cards.Add(card);
+		if (card.PreviousIndex.HasValue) {
+			_cards.Insert(card.PreviousIndex.Value, card);
+		}
+		else {
+			_cards.Add(card);
+		}
+
 		_cardPosition.Add(card, default);
 
 		CalculateCardPosition();
 		MoveCards(_cards.Count - 1, 0f);
 
+	}
+
+	public void RemoveCard(Card card) {
+		card.PreviousIndex = _cards.IndexOf(card);
+		_cards.Remove(card);
+		_cardPosition.Remove(card);
 	}
 
 	private void CalculateCardPosition() {
