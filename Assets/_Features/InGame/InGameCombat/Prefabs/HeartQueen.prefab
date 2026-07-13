@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1480694097953996811}
   - component: {fileID: 1028617174220807028}
   - component: {fileID: 5254672658135210367}
+  - component: {fileID: 6673505290249670044}
   m_Layer: 6
   m_Name: HeartQueen
   m_TagString: Untagged
@@ -196,6 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBrain
   body: {fileID: 7985905613763274805}
+  animator: {fileID: 0}
   healthSource: {fileID: 0}
   graph:
     entryStateId: 319992e5c63c4947b4a957f97a23fac8
@@ -219,7 +221,7 @@ MonoBehaviour:
             rid: 4264142789152604285
     - id: 03cc7afdab2f4b87bf8a2519b8311c0b
       name: AreaAttack
-      editorPosition: {x: 261.3333, y: 194.00003}
+      editorPosition: {x: 262, y: 193.33337}
       executionMode: 0
       loopSequence: 0
       actions:
@@ -287,6 +289,7 @@ MonoBehaviour:
     - rid: 4264142789152604276
       type: {class: MoveDirectionEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         direction: {x: 0, y: -1}
         speed: 1
         directionSpace: 0
@@ -295,6 +298,7 @@ MonoBehaviour:
     - rid: 4264142789152604281
       type: {class: CircleMeleeEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         attackOrigin: {fileID: 2189487221122657475}
         damage: 1
         radius: 3
@@ -303,10 +307,12 @@ MonoBehaviour:
     - rid: 4264142789152604282
       type: {class: WaitEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         duration: 3
     - rid: 4264142789152604283
       type: {class: RandomCircleHitscanEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         damage: 1
         radius: 1
         minimumAttackCount: 3
@@ -316,6 +322,7 @@ MonoBehaviour:
     - rid: 4264142789152604284
       type: {class: WaitEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         duration: 4
     - rid: 4264142789152604285
       type: {class: ActionsCompleteEnemyCondition, ns: , asm: Assembly-CSharp}
@@ -329,6 +336,7 @@ MonoBehaviour:
     - rid: 4264142789152604288
       type: {class: PatternShootEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         muzzle: {fileID: 2189487221122657475}
         projectilePrefab: {fileID: 5016140944135401950, guid: 48bbc744d65b6fb41911134c516c4057, type: 3}
         projectileDamage: 1
@@ -348,6 +356,7 @@ MonoBehaviour:
     - rid: 4264142789152604290
       type: {class: DashTowardPlayerEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         bodyCollider: {fileID: 2260275828149108786}
         damage: 1
         speed: 10
@@ -356,6 +365,7 @@ MonoBehaviour:
     - rid: 4264142789152604292
       type: {class: WaitEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         duration: 6
     - rid: 4264142789152604293
       type: {class: ActionsCompleteEnemyCondition, ns: , asm: Assembly-CSharp}
@@ -374,3 +384,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DestroyBelowWorldY
   bodyCollider: {fileID: 2260275828149108786}
   escapeDamage: 1
+--- !u!95 &6673505290249670044
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3773766357352750942}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

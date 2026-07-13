@@ -4,9 +4,11 @@ using UnityEngine;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
 {
     [SerializeField, Required] private Rigidbody2D body;
+    [SerializeField, Required] private Animator animator;
     [SerializeField] private MonoBehaviour healthSource;
     [SerializeField, HideInInspector] private EnemyBehaviorGraph graph = new();
 
@@ -17,6 +19,7 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
     private bool isRunning;
 
     public Rigidbody2D Body => body;
+    public Animator Animator => animator;
     public IEnemyHealthSource Health => (IEnemyHealthSource)healthSource;
     public EnemyRuntimeContext RuntimeContext { get; private set; }
     public EnemyState CurrentState => currentState;
@@ -68,13 +71,13 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
         if (currentState.ExecutionMode == EnemyActionExecutionMode.Parallel)
         {
             foreach (EnemyAction action in currentState.Actions)
-                action.Enter(behaviorContext);
+                EnterAction(action);
 
             return;
         }
 
         if (currentState.Actions.Count > 0)
-            currentState.Actions[0].Enter(behaviorContext);
+            EnterAction(currentState.Actions[0]);
     }
 
     private void ExitState()
@@ -117,7 +120,7 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
             sequenceIndex = 0;
 
         if (sequenceIndex < currentState.Actions.Count)
-            currentState.Actions[sequenceIndex].Enter(behaviorContext);
+            EnterAction(currentState.Actions[sequenceIndex]);
     }
 
     private void FixedUpdateActions()
@@ -174,6 +177,34 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
         return false;
     }
 
+    private void EnterAction(EnemyAction action)
+    {
+        PlayAnimation(action.AnimationStateName);
+        action.Enter(behaviorContext);
+    }
+
+    private void PlayAnimation(string stateName)
+    {
+        if (string.IsNullOrWhiteSpace(stateName)) return;
+
+        for (int layerIndex = 0; layerIndex < animator.layerCount; layerIndex++)
+        {
+            if (TryPlayAnimation(stateName, layerIndex)) return;
+
+            string fullPath = $"{animator.GetLayerName(layerIndex)}.{stateName}";
+            if (TryPlayAnimation(fullPath, layerIndex)) return;
+        }
+    }
+
+    private bool TryPlayAnimation(string stateName, int layerIndex)
+    {
+        int stateHash = UnityEngine.Animator.StringToHash(stateName);
+        if (!animator.HasState(layerIndex, stateHash)) return false;
+
+        animator.Play(stateHash, layerIndex, 0f);
+        return true;
+    }
+
     private void Stop()
     {
         if (isRunning) ExitState();
@@ -209,7 +240,11 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
 
     private void OnValidate() => graph.EnsureStateIds();
 
-    private void Reset() => body = GetComponent<Rigidbody2D>();
+    private void Reset()
+    {
+        body = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+    }
 
     private void HandlePlayerDied() => Stop();
 }
