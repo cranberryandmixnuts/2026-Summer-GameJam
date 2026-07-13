@@ -203,7 +203,7 @@ MonoBehaviour:
     states:
     - id: 72b328b748754ce1a82a04e8fd2fb5d4
       name: Move&Fire
-      editorPosition: {x: 39.33345, y: 179.33334}
+      editorPosition: {x: 30.666779, y: 179.33334}
       executionMode: 0
       loopSequence: 0
       actions:
@@ -220,7 +220,7 @@ MonoBehaviour:
             rid: 4264142789152604246
     - id: 0e7f2d13d84f475b97ae1cf1688a03b0
       name: FanMeleeAttack
-      editorPosition: {x: 272.66666, y: 208.6666}
+      editorPosition: {x: 272.66666, y: 207.33325}
       executionMode: 0
       loopSequence: 0
       actions:
