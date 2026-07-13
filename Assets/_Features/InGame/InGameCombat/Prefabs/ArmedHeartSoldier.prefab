@@ -200,8 +200,6 @@ GameObject:
   - component: {fileID: 5581154455435580085}
   - component: {fileID: 4381739228166026471}
   - component: {fileID: 4418338919762586867}
-  - component: {fileID: 6139749518762024485}
-  - component: {fileID: 7419077998347020536}
   - component: {fileID: 6884140542187831867}
   m_Layer: 6
   m_Name: ArmedHeartSoldier
@@ -374,47 +372,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 10
---- !u!114 &6139749518762024485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8508378361576631075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb2939061dc358b4888577f1762effae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyMover
-  body: {fileID: 5581154455435580085}
-  backwalk: {fileID: 5106679301704606352}
-  keep: {fileID: 7352038790341898085}
-  approachSpeed: 0.5
-  backwalkSpeed: 1
---- !u!114 &7419077998347020536
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8508378361576631075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b2d771dbf20c0e4fb487e278d479a51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyUnaimedShooter
-  muzzle: {fileID: 2280084214176668694}
-  projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
-  projectileDamage: 1
-  projectileSpeed: 6
-  projectileShots:
-  - angle: 0
-  - angle: 90
-  - angle: 180
-  - angle: 270
-  initialDelay: 0.5
-  minimumShotInterval: 3
-  maximumShotInterval: 6
 --- !u!114 &6884140542187831867
 MonoBehaviour:
   m_ObjectHideFlags: 0

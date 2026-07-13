@@ -122,8 +122,6 @@ GameObject:
   - component: {fileID: 4953755834393230172}
   - component: {fileID: 3224923158160231124}
   - component: {fileID: 1776364971842617044}
-  - component: {fileID: 7462527376382008272}
-  - component: {fileID: 8988536115374384676}
   - component: {fileID: 6419423960269545213}
   m_Layer: 6
   m_Name: ArmedSpadeSoldier
@@ -296,46 +294,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 10
---- !u!114 &7462527376382008272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6790217317713472905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb2939061dc358b4888577f1762effae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyMover
-  body: {fileID: 4953755834393230172}
-  backwalk: {fileID: 4775169476285702799}
-  keep: {fileID: 7124112810313477966}
-  approachSpeed: 0.5
-  backwalkSpeed: 1
---- !u!114 &8988536115374384676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6790217317713472905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0016bbab56a7794dbccf917f19a7ce8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAimedShooter
-  muzzle: {fileID: 991216986526428523}
-  projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
-  projectileDamage: 1
-  projectileSpeed: 6
-  initialDelay: 0.5
-  minimumShotInterval: 3
-  maximumShotInterval: 6
-  burstCount: 2
-  burstInterval: 0.1
-  multishotCount: 3
-  spreadAngle: 30
 --- !u!114 &6419423960269545213
 MonoBehaviour:
   m_ObjectHideFlags: 0

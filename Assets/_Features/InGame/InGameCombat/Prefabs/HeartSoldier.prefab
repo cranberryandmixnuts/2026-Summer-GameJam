@@ -200,8 +200,7 @@ GameObject:
   - component: {fileID: 9076739801807007853}
   - component: {fileID: 4472683068902421598}
   - component: {fileID: 1085845626010542863}
-  - component: {fileID: 3185237542922390199}
-  - component: {fileID: 5595008925638490393}
+  - component: {fileID: 2656030742805754738}
   - component: {fileID: 5171296244792463833}
   m_Layer: 6
   m_Name: HeartSoldier
@@ -374,7 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 10
---- !u!114 &3185237542922390199
+--- !u!114 &2656030742805754738
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -383,37 +382,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 8775158816998203423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb2939061dc358b4888577f1762effae, type: 3}
+  m_Script: {fileID: 11500000, guid: 629eec413ef7c9646bc7024715ac5700, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyMover
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBrain
   body: {fileID: 9076739801807007853}
-  backwalk: {fileID: 7699769293051833915}
-  keep: {fileID: 7931248101356063639}
-  approachSpeed: 0.5
-  backwalkSpeed: 1
---- !u!114 &5595008925638490393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8775158816998203423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0016bbab56a7794dbccf917f19a7ce8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAimedShooter
-  muzzle: {fileID: 7803959532690787280}
-  projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
-  projectileDamage: 1
-  projectileSpeed: 6
-  initialDelay: 0.5
-  minimumShotInterval: 3
-  maximumShotInterval: 6
-  burstCount: 1
-  burstInterval: 0.1
-  multishotCount: 1
-  spreadAngle: 30
+  healthSource: {fileID: 0}
+  graph:
+    entryStateId: 72b328b748754ce1a82a04e8fd2fb5d4
+    globalTransitions: []
+    states:
+    - id: 72b328b748754ce1a82a04e8fd2fb5d4
+      name: Move
+      editorPosition: {x: 105.333374, y: 236.00006}
+      executionMode: 0
+      loopSequence: 0
+      actions:
+      - rid: 4264142786137686093
+      - rid: 4264142786137686092
+      - rid: 4264142785469743189
+      transitions: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4264142785469743189
+      type: {class: AimedShootEnemyAction, ns: , asm: Assembly-CSharp}
+      data:
+        muzzle: {fileID: 7803959532690787280}
+        projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
+        projectileDamage: 1
+        projectileSpeed: 6
+        initialDelay: 0.5
+        minimumShotInterval: 3
+        maximumShotInterval: 6
+        burstCount: 1
+        burstInterval: 0.1
+        multishotCount: 1
+        spreadAngle: 30
+    - rid: 4264142786137686092
+      type: {class: PatternShootEnemyAction, ns: , asm: Assembly-CSharp}
+      data:
+        muzzle: {fileID: 7803959532690787280}
+        projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
+        projectileDamage: 1
+        projectileSpeed: 6
+        projectileShots:
+        - angle: 0
+        - angle: 90
+        - angle: 180
+        - angle: 270
+        initialDelay: 0.5
+        minimumShotInterval: 3
+        maximumShotInterval: 6
+    - rid: 4264142786137686093
+      type: {class: MoveDirectionEnemyAction, ns: , asm: Assembly-CSharp}
+      data:
+        direction: {x: 0, y: -1}
+        speed: 1
+        directionSpace: 0
+        useDuration: 0
+        duration: 1
 --- !u!114 &5171296244792463833
 MonoBehaviour:
   m_ObjectHideFlags: 0
