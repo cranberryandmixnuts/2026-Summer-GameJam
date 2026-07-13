@@ -62,7 +62,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -171,7 +171,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -393,43 +393,33 @@ MonoBehaviour:
     states:
     - id: 72b328b748754ce1a82a04e8fd2fb5d4
       name: Move
-      editorPosition: {x: 105.333374, y: 236.00006}
+      editorPosition: {x: 100.00011, y: 173.33345}
       executionMode: 0
       loopSequence: 0
       actions:
       - rid: 4264142786137686093
       - rid: 4264142786137686092
-      - rid: 4264142785469743189
       transitions: []
   references:
     version: 2
     RefIds:
-    - rid: 4264142785469743189
-      type: {class: AimedShootEnemyAction, ns: , asm: Assembly-CSharp}
-      data:
-        muzzle: {fileID: 7803959532690787280}
-        projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
-        projectileDamage: 1
-        projectileSpeed: 6
-        initialDelay: 0.5
-        minimumShotInterval: 3
-        maximumShotInterval: 6
-        burstCount: 1
-        burstInterval: 0.1
-        multishotCount: 1
-        spreadAngle: 30
     - rid: 4264142786137686092
       type: {class: PatternShootEnemyAction, ns: , asm: Assembly-CSharp}
       data:
         muzzle: {fileID: 7803959532690787280}
         projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
         projectileDamage: 1
-        projectileSpeed: 6
+        projectileSpeed: 3
         projectileShots:
         - angle: 0
+        - angle: 45
         - angle: 90
+        - angle: 135
         - angle: 180
+        - angle: 225
         - angle: 270
+        - angle: 315
+        - angle: 315
         initialDelay: 0.5
         minimumShotInterval: 3
         maximumShotInterval: 6
