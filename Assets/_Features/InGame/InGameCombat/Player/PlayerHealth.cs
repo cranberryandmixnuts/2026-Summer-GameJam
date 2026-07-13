@@ -11,6 +11,7 @@ public sealed class PlayerHealth : MonoBehaviour, IDamageable
 
     public int MaxHealth => maxHealth;
     public int CurrentHealth { get; private set; }
+    public bool IsDead { get; private set; }
     public bool IsInvulnerable => !isDead && Time.time < invulnerableUntil;
 
     public event Action<int, int> HealthChanged;

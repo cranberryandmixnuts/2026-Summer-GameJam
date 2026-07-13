@@ -6,6 +6,7 @@ public readonly struct EnemyRuntimeContext
     public Collider2D PlayerCollider { get; }
     public PlayerHealth PlayerHealth { get; }
     public CombatBridge CombatBridge { get; }
+    public CombatBounds CombatBounds { get; }
     public DespawnBounds DespawnBounds { get; }
 
     public EnemyRuntimeContext(
@@ -13,12 +14,14 @@ public readonly struct EnemyRuntimeContext
         Collider2D playerCollider,
         PlayerHealth playerHealth,
         CombatBridge combatBridge,
+        CombatBounds combatBounds,
         DespawnBounds despawnBounds)
     {
         Player = player;
         PlayerCollider = playerCollider;
         PlayerHealth = playerHealth;
         CombatBridge = combatBridge;
+        CombatBounds = combatBounds;
         DespawnBounds = despawnBounds;
     }
 }
