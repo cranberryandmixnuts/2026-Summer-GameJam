@@ -22,7 +22,11 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 	[SerializeField] private float _hoverAdditionalPosition;
 
 	[Header("Animation")]
+	[SerializeField] private float _hoverAnimationDuration;
 	[SerializeField] private float _hoverAnimationSpreadingDuration;
+	[SerializeField] private Ease _hoverAnimationEase;
+
+	[Space]
 	[SerializeField] private float _drawAnimationDuration;
 	[SerializeField] private Ease _drawAnimationEase;
 
@@ -62,14 +66,14 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 
 			if (HoveredCard != null) {
 				HoveredCard.transform
-					.DOScale(_hoverScale, _drawAnimationDuration)
-					.SetEase(_drawAnimationEase);
+					.DOScale(_hoverScale, _hoverAnimationDuration)
+					.SetEase(_hoverAnimationEase);
 			}
 
 			if (_previousHoveredCard != null) {
 				_previousHoveredCard.transform
-					.DOScale(1f, _drawAnimationDuration)
-					.SetEase(_drawAnimationEase);
+					.DOScale(1f, _hoverAnimationDuration)
+					.SetEase(_hoverAnimationEase);
 			}
 
 			_previousHoveredCard = HoveredCard;
@@ -146,7 +150,7 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope> {
 			
 				if (leftIndex >= 0) {
 					PlayAnimation(_cards[leftIndex]);
-				} 
+				}
 
 				if (rightIndex < _cards.Count && rightIndex != leftIndex) {
 					PlayAnimation(_cards[rightIndex]);
