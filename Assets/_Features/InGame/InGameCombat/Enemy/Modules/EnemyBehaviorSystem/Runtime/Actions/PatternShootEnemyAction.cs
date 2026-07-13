@@ -60,7 +60,8 @@ public sealed class PatternShootEnemyAction : EnemyAction
                 projectileSpeed,
                 projectileDamage,
                 context.Owner,
-                context.Brain.RuntimeContext);
+                context.Brain.RuntimeContext,
+                context.Player);
         }
     }
 }

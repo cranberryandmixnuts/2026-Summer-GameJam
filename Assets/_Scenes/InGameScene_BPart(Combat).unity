@@ -1274,10 +1274,10 @@ MonoBehaviour:
   combatBounds: {fileID: 540481624}
   despawnBounds: {fileID: 1480896908}
   spawnEntries:
-  - Prefab: {fileID: 6790217317713472905, guid: 6a5c14d332ea99844a3c6f210f41b004, type: 3}
+  - Prefab: {fileID: 3773766357352750942, guid: a7f926acecb69304da4e822a8597dfc1, type: 3}
     Weight: 1
-  initialDelay: 1
-  spawnInterval: 3
+  initialDelay: 0
+  spawnInterval: 1e+23
   spawnOnEnable: 1
 --- !u!1 &1979276958
 GameObject:
