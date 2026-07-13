@@ -19,6 +19,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 	//======================================================================| Properties
 
 	public IEnumerable<Vector2Int> ActiveSlots => _activeSlots;
+	public IReadOnlyDictionary<Vector2Int, GameObject> SlotInstances => _slotInstances;
 
 	//======================================================================| Unity Methods
 
