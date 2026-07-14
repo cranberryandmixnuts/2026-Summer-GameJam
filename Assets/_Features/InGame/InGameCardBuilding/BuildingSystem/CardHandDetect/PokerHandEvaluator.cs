@@ -22,9 +22,7 @@ public static class PokerHandEvaluator
     {
         return handType switch
         {
-            PokerHandType.HighCard => IsHighCard(cards),
             PokerHandType.OnePair => HasCommonRank(cards),
-            PokerHandType.TwoPair => IsTwoPair(cards),
             PokerHandType.ThreeOfAKind => HasCommonRank(cards),
             PokerHandType.Straight => IsStraight(cards),
             PokerHandType.Flush => HasCommonPattern(cards),
@@ -34,28 +32,6 @@ public static class PokerHandEvaluator
             PokerHandType.RoyalFlush => HasCommonPattern(cards) && CanAssignRanks(cards, RoyalRanks),
             _ => false
         };
-    }
-
-    private static bool IsHighCard(IReadOnlyList<PokerCardProfile> cards)
-    {
-        if (HasAnyPair(cards)) return false;
-        if (IsStraight(cards)) return false;
-        if (HasCommonPattern(cards)) return false;
-
-        return true;
-    }
-
-    private static bool HasAnyPair(IReadOnlyList<PokerCardProfile> cards)
-    {
-        for (int first = 0; first < cards.Count - 1; first++)
-        {
-            for (int second = first + 1; second < cards.Count; second++)
-            {
-                if ((cards[first].RankMask & cards[second].RankMask) != 0) return true;
-            }
-        }
-
-        return false;
     }
 
     private static bool HasCommonRank(IReadOnlyList<PokerCardProfile> cards)
@@ -74,13 +50,6 @@ public static class PokerHandEvaluator
         foreach (PokerCardProfile card in cards) commonPatterns &= card.PatternMask;
 
         return commonPatterns != 0;
-    }
-
-    private static bool IsTwoPair(IReadOnlyList<PokerCardProfile> cards)
-    {
-        return CanFormDistinctGroups(cards[0].RankMask & cards[1].RankMask, cards[2].RankMask & cards[3].RankMask)
-            || CanFormDistinctGroups(cards[0].RankMask & cards[2].RankMask, cards[1].RankMask & cards[3].RankMask)
-            || CanFormDistinctGroups(cards[0].RankMask & cards[3].RankMask, cards[1].RankMask & cards[2].RankMask);
     }
 
     private static bool IsFullHouse(IReadOnlyList<PokerCardProfile> cards)

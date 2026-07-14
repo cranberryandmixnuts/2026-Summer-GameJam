@@ -3,9 +3,7 @@ using UnityEngine;
 
 public enum PokerHandType
 {
-    HighCard,
     OnePair,
-    TwoPair,
     ThreeOfAKind,
     Straight,
     Flush,
@@ -13,12 +11,6 @@ public enum PokerHandType
     FourOfAKind,
     StraightFlush,
     RoyalFlush
-}
-
-public enum CardHandSelectionMode
-{
-    Consecutive,
-    AnyCombination
 }
 
 [CreateAssetMenu(
@@ -42,20 +34,15 @@ public sealed class PokerHandRule : CardHandRule
     [SerializeField]
     private PokerHandType _handType;
 
-    [SerializeField]
-    private CardHandSelectionMode _selectionMode = CardHandSelectionMode.Consecutive;
-
     public PokerHandType HandType => _handType;
-    public CardHandSelectionMode SelectionMode => _selectionMode;
     public override string Id => GetId(_handType);
     public override string DisplayName => GetDisplayName(_handType);
     public override int Priority => GetPriority(_handType);
     public override Color LineColor => GetLineColor(_handType);
 
-    public void Configure(PokerHandType handType, CardHandSelectionMode selectionMode)
+    public void Configure(PokerHandType handType)
     {
         _handType = handType;
-        _selectionMode = selectionMode;
     }
 
     public override void FindMatches(CardLine line, ICollection<CardHandMatch> matches)
@@ -100,31 +87,18 @@ public sealed class PokerHandRule : CardHandRule
         CardLineCard[] selectedCards = new CardLineCard[requiredCardCount];
         PokerCardProfile[] selectedProfiles = new PokerCardProfile[requiredCardCount];
 
-        if (_selectionMode == CardHandSelectionMode.Consecutive)
+        for (int start = 0; start <= segment.Count - requiredCardCount; start++)
         {
-            for (int start = 0; start <= segment.Count - requiredCardCount; start++)
+            for (int i = 0; i < requiredCardCount; i++)
             {
-                for (int i = 0; i < requiredCardCount; i++)
-                {
-                    selectedCards[i] = segment[start + i].LineCard;
-                    selectedProfiles[i] = segment[start + i].Profile;
-                }
-
-                AddSelectionIfMatched(line, selectedCards, selectedProfiles, matches);
+                selectedCards[i] = segment[start + i].LineCard;
+                selectedProfiles[i] = segment[start + i].Profile;
             }
 
-            return;
+            AddSelectionIfMatched(line, selectedCards, selectedProfiles, matches);
         }
 
-        FindCombinationMatches(
-            line,
-            segment,
-            0,
-            0,
-            selectedCards,
-            selectedProfiles,
-            matches
-        );
+        return;
     }
 
     private void FindCombinationMatches(
@@ -179,9 +153,7 @@ public sealed class PokerHandRule : CardHandRule
     {
         return handType switch
         {
-            PokerHandType.HighCard => 5,
             PokerHandType.OnePair => 2,
-            PokerHandType.TwoPair => 4,
             PokerHandType.ThreeOfAKind => 3,
             PokerHandType.Straight => 5,
             PokerHandType.Flush => 5,
@@ -197,9 +169,7 @@ public sealed class PokerHandRule : CardHandRule
     {
         return handType switch
         {
-            PokerHandType.HighCard => "poker.high-card",
             PokerHandType.OnePair => "poker.one-pair",
-            PokerHandType.TwoPair => "poker.two-pair",
             PokerHandType.ThreeOfAKind => "poker.three-of-a-kind",
             PokerHandType.Straight => "poker.straight",
             PokerHandType.Flush => "poker.flush",
@@ -215,9 +185,7 @@ public sealed class PokerHandRule : CardHandRule
     {
         return handType switch
         {
-            PokerHandType.HighCard => "하이 카드",
             PokerHandType.OnePair => "원 페어",
-            PokerHandType.TwoPair => "투 페어",
             PokerHandType.ThreeOfAKind => "트리플",
             PokerHandType.Straight => "스트레이트",
             PokerHandType.Flush => "플러시",
@@ -233,16 +201,14 @@ public sealed class PokerHandRule : CardHandRule
     {
         return handType switch
         {
-            PokerHandType.HighCard => 100,
-            PokerHandType.OnePair => 200,
-            PokerHandType.TwoPair => 300,
-            PokerHandType.ThreeOfAKind => 400,
-            PokerHandType.Straight => 500,
-            PokerHandType.Flush => 600,
-            PokerHandType.FullHouse => 700,
-            PokerHandType.FourOfAKind => 800,
-            PokerHandType.StraightFlush => 900,
-            PokerHandType.RoyalFlush => 1000,
+            PokerHandType.OnePair => 100,
+            PokerHandType.ThreeOfAKind => 200,
+            PokerHandType.Straight => 300,
+            PokerHandType.Flush => 400,
+            PokerHandType.FullHouse => 500,
+            PokerHandType.FourOfAKind => 600,
+            PokerHandType.StraightFlush => 700,
+            PokerHandType.RoyalFlush => 800,
             _ => 0
         };
     }
@@ -251,9 +217,7 @@ public sealed class PokerHandRule : CardHandRule
     {
         return handType switch
         {
-            PokerHandType.HighCard => new Color(0.65f, 0.65f, 0.65f),
             PokerHandType.OnePair => new Color(0.25f, 0.8f, 1f),
-            PokerHandType.TwoPair => new Color(0.2f, 0.45f, 1f),
             PokerHandType.ThreeOfAKind => new Color(0.55f, 0.3f, 1f),
             PokerHandType.Straight => new Color(0.25f, 1f, 0.45f),
             PokerHandType.Flush => new Color(0.1f, 1f, 0.85f),
