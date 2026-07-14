@@ -14,7 +14,11 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
 
     private EnemyBehaviorContext behaviorContext;
     private EnemyState currentState;
+    private EnemyState pendingState;
     private int sequenceIndex;
+    private float transitionDelay = 0f;
+    private float transitionDelayElapsedTime;
+    private float movementSpeedMultiplier = 1f;
     private bool isInitialized;
     private bool isRunning;
 
@@ -25,6 +29,17 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
     public EnemyState CurrentState => currentState;
     public float StateElapsedTime { get; private set; }
     public bool ActionsComplete => GetActionsComplete();
+    public float TransitionDelay
+    {
+        get => transitionDelay;
+        set => transitionDelay = Mathf.Max(0f, value);
+    }
+
+    public float MovementSpeedMultiplier
+    {
+        get => movementSpeedMultiplier;
+        set => movementSpeedMultiplier = Mathf.Max(0f, value);
+    }
 
     public void Initialize(in EnemyRuntimeContext context)
     {
@@ -46,7 +61,15 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
 
     private void Update()
     {
-        if (!isRunning || currentState == null) return;
+        if (!isRunning) return;
+
+        if (pendingState != null)
+        {
+            UpdateTransitionDelay();
+            return;
+        }
+
+        if (currentState == null) return;
 
         StateElapsedTime += Time.deltaTime;
         UpdateActions();
@@ -62,6 +85,8 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
 
     private void EnterState(EnemyState state)
     {
+        pendingState = null;
+        transitionDelayElapsedTime = 0f;
         currentState = state;
         StateElapsedTime = 0f;
         sequenceIndex = 0;
@@ -169,12 +194,34 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
             EnemyState targetState = graph.FindState(transition.TargetStateId);
             if (targetState == null) continue;
 
-            ExitState();
-            EnterState(targetState);
+            BeginTransition(targetState);
             return true;
         }
 
         return false;
+    }
+
+    private void BeginTransition(EnemyState targetState)
+    {
+        ExitState();
+        currentState = null;
+
+        if (transitionDelay <= 0f)
+        {
+            EnterState(targetState);
+            return;
+        }
+
+        pendingState = targetState;
+        transitionDelayElapsedTime = 0f;
+    }
+
+    private void UpdateTransitionDelay()
+    {
+        transitionDelayElapsedTime += Time.deltaTime;
+        if (transitionDelayElapsedTime < transitionDelay) return;
+
+        EnterState(pendingState);
     }
 
     private void EnterAction(EnemyAction action)
@@ -210,6 +257,8 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
         if (isRunning) ExitState();
 
         isRunning = false;
+        pendingState = null;
+        transitionDelayElapsedTime = 0f;
         body.linearVelocity = Vector2.zero;
         body.angularVelocity = 0f;
     }
@@ -227,6 +276,8 @@ public sealed class EnemyBrain : MonoBehaviour, IEnemyRuntimeInitializable
         if (isRunning) ExitState();
 
         isRunning = false;
+        pendingState = null;
+        transitionDelayElapsedTime = 0f;
         body.linearVelocity = Vector2.zero;
         body.angularVelocity = 0f;
     }

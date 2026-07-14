@@ -12,7 +12,8 @@ public sealed class MoveTowardPlayerEnemyAction : EnemyAction
     {
         Vector2 offset = context.Player.position - context.Transform.position;
         Vector2 direction = EnemyBehaviorMath.ApplyAxis(offset, axis).normalized;
-        context.Body.MovePosition(context.Body.position + direction * speed * Time.fixedDeltaTime);
+        context.Body.MovePosition(
+            context.Body.position + direction * speed * context.MovementSpeedMultiplier * Time.fixedDeltaTime);
     }
 
     public override void Exit(in EnemyBehaviorContext context) => context.Body.linearVelocity = Vector2.zero;

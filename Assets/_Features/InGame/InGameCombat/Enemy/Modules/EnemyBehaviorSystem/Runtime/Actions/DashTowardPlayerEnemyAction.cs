@@ -65,7 +65,9 @@ public sealed class DashTowardPlayerEnemyAction : EnemyAction
             return;
         }
 
-        float requestedDistance = Mathf.Min(speed * Time.fixedDeltaTime, remainingDistance);
+        float requestedDistance = Mathf.Min(
+            speed * context.MovementSpeedMultiplier * Time.fixedDeltaTime,
+            remainingDistance);
         Vector2 currentPosition = context.Body.position;
         Vector2 targetPosition = currentPosition + direction * requestedDistance;
         Vector2 clampedPosition = context.Brain.RuntimeContext.CombatBounds.Clamp(

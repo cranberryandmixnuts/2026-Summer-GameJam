@@ -18,7 +18,7 @@ public sealed class MaintainVerticalPlayerZoneEnemyAction : EnemyAction
     {
         if (retreatZone.Distance(context.PlayerCollider).isOverlapped)
         {
-            Move(context.Body, 1f, retreatSpeed);
+            Move(context, 1f, retreatSpeed);
             return;
         }
 
@@ -28,15 +28,16 @@ public sealed class MaintainVerticalPlayerZoneEnemyAction : EnemyAction
             return;
         }
 
-        Move(context.Body, -1f, approachSpeed);
+        Move(context, -1f, approachSpeed);
     }
 
     public override void Exit(in EnemyBehaviorContext context) => context.Body.linearVelocity = Vector2.zero;
 
-    private void Move(Rigidbody2D body, float direction, float speed)
+    private void Move(in EnemyBehaviorContext context, float direction, float speed)
     {
+        Rigidbody2D body = context.Body;
         body.MovePosition(new Vector2(
             fixedX,
-            body.position.y + direction * speed * Time.fixedDeltaTime));
+            body.position.y + direction * speed * context.MovementSpeedMultiplier * Time.fixedDeltaTime));
     }
 }
