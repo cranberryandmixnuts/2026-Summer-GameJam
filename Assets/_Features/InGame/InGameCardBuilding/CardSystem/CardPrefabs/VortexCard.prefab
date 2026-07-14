@@ -109,17 +109,6 @@ PrefabInstance:
       insertIndex: 2
       addedObject: {fileID: 2918038444514818267}
   m_SourcePrefab: {fileID: 100100000, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
---- !u!114 &3214409887176423803 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6459619390146358190, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
-  m_PrefabInstance: {fileID: 8448415757326439125}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &4986063864687161717 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3462357667494208416, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
@@ -138,8 +127,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VortexCard
   _baseStatus: {fileID: 11400000, guid: 0a869c82b350b594b968f5ca397e3911, type: 2}
-  _frontImage: {fileID: 3214409887176423803}
   _slotReactiveRange: 1.5
-  _tiltBySpeedMultiplier: 7
-  _maxTiltAngle: 20
-  _tiltLerpFactor: 8
+  _additionalDamageOverSlots:
+  - 10
+  - 25
+  - 40
+  - 80
+  - 100
+  _additionalMultiplierOverSlots:
+  - 0.125
+  - 0.25
+  - 0.5
+  - 0.7
+  - 1
+  _slotRadius: 250
+  _spiningSpeed: 1

@@ -1,8 +1,9 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public abstract class Card : MonoBehaviour,
 	IPointerEnterHandler,
@@ -15,27 +16,12 @@ public abstract class Card : MonoBehaviour,
 	[SerializeField]
 	private CardBaseStatus _baseStatus;
 
-	[SerializeField]
-	private Image _frontImage;
-
 	[Space]
 	[SerializeField]
 	private float _slotReactiveRange = 1.5f;
 
-	[Header("Movement Tilt")]
-	[SerializeField]
-	private float _tiltBySpeedMultiplier = 7f;
-
-	[SerializeField]
-	private float _maxTiltAngle = 20f;
-
-	[SerializeField]
-	private float _tiltLerpFactor = 8f;
-
-	private Vector3 _previousPosition;
-	private Quaternion _initialFrontRotation;
-
-	private Vector2Int? _curentTargetSlot;
+	private GameObject _curentTargetSlot;
+	protected readonly Dictionary<int, Card> _cardOnSpecialSlot = new();
 
 	//======================================================================| Properties
 
@@ -44,20 +30,20 @@ public abstract class Card : MonoBehaviour,
 	public bool IsGrabed { get; private set; }
 
 	public int? PreviousIndex { get; set; } = null;
-	public Vector2Int? AttachedSlot { get; private set; } = null;
+	public GameObject AttachedSlot { get; private set; } = null;
 
 	public CardEffect Effect { get; private set; } = new();
 
+	public virtual IReadOnlyList<SpecialCardSlot> SpecialCardSlots => Array.Empty<SpecialCardSlot>();
+
+	//======================================================================| Events
+
+	public event Action<Card> OnUpdate;
+
 	//======================================================================| Unity Methods
 
-	private void Awake() {
 
-		_previousPosition = transform.position;
-		_initialFrontRotation = _frontImage.transform.localRotation;
-
-	}
-
-	private void Update() {
+	protected virtual void Update() {
 
 		var currentPosition = transform.position;
 
@@ -69,18 +55,18 @@ public abstract class Card : MonoBehaviour,
 
 			transform.position = currentPosition;
 
-			if (TryGetAttachSlot(out var slotPosition)) {
-				_curentTargetSlot = slotPosition;
-			}
-			else {
-				_curentTargetSlot = null;
-			}
+			_curentTargetSlot = GetAttachSlot();
 
 		}
 
-		UpdateMovementTilt(currentPosition);
-
-		_previousPosition = currentPosition;
+		OnUpdate?.Invoke(this);
+		
+		foreach (var (index, card) in _cardOnSpecialSlot) {
+			card.transform.SetPositionAndRotation(
+				SpecialCardSlots[index].transform.position,
+				SpecialCardSlots[index].transform.rotation
+			);
+		}
 
 	}
 
@@ -89,13 +75,20 @@ public abstract class Card : MonoBehaviour,
 	public virtual float CalculateDamage() => _baseStatus.BaseDamage;
 	public virtual float CalculateAdditionalMultiplier() => _baseStatus.AdditionalMultiplier;
 
+	public void AddCardOnSpecialSlot(Card target, int index) {
+		_cardOnSpecialSlot.Add(index, target);
+	}
+
+	public void AddCardOnSpecialSlot(Card target, SpecialCardSlot slot) {
+		_cardOnSpecialSlot.Add(SpecialCardSlots.IndexOf(slot), target);
+	}
+
 	public void AddEffect(CardEffect effect) {
 		Effect += effect;
 	}
 
 	public void OnPointerEnter(PointerEventData eventData) {
-		if (AttachedSlot != null)
-			return;
+		if (AttachedSlot != null) return;
 		IsHovered = true;
 	}
 
@@ -105,8 +98,7 @@ public abstract class Card : MonoBehaviour,
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {
-		if (AttachedSlot != null)
-			return;
+		if (AttachedSlot != null) return;
 		IsGrabed = true;
 	}
 
@@ -118,82 +110,47 @@ public abstract class Card : MonoBehaviour,
 		IsGrabed = false;
 		IsHovered = false;
 
-		if (_curentTargetSlot.HasValue) {
+		if (_curentTargetSlot != null) {
 
 			AttachedSlot = _curentTargetSlot;
 
 			PlayerHand.Instance.RemoveCard(this);
-			CardField.Instance.PlaceCard(AttachedSlot.Value, this);
+			CardField.Instance.PlaceCard(AttachedSlot, this);
 
 		}
 
 	}
 
-	private bool TryGetAttachSlot(out Vector2Int slotPosition) {
+	private GameObject GetAttachSlot() {
 
-		var slots = CardField.Instance.SlotInstances
-			.Where(pair => Vector2.Distance(pair.Value.transform.position, transform.position) <= _slotReactiveRange);
+		var slots = CardField.Instance.SlotInstances.Keys
+			.Concat(CardField.Instance.SpecialSlotInstances
+				.Where(s => s.PlacedCard == null)
+				.Select(s => s.gameObject)
+			)
+			.Where(obj => Vector2.Distance(obj.transform.position, transform.position) <= _slotReactiveRange);
 
 		if (!slots.Any()) {
-			slotPosition = Vector2Int.zero;
-			return false;
+			return null;
 		}
 
-		float minDistance = float.MaxValue;
-		slotPosition = Vector2Int.zero;
+		var minDistance = float.MaxValue;
+		GameObject result = null;
 
-		foreach (var (position, obj) in CardField.Instance.SlotInstances) {
+		foreach (var slot in slots) {
+			
+			var distance = Vector2.Distance(slot.transform.position, transform.position);
 
-			var distance = Vector2.Distance(obj.transform.position, transform.position);
-
-			if (minDistance > distance) {
+			if (distance < minDistance) {
 				minDistance = distance;
-				slotPosition = position;
+				result = slot;
 			}
 
 		}
 
-		return true;
+		return result;
 
 	}
 
-	private void UpdateMovementTilt(Vector3 currentPosition) {
-
-		if (Time.deltaTime <= Mathf.Epsilon) return;
-
-		var velocity = (currentPosition - _previousPosition) / Time.deltaTime;
-
-		var targetEulerAngle = new Vector3(
-			velocity.y * _tiltBySpeedMultiplier,
-			-velocity.x * _tiltBySpeedMultiplier,
-			0f
-		);
-
-		targetEulerAngle.x = Mathf.Clamp(
-			targetEulerAngle.x,
-			-_maxTiltAngle,
-			_maxTiltAngle
-		);
-
-		targetEulerAngle.y = Mathf.Clamp(
-			targetEulerAngle.y,
-			-_maxTiltAngle,
-			_maxTiltAngle
-		);
-
-		var targetRotation =
-			_initialFrontRotation *
-			Quaternion.Euler(targetEulerAngle);
-
-		var lerpAmount =
-			1f - Mathf.Exp(-_tiltLerpFactor * Time.deltaTime);
-
-		_frontImage.transform.localRotation = Quaternion.Slerp(
-			_frontImage.transform.localRotation,
-			targetRotation,
-			lerpAmount
-		);
-
-	}
 
 }

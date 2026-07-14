@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
@@ -10,6 +11,9 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 	[SerializeField]
     private GameObject _slotPrefab;
+
+	[SerializeField]
+	private GameObject _specialSlotPrefab;
 	
 	[SerializeField]
 	private Transform _slotField;
@@ -39,10 +43,10 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
     private readonly Dictionary<Vector2Int, Card> _placedCards = new();
     private readonly HashSet<Vector2Int> _activeSlots = new();
-    private readonly Dictionary<Vector2Int, GameObject> _slotInstances = new();
+    private readonly Dictionary<GameObject, Vector2Int> _slotInstances = new();
 
-	private readonly HashSet<GameObject> _specialSlots = new();
-	private readonly HashSet<Card> _specialPlacedCards;
+	private readonly Dictionary<Image, SpecialCardSlot> _specialSlotInstances = new();
+	private readonly HashSet<Card> _specialPlacedCards = new();
 
 	//======================================================================| Properties
 
@@ -55,7 +59,8 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
     public IEnumerable<Vector2Int> ActiveSlots => _activeSlots;
     public IReadOnlyDictionary<Vector2Int, Card> PlacedCards => _placedCards;
-    public IReadOnlyDictionary<Vector2Int, GameObject> SlotInstances => _slotInstances;
+    public IReadOnlyDictionary<GameObject, Vector2Int> SlotInstances => _slotInstances;
+	public IEnumerable<SpecialCardSlot> SpecialSlotInstances => _specialSlotInstances.Values;
 
 	public IEnumerable<Card> TotalCards => PlacedCards.Values.Concat(_specialPlacedCards);
 	
@@ -79,6 +84,10 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
         CardsChanged?.Invoke();
     }
 
+	private void Update() {		
+		SyncSpecialSlotTransforms();
+	}
+
 	private void OnRectTransformDimensionsChange() {
 		RescaleAndMove();
 	}
@@ -93,21 +102,34 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 	//======================================================================| Methods
 
-	public bool PlaceCard(Vector2Int position, Card card) {
-
-		if (!_activeSlots.Contains(position)) return false;
+	public bool PlaceCard(GameObject target, Card card) {
 
 		FinalBaseDamage += card.BaseStatus.BaseDamage;
 		FinalMultiplier += card.BaseStatus.AdditionalMultiplier;
 
 		var releasedWorldPosition = card.transform.position;
-		var targetLocalPosition = (Vector3)(_gridSize * position);
+		var targetLocalPosition = target.transform.localPosition;
 
 		card.transform.DOKill();
+		
+		if (!target.TryGetComponent<SpecialCardSlot>(out var special)) {
 
-		_placedCards[position] = card;
+			_placedCards[_slotInstances[target]] = card;
+			card.transform.SetParent(CardFieldTransform, true);
 
-		card.transform.SetParent(CardFieldTransform, true);
+		}
+		else {
+
+			_specialPlacedCards.Add(card);
+
+			card.transform.SetParent(SpecialSlotField, true);
+			special.BaseCard.AddCardOnSpecialSlot(card, special);
+			special.PlacedCard = card;
+
+		}
+
+
+		SpawnSpecialSlots(card);
 
 		CalculateSlotPositions();
 		RedrawSlots();
@@ -125,12 +147,30 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 			.SetEase(_cardPlacingEase);
 
 		card.transform
-			.DORotate(Vector3.zero, _cardPlacingDuration)
+			.DORotate(target.transform.eulerAngles, _cardPlacingDuration)
 			.SetEase(_cardPlacingEase);
 
 		CardsChanged?.Invoke();
 
 		return true;
+
+	}
+
+	public void SpawnSpecialSlots(Card card) {
+
+		foreach (var slot in card.SpecialCardSlots) {
+			
+			GameObject instance = Instantiate(_specialSlotPrefab);
+			instance.transform.SetParent(_specialSlotField);
+			instance.transform.localScale = Vector3.one;
+
+			var image = instance.GetComponent<Image>();
+			image.color = new Color(0f, 0f, 0f, 0f);
+			image.DOColor(new Color(1f, 1f, 1f, 0.3f), 0.2f).SetEase(Ease.OutExpo);
+
+			_specialSlotInstances.Add(image, slot);
+
+		}
 
 	}
 
@@ -156,6 +196,9 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 			parent,
 			effect
 		));
+
+		FinalBaseDamage = 0f;
+		FinalMultiplier = 0f;
 
 	}
 
@@ -202,7 +245,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
     private void RedrawSlots() {
 
-        foreach (GameObject instance in _slotInstances.Values) {
+        foreach (GameObject instance in _slotInstances.Keys) {
 			instance.SetActive(false);
 			Destroy(instance);
 		}
@@ -214,7 +257,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
             GameObject instance = Instantiate(_slotPrefab, _slotField, false);
             instance.transform.localPosition = _gridSize * position;
 
-            _slotInstances[position] = instance;
+            _slotInstances[instance] = position;
 
         }
 
@@ -300,6 +343,8 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 		}
 
+		SyncSpecialSlotTransforms();
+
 		try {
 
 			var cardsBound = (_cardField as RectTransform).GetGlobalBounds();
@@ -326,9 +371,30 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 			}
 
+			SyncSpecialSlotTransforms();
+
 		}
 
 	}
+
+	private void SyncSpecialSlotTransforms() {
+
+		foreach (var (image, slot) in _specialSlotInstances) {
+
+			if (image == null ||
+				slot == null) {
+				continue;
+			}
+
+			image.transform.SetPositionAndRotation(
+				slot.transform.position,
+				slot.transform.rotation
+			);
+
+		}
+
+	}
+
 
 	private void OnDrawGizmos() {
 
