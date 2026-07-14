@@ -2,7 +2,7 @@
 - Project name: 2026-Summer-GameJam
 - Unity version: Unity 6000.5.3f1
 - Active game object:
-  - Name: NormalCard_Spade1
+  - Name: VortexCard
   - Tag: Untagged
   - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

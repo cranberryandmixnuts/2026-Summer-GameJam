@@ -20,17 +20,17 @@ public abstract class Card : MonoBehaviour,
 
 	[Space]
 	[SerializeField]
-	private float _slotReactiveRange;
+	private float _slotReactiveRange = 1.5f;
 
 	[Header("Movement Tilt")]
 	[SerializeField]
-	private float _tiltBySpeedMultiplier = 1f;
+	private float _tiltBySpeedMultiplier = 7f;
 
 	[SerializeField]
-	private float _maxTiltAngle = 15f;
+	private float _maxTiltAngle = 20f;
 
 	[SerializeField]
-	private float _tiltLerpFactor = 12f;
+	private float _tiltLerpFactor = 8f;
 
 	private Vector3 _previousPosition;
 	private Quaternion _initialFrontRotation;
