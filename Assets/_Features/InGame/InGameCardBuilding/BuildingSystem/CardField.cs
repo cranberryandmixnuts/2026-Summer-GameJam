@@ -45,6 +45,14 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 	//======================================================================| Event
 
 	public event Action CardsChanged;
+	public event Action<CardThrowArgs> OnCardThrow;
+
+	public record CardThrowArgs(
+		in float FinalDamage,
+		in float Speed,
+		in GameObject Cards,
+		in CardEffect Effect
+	);
 
 	//======================================================================| Properties
 
