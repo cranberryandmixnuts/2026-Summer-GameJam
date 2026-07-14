@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 708533034ec505d4785c167bd14bda46, type: 3}
-  m_Name: Flush
-  m_EditorClassIdentifier: Assembly-CSharp::PokerHandRule
-  _bonuses: []
-  _handType: 3
+  m_Script: {fileID: 11500000, guid: 432efd527ab6ea041bc589bca30d8dfd, type: 3}
+  m_Name: StraightHandRule
+  m_EditorClassIdentifier: Assembly-CSharp::StraightHandRule
+  _straightBonus: 0
+  _straightFlushBonus: 0
+  _royalStraightBonus: 0
+  _royalStraightFlushBonus: 0

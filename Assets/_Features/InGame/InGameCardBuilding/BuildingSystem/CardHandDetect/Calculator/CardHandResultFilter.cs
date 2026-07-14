@@ -10,7 +10,7 @@ public static class CardHandResultFilter
 
         foreach (CardHandMatch candidate in uniqueMatches)
         {
-            if (IsContainedByHigherPriorityMatch(candidate, uniqueMatches)) continue;
+            if (IsContainedByDominantMatch(candidate, uniqueMatches)) continue;
 
             filteredMatches.Add(candidate);
         }
@@ -41,7 +41,7 @@ public static class CardHandResultFilter
         return uniqueMatches;
     }
 
-    private static bool IsContainedByHigherPriorityMatch(
+    private static bool IsContainedByDominantMatch(
         CardHandMatch candidate,
         IReadOnlyList<CardHandMatch> matches
     )
@@ -49,9 +49,10 @@ public static class CardHandResultFilter
         foreach (CardHandMatch other in matches)
         {
             if (ReferenceEquals(candidate, other)) continue;
-            if (other.Rule.Priority <= candidate.Rule.Priority) continue;
             if (other.Cards.Count < candidate.Cards.Count) continue;
-            if (other.ContainsAll(candidate)) return true;
+            if (!other.ContainsAll(candidate)) continue;
+            if (other.Cards.Count > candidate.Cards.Count) return true;
+            if (other.Priority > candidate.Priority) return true;
         }
 
         return false;
@@ -59,7 +60,7 @@ public static class CardHandResultFilter
 
     private static int CompareMatches(CardHandMatch left, CardHandMatch right)
     {
-        int priorityComparison = right.Rule.Priority.CompareTo(left.Rule.Priority);
+        int priorityComparison = right.Priority.CompareTo(left.Priority);
         if (priorityComparison != 0) return priorityComparison;
 
         int directionComparison = left.Line.Direction.CompareTo(right.Line.Direction);
@@ -68,7 +69,7 @@ public static class CardHandResultFilter
         int positionComparison = ComparePositions(left.Cards[0].Position, right.Cards[0].Position);
         if (positionComparison != 0) return positionComparison;
 
-        return string.Compare(left.Rule.Id, right.Rule.Id, StringComparison.Ordinal);
+        return string.Compare(left.Id, right.Id, StringComparison.Ordinal);
     }
 
     private static int ComparePositions(UnityEngine.Vector2Int left, UnityEngine.Vector2Int right)

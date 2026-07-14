@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: CardHandRuleCatalog
   m_EditorClassIdentifier: Assembly-CSharp::CardHandRuleCatalog
   _rules:
-  - {fileID: 11400000, guid: 04af6b34e9b4a204f904f7856db92fd9, type: 2}
-  - {fileID: 11400000, guid: 7fd702cb98ddfe342bc8ce996d990d20, type: 2}
-  - {fileID: 11400000, guid: 3a662db5e640bea4287325b5595a2dcf, type: 2}
-  - {fileID: 11400000, guid: f0af4a5cbd0766a4cb0e160df12250e3, type: 2}
-  - {fileID: 11400000, guid: 6191a8c11ea2ff34584ccc25ee98f380, type: 2}
-  - {fileID: 11400000, guid: edd3c4353287b6e499679a16dafd60cd, type: 2}
-  - {fileID: 11400000, guid: 71a5788664ee7ef42bb87e473a2a3561, type: 2}
-  - {fileID: 11400000, guid: 36ae528fba7fa9443b18894a587ed76f, type: 2}
+  - {fileID: 11400000, guid: 5c7ae0a8e3cdfb44c8c544825440c125, type: 2}
+  - {fileID: 11400000, guid: 741be532af612ab4fb1e3cac58c6821f, type: 2}
+  - {fileID: 11400000, guid: 3b71fab245b8fda4fadcb1cf0e0c42ad, type: 2}
+  - {fileID: 11400000, guid: 4290bb99e65cbfa40a1dceb5be597251, type: 2}
+  - {fileID: 11400000, guid: dd126914d5da7d742b345de0462d206d, type: 2}
+  - {fileID: 11400000, guid: fb5b83d9fd5c46742994cfda432401f9, type: 2}
