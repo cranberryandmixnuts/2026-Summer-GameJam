@@ -1,5 +1,4 @@
 using DG.Tweening;
-using Sirenix.OdinInspector.Editor.Drawers;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -47,9 +46,11 @@ public abstract class Card : MonoBehaviour,
 				.WithZ(transform.position.z);
 
 			if (TryGetAttachSlot(out var slotPosition)) {
+				print(true);
 				_curentTargetSlot = slotPosition;
 			}
 			else {
+				print(false);
 				_curentTargetSlot = null;
 			}
 
@@ -90,6 +91,7 @@ public abstract class Card : MonoBehaviour,
 			transform
 				.DOMove(CardField.Instance.SlotInstances[_curentTargetSlot.Value].transform.position, 0.2f);
 
+			transform.SetParent(CardField.Instance.CardFieldTransform);
 				
 			PlayerHand.Instance.RemoveCard(this);
 			CardField.Instance.PlaceCard(_curentTargetSlot.Value, this);
