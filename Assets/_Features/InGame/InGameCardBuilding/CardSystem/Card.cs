@@ -46,6 +46,8 @@ public abstract class Card : MonoBehaviour,
 	public int? PreviousIndex { get; set; } = null;
 	public Vector2Int? AttachedSlot { get; private set; } = null;
 
+	public CardEffect Effect { get; private set; } = new();
+
 	//======================================================================| Unity Methods
 
 	private void Awake() {
@@ -86,6 +88,10 @@ public abstract class Card : MonoBehaviour,
 
 	public virtual float CalculateDamage() => _baseStatus.BaseDamage;
 	public virtual float CalculateAdditionalMultiplier() => _baseStatus.AdditionalMultiplier;
+
+	public void AddEffect(CardEffect effect) {
+		Effect += effect;
+	}
 
 	public void OnPointerEnter(PointerEventData eventData) {
 		if (AttachedSlot != null)

@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CardField : SingletonBehaviour<CardField, SceneScope> {
@@ -40,19 +41,8 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
     private readonly HashSet<Vector2Int> _activeSlots = new();
     private readonly Dictionary<Vector2Int, GameObject> _slotInstances = new();
 
-	public readonly HashSet<GameObject> _specialSlots = new();
-
-	//======================================================================| Event
-
-	public event Action CardsChanged;
-	public event Action<CardThrowArgs> OnCardThrow;
-
-	public record CardThrowArgs(
-		in float FinalDamage,
-		in float Speed,
-		in GameObject Cards,
-		in CardEffect Effect
-	);
+	private readonly HashSet<GameObject> _specialSlots = new();
+	private readonly HashSet<Card> _specialPlacedCards;
 
 	//======================================================================| Properties
 
@@ -66,6 +56,20 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
     public IEnumerable<Vector2Int> ActiveSlots => _activeSlots;
     public IReadOnlyDictionary<Vector2Int, Card> PlacedCards => _placedCards;
     public IReadOnlyDictionary<Vector2Int, GameObject> SlotInstances => _slotInstances;
+
+	public IEnumerable<Card> TotalCards => PlacedCards.Values.Concat(_specialPlacedCards);
+	
+	//======================================================================| Event
+
+	public event Action CardsChanged;
+	public event Action<CardThrowArgs> OnCardThrow;
+
+	public record CardThrowArgs(
+		in float FinalDamage,
+		in float Speed,
+		in GameObject Cards,
+		in CardEffect Effect
+	);
 
 	//======================================================================| Unity Methods
 
@@ -127,6 +131,31 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 		CardsChanged?.Invoke();
 
 		return true;
+
+	}
+
+	public void Shoot() {
+
+		var multiplier = FinalMultiplier + CardHandDetector.Instance.CurrentMatches.Sum(m => m.Bonus);
+		CardEffect effect = new();
+
+		foreach (var card in TotalCards) {
+			effect += card.Effect;
+		}
+		
+		GameObject parent = new("CardBullet");
+		parent.transform.position = (_cardField.transform as RectTransform).GetGlobalBounds().center;
+
+		foreach (var card in TotalCards) {
+			card.transform.SetParent(parent.transform, false);
+		}
+
+		OnCardThrow.Invoke(new(
+			FinalBaseDamage * multiplier,
+			1f,
+			parent,
+			effect
+		));
 
 	}
 
