@@ -16,10 +16,9 @@ public abstract class Card : MonoBehaviour,
 	[SerializeField]
 	private CardBaseStatus _baseStatus;
 
-	[Space]
-	[SerializeField]
-	private float _slotReactiveRange = 1.5f;
+	private const float _slotReactiveRange = 5f;
 
+	private CardAudio _audio;
 	private GameObject _curentTargetSlot;
 	protected readonly Dictionary<int, Card> _cardOnSpecialSlot = new();
 
@@ -42,6 +41,9 @@ public abstract class Card : MonoBehaviour,
 
 	//======================================================================| Unity Methods
 
+	protected virtual void Awake() {
+		_audio = GetComponent<CardAudio>();
+	}
 
 	protected virtual void Update() {
 
@@ -50,7 +52,7 @@ public abstract class Card : MonoBehaviour,
 		if (IsGrabed) {
 
 			currentPosition = Camera.main
-				.ScreenToWorldPoint(Mouse.current.position.ReadValue())
+				.ScreenToWorldPoint(Mouse.current.position.ReadValue().ToVector3WithZ(100f))
 				.WithZ(transform.position.z);
 
 			transform.position = currentPosition;
@@ -75,6 +77,18 @@ public abstract class Card : MonoBehaviour,
 	public virtual float CalculateDamage() => _baseStatus.BaseDamage;
 	public virtual float CalculateAdditionalMultiplier() => _baseStatus.AdditionalMultiplier;
 
+	public void PlayDrawSound() {
+		_audio.Draw.Play();
+	}
+
+	public void PlayHoverSound() {
+		_audio.Hover.Play();
+	}
+
+	public void PlayPlaceSound() {
+		_audio.Placed.Play();
+	}
+
 	public void AddCardOnSpecialSlot(Card target, int index) {
 		_cardOnSpecialSlot.Add(index, target);
 	}
@@ -88,8 +102,10 @@ public abstract class Card : MonoBehaviour,
 	}
 
 	public void OnPointerEnter(PointerEventData eventData) {
+
 		if (AttachedSlot != null) return;
 		IsHovered = true;
+
 	}
 
 	public void OnPointerExit(PointerEventData eventData) {

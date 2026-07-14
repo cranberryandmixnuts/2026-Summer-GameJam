@@ -136,6 +136,8 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 		RescaleAndMove();
 
+		card.PlayPlaceSound();
+
 		card.transform.position = releasedWorldPosition;
 
 		card.transform

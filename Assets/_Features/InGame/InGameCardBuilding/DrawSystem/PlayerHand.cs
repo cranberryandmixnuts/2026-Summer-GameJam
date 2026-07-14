@@ -102,6 +102,7 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope>
 
             if (HoveredCard != null)
             {
+				HoveredCard.PlayHoverSound();
                 SetTween(
                     _scaleTweens,
                     HoveredCard,
@@ -152,6 +153,7 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope>
 
         CalculateCardPosition();
         MoveCards(_cards.Count - 1, 0f);
+		card.PlayDrawSound();
 
     }
 

@@ -28,7 +28,6 @@ public class DrawManager : SingletonBehaviour<DrawManager, SceneScope> {
 
 		PlayerHand.Instance.AddCard(card);
 
-
 	}
 
 }
