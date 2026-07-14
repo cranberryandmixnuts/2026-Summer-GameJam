@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb10b4488880174b88e6965d89b9e1b, type: 3}
+  m_Name: CardProjectileSettings
+  m_EditorClassIdentifier: Assembly-CSharp::CardProjectileSettings
+  projectileLifetime: 10
+  fireDamagePerLevel: 1
+  fireDurationPerLevel: 3
+  waterTransitionDelayPerLevel: 0.1
+  waterDurationPerLevel: 3
+  electricSlowPercentPerLevel: 10
+  electricDurationPerLevel: 3
+  poisonDropInterval: 0.5
+  poisonAreaDamage: 1
+  poisonDamageInterval: 1
+  poisonAreaDuration: 3
+  healPercentPerLevel: 5
