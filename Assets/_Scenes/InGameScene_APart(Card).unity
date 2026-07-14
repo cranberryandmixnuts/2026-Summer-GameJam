@@ -796,7 +796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281f6cc2024612549b1ba354599dd137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardProvider
-  _database: {fileID: 11400000, guid: f7e19e4f8967e2e44bd5189080c5d0e5, type: 2}
+  _database: {fileID: 11400000, guid: 39ef3ac3ce536a246bf2cfd7b2cc4925, type: 2}
 --- !u!1 &1061635680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,6 +1111,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1468701780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1468701782}
+  - component: {fileID: 1468701781}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1468701781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468701780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: e516d65ccb32cac4a9fed51ec9a501a2, type: 2}
+--- !u!4 &1468701782
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468701780}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1576183364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,6 +1372,7 @@ SceneRoots:
   - {fileID: 1105970350}
   - {fileID: 1577002967}
   - {fileID: 1456490402}
+  - {fileID: 1468701782}
   - {fileID: 1101605710}
   - {fileID: 9093378}
   - {fileID: 1576183365}

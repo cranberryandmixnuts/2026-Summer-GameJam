@@ -40,6 +40,8 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
     private readonly HashSet<Vector2Int> _activeSlots = new();
     private readonly Dictionary<Vector2Int, GameObject> _slotInstances = new();
 
+	public readonly HashSet<GameObject> _specialSlots = new();
+
 	//======================================================================| Event
 
 	public event Action CardsChanged;
@@ -97,7 +99,6 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 		CalculateSlotPositions();
 		RedrawSlots();
-		
 
 		RescaleAndMove();
 

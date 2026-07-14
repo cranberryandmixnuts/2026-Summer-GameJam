@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8448415757326439125
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3462357667494208416, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_Name
+      value: VortexCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 170.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 237.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459619390146358190, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459619390146358190, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8260389724759304331, guid: 382987e59a7bd95499aa3bea0c7b9689, type: 3}
+    m_RemovedComponents:
+    - {fileID: 2886948533877787642, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3462357667494208416, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 2918038444514818267}
+  m_SourcePrefab: {fileID: 100100000, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+--- !u!114 &3214409887176423803 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6459619390146358190, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+  m_PrefabInstance: {fileID: 8448415757326439125}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!1 &4986063864687161717 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3462357667494208416, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+  m_PrefabInstance: {fileID: 8448415757326439125}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2918038444514818267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4986063864687161717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b0453df2f367d42a7792417c9e6088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VortexCard
+  _baseStatus: {fileID: 11400000, guid: 0a869c82b350b594b968f5ca397e3911, type: 2}
+  _frontImage: {fileID: 3214409887176423803}
+  _slotReactiveRange: 1.5
+  _tiltBySpeedMultiplier: 7
+  _maxTiltAngle: 20
+  _tiltLerpFactor: 8
