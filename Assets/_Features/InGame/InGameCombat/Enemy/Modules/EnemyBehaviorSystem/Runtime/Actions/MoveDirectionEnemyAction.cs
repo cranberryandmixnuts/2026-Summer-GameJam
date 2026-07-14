@@ -36,7 +36,7 @@ public sealed class MoveDirectionEnemyAction : EnemyAction
         if (directionSpace == EnemyDirectionSpace.Self) movementDirection = context.Transform.TransformDirection(movementDirection);
 
         context.Body.MovePosition(
-            context.Body.position + movementDirection * speed * Time.fixedDeltaTime);
+            context.Body.position + movementDirection * speed * context.MovementSpeedMultiplier * Time.fixedDeltaTime);
     }
 
     public override void Exit(in EnemyBehaviorContext context) => context.Body.linearVelocity = Vector2.zero;

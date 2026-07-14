@@ -12,6 +12,7 @@ public sealed class EnemyHealth : MonoBehaviour, IDamageable, IEnemyHealthSource
     public bool IsDead { get; private set; }
 
     public event Action<DamageInfo> Damaged;
+    public event Action<int> Healed;
     public event Action<EnemyHealth> Died;
 
     private void Awake()
@@ -32,6 +33,16 @@ public sealed class EnemyHealth : MonoBehaviour, IDamageable, IEnemyHealthSource
         IsDead = true;
         Died?.Invoke(this);
         Destroy(gameObject);
+        return true;
+    }
+
+    public bool TryHeal(int amount)
+    {
+        if (amount <= 0 || IsDead || CurrentHealth >= MaxHealth) return false;
+
+        int previousHealth = CurrentHealth;
+        CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
+        Healed?.Invoke(CurrentHealth - previousHealth);
         return true;
     }
 }

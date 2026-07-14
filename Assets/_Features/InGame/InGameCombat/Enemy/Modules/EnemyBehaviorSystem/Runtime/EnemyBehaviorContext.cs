@@ -13,6 +13,7 @@ public readonly struct EnemyBehaviorContext
     public IEnemyHealthSource Health => brain.Health;
     public float StateElapsedTime => brain.StateElapsedTime;
     public bool ActionsComplete => brain.ActionsComplete;
+    public float MovementSpeedMultiplier => brain.MovementSpeedMultiplier;
 
     public EnemyBehaviorContext(EnemyBrain brain) => this.brain = brain;
 }

@@ -22,8 +22,9 @@ public class CardEffect {
             FireLevel = left.FireLevel + right.FireLevel,
 			WaterLevel = left.WaterLevel + right.WaterLevel,
 			ElectricLevel = left.ElectricLevel + right.ElectricLevel,
+			HealLevel = left.HealLevel + right.HealLevel,
 
-			SizeMultiplier = left.SizeMultiplier * right.SizeMultiplier,
+            SizeMultiplier = left.SizeMultiplier * right.SizeMultiplier,
 			SpeedMutliplier = left.SpeedMutliplier * right.SpeedMutliplier,
 
 			AdditionalMultiplier = left.AdditionalMultiplier + right.AdditionalMultiplier
