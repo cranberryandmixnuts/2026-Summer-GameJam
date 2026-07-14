@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,8 +22,19 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 	[SerializeField]
 	private Transform _elements;
 
+	[SerializeField]
+	private Transform _fieldBound;
+
     [SerializeField]
     private Vector2 _gridSize;
+
+	[Header("Animation")]
+	[SerializeField] private float _cardPlacingDuration;
+	[SerializeField] private Ease _cardPlacingEase;
+
+	[Space]
+	[SerializeField] private float _cameraEffectDuration;
+	[SerializeField] private Ease _cameraEffectEase;
 
     private readonly Dictionary<Vector2Int, Card> _placedCards = new();
     private readonly HashSet<Vector2Int> _activeSlots = new();
@@ -33,6 +45,9 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 	public event Action CardsChanged;
 
 	//======================================================================| Properties
+
+	public float FinalBaseDamage { get; private set; } = 0f;
+	public float FinalMultiplier { get; private set; } = 0f;
 
 	public Transform SlotField => _slotField;
 	public Transform SpecialSlotField => _specialSlotField;
@@ -50,7 +65,11 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
         CardsChanged?.Invoke();
     }
 
-    private void OnEnable() {
+	private void OnRectTransformDimensionsChange() {
+		RescaleAndMove();
+	}
+
+	private void OnEnable() {
         CardBuildingManager.OnRestarted += OnReset;
     }
 
@@ -62,19 +81,45 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 	public bool PlaceCard(Vector2Int position, Card card) {
 
-        if (!_activeSlots.Contains(position)) return false;
+		if (!_activeSlots.Contains(position)) return false;
 
-        _placedCards[position] = card;
+		FinalBaseDamage += card.BaseStatus.BaseDamage;
+		FinalMultiplier += card.BaseStatus.AdditionalMultiplier;
 
-        CalculateSlotPositions();
-        RedrawSlots();
-        CardsChanged?.Invoke();
+		var releasedWorldPosition = card.transform.position;
+		var targetLocalPosition = (Vector3)(_gridSize * position);
+
+		card.transform.DOKill();
+
+		_placedCards[position] = card;
+
+		card.transform.SetParent(CardFieldTransform, true);
+
+		CalculateSlotPositions();
+		RedrawSlots();
+		
 
 		RescaleAndMove();
 
-        return true;
+		card.transform.position = releasedWorldPosition;
 
-    }
+		card.transform
+			.DOLocalMove(targetLocalPosition, _cardPlacingDuration)
+			.SetEase(_cardPlacingEase);
+
+		card.transform
+			.DOScale(Vector3.one, _cardPlacingDuration)
+			.SetEase(_cardPlacingEase);
+
+		card.transform
+			.DORotate(Vector3.zero, _cardPlacingDuration)
+			.SetEase(_cardPlacingEase);
+
+		CardsChanged?.Invoke();
+
+		return true;
+
+	}
 
     private void OnReset()  {
 
@@ -120,6 +165,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
     private void RedrawSlots() {
 
         foreach (GameObject instance in _slotInstances.Values) {
+			instance.SetActive(false);
 			Destroy(instance);
 		}
 
@@ -139,51 +185,118 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 	private void RescaleAndMove() {
 
 		var elementsRectTransform = _elements as RectTransform;
-		var fieldRectTransform = transform as RectTransform;
+		var fieldRectTransform = _fieldBound as RectTransform;
 
-		elementsRectTransform.localScale = Vector3.one;
-		elementsRectTransform.localPosition = Vector3.zero;
-
-		var contentBound = GetContentBounds();
-		var fieldBound = fieldRectTransform.GetGlobalBounds();
-
-		if (contentBound.size.x <= Mathf.Epsilon ||
-			contentBound.size.y <= Mathf.Epsilon) {
+		if (elementsRectTransform == null ||
+			fieldRectTransform == null) {
 			return;
 		}
 
-		var scale = Mathf.Min(
+		elementsRectTransform.DOKill();
+
+		var currentScale = elementsRectTransform.localScale;
+		var currentPosition = elementsRectTransform.anchoredPosition;
+
+		elementsRectTransform.localScale = Vector3.one;
+		elementsRectTransform.anchoredPosition = Vector2.zero;
+
+		var contentBound = GetContentBounds();
+		var fieldBound = fieldRectTransform.GetWorldBounds();
+
+		if (contentBound.size.x <= Mathf.Epsilon ||
+			contentBound.size.y <= Mathf.Epsilon) {
+
+			elementsRectTransform.localScale = currentScale;
+			elementsRectTransform.anchoredPosition = currentPosition;
+			return;
+
+		}
+
+		var targetScale = Mathf.Min(
 			1f,
 			fieldBound.size.x / contentBound.size.x,
 			fieldBound.size.y / contentBound.size.y
 		);
 
-		elementsRectTransform.localScale = Vector3.one * scale;
+		elementsRectTransform.localScale = Vector3.one * targetScale;
 
 		contentBound = GetContentBounds();
 
 		var worldOffset = fieldBound.center - contentBound.center;
 		var localOffset = elementsRectTransform.parent.InverseTransformVector(worldOffset);
+		var targetPosition = (Vector2)localOffset;
 
-		elementsRectTransform.anchoredPosition = localOffset;
+		elementsRectTransform.localScale = currentScale;
+		elementsRectTransform.anchoredPosition = currentPosition;
+
+		elementsRectTransform
+			.DOScale(Vector3.one * targetScale, _cameraEffectDuration)
+			.SetEase(_cameraEffectEase);
+
+		elementsRectTransform
+			.DOAnchorPos(targetPosition, _cameraEffectDuration)
+			.SetEase(_cameraEffectEase);
 
 	}
 
 	private Bounds GetContentBounds() {
 
-		var cardsBound = (_cardField as RectTransform).GetGlobalBounds();
-		var slotBound = (_slotField as RectTransform).GetGlobalBounds();
-		var specialSlotBound = (_specialSlotField as RectTransform).GetGlobalBounds();
+		var cardStates = new List<(
+			Transform Transform,
+			Vector3 LocalPosition,
+			Vector3 LocalScale
+		)>(_placedCards.Count);
 
-		var bound = cardsBound;
+		foreach (var pair in _placedCards) {
 
-		bound.Encapsulate(slotBound.min);
-		bound.Encapsulate(slotBound.max);
+			var cardTransform = pair.Value.transform;
 
-		bound.Encapsulate(specialSlotBound.min);
-		bound.Encapsulate(specialSlotBound.max);
+			cardStates.Add((
+				cardTransform,
+				cardTransform.localPosition,
+				cardTransform.localScale
+			));
 
-		return bound;
+			cardTransform.localPosition = _gridSize * pair.Key;
+			cardTransform.localScale = Vector3.one;
+
+		}
+
+		try {
+
+			var cardsBound = (_cardField as RectTransform).GetGlobalBounds();
+			var slotBound = (_slotField as RectTransform).GetGlobalBounds();
+			var specialSlotBound = (_specialSlotField as RectTransform).GetGlobalBounds();
+
+			var bound = cardsBound;
+
+			bound.Encapsulate(slotBound.min);
+			bound.Encapsulate(slotBound.max);
+
+			bound.Encapsulate(specialSlotBound.min);
+			bound.Encapsulate(specialSlotBound.max);
+
+			return bound;
+
+		}
+		finally {
+
+			foreach (var state in cardStates) {
+
+				state.Transform.localPosition = state.LocalPosition;
+				state.Transform.localScale = state.LocalScale;
+
+			}
+
+		}
+
+	}
+
+	private void OnDrawGizmos() {
+
+		var contentBound = GetContentBounds();
+		Gizmos.color = Color.skyBlue;
+		Gizmos.DrawWireCube(contentBound.center, contentBound.size);
 
 	}
 

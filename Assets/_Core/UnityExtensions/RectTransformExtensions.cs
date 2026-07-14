@@ -2,6 +2,21 @@ using UnityEngine;
 
 public static class RectTransformExtensions {
 
+	public static Bounds GetWorldBounds(this RectTransform rectTransform) {
+
+		var corners = new Vector3[4];
+		rectTransform.GetWorldCorners(corners);
+
+		var bounds = new Bounds(corners[0], Vector3.zero);
+
+		for (int i = 1; i < corners.Length; i++) {
+			bounds.Encapsulate(corners[i]);
+		}
+
+		return bounds;
+
+	}
+
 	public static Bounds GetGlobalBounds(this RectTransform rectTransform) {
 
 		var rects = rectTransform.GetComponentsInChildren<RectTransform>(true);
