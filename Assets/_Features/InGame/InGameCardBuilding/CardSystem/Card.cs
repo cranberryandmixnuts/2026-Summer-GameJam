@@ -88,10 +88,11 @@ public abstract class Card : MonoBehaviour,
 
 			AttachedSlot = _curentTargetSlot;
 
-			transform
-				.DOMove(CardField.Instance.SlotInstances[_curentTargetSlot.Value].transform.position, 0.2f);
-
 			transform.SetParent(CardField.Instance.CardFieldTransform);
+
+			transform
+				.DOLocalMove(CardField.Instance.SlotInstances[_curentTargetSlot.Value].transform.localPosition, 0.2f);
+
 				
 			PlayerHand.Instance.RemoveCard(this);
 			CardField.Instance.PlaceCard(_curentTargetSlot.Value, this);

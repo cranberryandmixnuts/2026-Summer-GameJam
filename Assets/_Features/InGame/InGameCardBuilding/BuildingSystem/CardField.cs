@@ -18,6 +18,9 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 	[SerializeField]
 	private Transform _cardField;
 
+	[SerializeField]
+	private Transform _elements;
+
     [SerializeField]
     private Vector2 _gridSize;
 
@@ -67,6 +70,8 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
         RedrawSlots();
         CardsChanged?.Invoke();
 
+		RescaleAndMove();
+
         return true;
 
     }
@@ -78,6 +83,8 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
         CalculateSlotPositions();
         RedrawSlots();
         CardsChanged?.Invoke();
+
+		RescaleAndMove();
 
     }
 
@@ -98,6 +105,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
             AddSlotIfAvailable(pair.Key + Vector2Int.down);
             AddSlotIfAvailable(pair.Key + Vector2Int.left);
             AddSlotIfAvailable(pair.Key + Vector2Int.right);
+
         }
 
     }
@@ -127,5 +135,56 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
         }
 
     }
+
+	private void RescaleAndMove() {
+
+		var elementsRectTransform = _elements as RectTransform;
+		var fieldRectTransform = transform as RectTransform;
+
+		elementsRectTransform.localScale = Vector3.one;
+		elementsRectTransform.localPosition = Vector3.zero;
+
+		var contentBound = GetContentBounds();
+		var fieldBound = fieldRectTransform.GetGlobalBounds();
+
+		if (contentBound.size.x <= Mathf.Epsilon ||
+			contentBound.size.y <= Mathf.Epsilon) {
+			return;
+		}
+
+		var scale = Mathf.Min(
+			1f,
+			fieldBound.size.x / contentBound.size.x,
+			fieldBound.size.y / contentBound.size.y
+		);
+
+		elementsRectTransform.localScale = Vector3.one * scale;
+
+		contentBound = GetContentBounds();
+
+		var worldOffset = fieldBound.center - contentBound.center;
+		var localOffset = elementsRectTransform.parent.InverseTransformVector(worldOffset);
+
+		elementsRectTransform.anchoredPosition = localOffset;
+
+	}
+
+	private Bounds GetContentBounds() {
+
+		var cardsBound = (_cardField as RectTransform).GetGlobalBounds();
+		var slotBound = (_slotField as RectTransform).GetGlobalBounds();
+		var specialSlotBound = (_specialSlotField as RectTransform).GetGlobalBounds();
+
+		var bound = cardsBound;
+
+		bound.Encapsulate(slotBound.min);
+		bound.Encapsulate(slotBound.max);
+
+		bound.Encapsulate(specialSlotBound.min);
+		bound.Encapsulate(specialSlotBound.max);
+
+		return bound;
+
+	}
 
 }
