@@ -1251,7 +1251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381dbbbdee116d24bac96dd87fcf77a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHand
-  _handCardLimit: 10
+  _handCardLimit: 30
   _displayRadius: 2296.8
   _displayNormalInterval: 150
   _displayMaxRange: 1050

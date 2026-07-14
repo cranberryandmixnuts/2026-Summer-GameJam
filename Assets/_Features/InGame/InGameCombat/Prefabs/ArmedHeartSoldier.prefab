@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4418338919762586867}
   - component: {fileID: -477256560074981728}
   - component: {fileID: 6884140542187831867}
+  - component: {fileID: 5798232094105854732}
   m_Layer: 6
   m_Name: ArmedHeartSoldier
   m_TagString: Untagged
@@ -196,7 +197,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBrain
   body: {fileID: 5581154455435580085}
-  healthSource: {fileID: 0}
+  animator: {fileID: 5798232094105854732}
+  healthSource: {fileID: 4418338919762586867}
   graph:
     entryStateId: 1df3d5d00a604ec5af7134d64cd74e98
     globalTransitions: []
@@ -250,6 +252,7 @@ MonoBehaviour:
     - rid: 4264142789152604253
       type: {class: PatternShootEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         muzzle: {fileID: 7772445035699773196}
         projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
         projectileDamage: 1
@@ -265,6 +268,7 @@ MonoBehaviour:
     - rid: 4264142789152604259
       type: {class: MoveDirectionEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         direction: {x: 0, y: -1}
         speed: 1
         directionSpace: 0
@@ -276,13 +280,16 @@ MonoBehaviour:
     - rid: 4264142789152604262
       type: {class: DashTowardPlayerEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         bodyCollider: {fileID: 4381739228166026471}
         damage: 1
         speed: 8
         maximumDistance: 4
+        stopOnPlayerHit: 0
     - rid: 4264142789152604263
       type: {class: WaitEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         duration: 1
 --- !u!114 &6884140542187831867
 MonoBehaviour:
@@ -298,3 +305,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DestroyBelowWorldY
   bodyCollider: {fileID: 4381739228166026471}
   escapeDamage: 1
+--- !u!95 &5798232094105854732
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8508378361576631075}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
