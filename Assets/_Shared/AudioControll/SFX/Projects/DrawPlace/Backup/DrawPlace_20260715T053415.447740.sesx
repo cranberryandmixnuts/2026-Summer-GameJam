@@ -82,7 +82,7 @@
             </parameter>
             <parameter index="1" name="static gain" parameterValue="1"/>
           </component>
-          <component componentGuid="ac34687b-6dae-4978-a814-08baaf9b2400" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
+          <component componentGuid="563283d5-6f2e-49e8-8d4a-105178cb3836" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
             <parameter index="0" parameterValue="0"/>
             <parameter index="1" name="mute" parameterValue="0"/>
           </component>
@@ -174,7 +174,7 @@
             </parameter>
             <parameter index="1" name="static gain" parameterValue="1"/>
           </component>
-          <component componentGuid="e3bc5699-49c2-481b-8505-3b7e6d7bb82d" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
+          <component componentGuid="fcf9546e-44b3-44f9-a1ac-a82fe384a8a1" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
             <parameter index="0" parameterValue="0"/>
             <parameter index="1" name="mute" parameterValue="0"/>
           </component>
@@ -268,7 +268,7 @@
             </parameter>
             <parameter index="1" name="static gain" parameterValue="1"/>
           </component>
-          <component componentGuid="952e1027-0c39-4bc3-89f4-c69960504170" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
+          <component componentGuid="870dcefe-a41e-4870-82a4-e44eb80be92f" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
             <parameter index="0" parameterValue="0"/>
             <parameter index="1" name="mute" parameterValue="0"/>
           </component>
@@ -357,7 +357,7 @@
             <parameter index="0" name="volume" parameterValue="1"/>
             <parameter index="1" name="static gain" parameterValue="1"/>
           </component>
-          <component componentGuid="67e75e47-5c04-4a7c-8098-4582bd76b02c" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
+          <component componentGuid="606ec4e0-8efe-4c78-8d07-3d3b5051787e" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
             <parameter index="0" parameterValue="0"/>
             <parameter index="1" name="mute" parameterValue="0"/>
           </component>
@@ -591,14 +591,15 @@
             xmlns:xmp="http://ns.adobe.com/xap/1.0/"
             xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/"
             xmlns:stEvt="http://ns.adobe.com/xap/1.0/sType/ResourceEvent#"
+            xmlns:stRef="http://ns.adobe.com/xap/1.0/sType/ResourceRef#"
             xmlns:dc="http://purl.org/dc/elements/1.1/"
             xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
          <xmp:CreatorTool>Adobe Audition 25.6 (Windows)</xmp:CreatorTool>
          <xmp:CreateDate>2026-07-15T03:10:48+09:00</xmp:CreateDate>
          <xmp:MetadataDate>2026-07-15T05:34:15+09:00</xmp:MetadataDate>
          <xmp:ModifyDate>2026-07-15T05:34:15+09:00</xmp:ModifyDate>
-         <xmpMM:InstanceID>xmp.iid:6aa1181b-c53c-9946-9a25-c65b8432e5d6</xmpMM:InstanceID>
-         <xmpMM:DocumentID>xmp.did:b576274d-69da-294a-91ce-ee9fd1ffb626</xmpMM:DocumentID>
+         <xmpMM:InstanceID>xmp.iid:e4f47483-bf9f-f048-86d2-ce741ccc9496</xmpMM:InstanceID>
+         <xmpMM:DocumentID>xmp.did:e4f47483-bf9f-f048-86d2-ce741ccc9496</xmpMM:DocumentID>
          <xmpMM:OriginalDocumentID>xmp.did:b576274d-69da-294a-91ce-ee9fd1ffb626</xmpMM:OriginalDocumentID>
          <xmpMM:History>
             <rdf:Seq>
@@ -665,8 +666,27 @@
                   <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/</stEvt:changed>
                </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>saved</stEvt:action>
+                  <stEvt:instanceID>xmp.iid:f1220b32-b015-f942-b3b7-cf7c0eebcd63</stEvt:instanceID>
+                  <stEvt:when>2026-07-15T05:34:15+09:00</stEvt:when>
+                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
+                  <stEvt:changed>/metadata</stEvt:changed>
+               </rdf:li>
+               <rdf:li rdf:parseType="Resource">
+                  <stEvt:action>saved</stEvt:action>
+                  <stEvt:instanceID>xmp.iid:e4f47483-bf9f-f048-86d2-ce741ccc9496</stEvt:instanceID>
+                  <stEvt:when>2026-07-15T05:34:15+09:00</stEvt:when>
+                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
+                  <stEvt:changed>/</stEvt:changed>
+               </rdf:li>
             </rdf:Seq>
          </xmpMM:History>
+         <xmpMM:DerivedFrom rdf:parseType="Resource">
+            <stRef:instanceID>xmp.iid:f1220b32-b015-f942-b3b7-cf7c0eebcd63</stRef:instanceID>
+            <stRef:documentID>xmp.did:b576274d-69da-294a-91ce-ee9fd1ffb626</stRef:documentID>
+            <stRef:originalDocumentID>xmp.did:b576274d-69da-294a-91ce-ee9fd1ffb626</stRef:originalDocumentID>
+         </xmpMM:DerivedFrom>
          <dc:format>application/xml</dc:format>
          <xmpDM:Tracks>
             <rdf:Bag>
@@ -789,10 +809,10 @@
   </session>
 
   <files>
-    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\DrawPlace\Conformed Files\Objects, Packaging, Plastic, Bag, Large, Thick, Placing Object Inside, Taking Out SND145750 48000 1.wav" id="0" mediaHandler="AmioWav" relativePath="Conformed Files/Objects, Packaging, Plastic, Bag, Large, Thick, Placing Object Inside, Taking Out SND145750 48000 1.wav"/>
-    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\DrawPlace\Conformed Files\Footsteps, Human, Boots, Carpet, Wood, Hollow, Walk, Close SND125688 48000 1.wav" id="1" mediaHandler="AmioWav" relativePath="Conformed Files/Footsteps, Human, Boots, Carpet, Wood, Hollow, Walk, Close SND125688 48000 1.wav"/>
-    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\DrawPlace\Conformed Files\Games, Board, Chess, Bishop Capturing Pawn SND56640_Seg 0 48000 1.wav" id="2" mediaHandler="AmioWav" relativePath="Conformed Files/Games, Board, Chess, Bishop Capturing Pawn SND56640_Seg 0 48000 1.wav"/>
-    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\DrawPlace\가져온 파일\Objects, Misc, Scissors, Cutting Cardboard SND3989 1_Seg 0 48000 1.wav" id="3" importerPrivateSettings="Compression:0:0;LargeFileSupport:0:0;SampleType:0:20;" mediaHandler="AmioWav" relativePath="가져온 파일/Objects, Misc, Scissors, Cutting Cardboard SND3989 1_Seg 0 48000 1.wav"/>
+    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\DrawPlace\Conformed Files\Objects, Packaging, Plastic, Bag, Large, Thick, Placing Object Inside, Taking Out SND145750 48000 1.wav" id="0" mediaHandler="AmioWav" recoveryID="569f0696-f4d1-45d0-b578-3d4032948a76" relativePath="../Conformed Files/Objects, Packaging, Plastic, Bag, Large, Thick, Placing Object Inside, Taking Out SND145750 48000 1.wav"/>
+    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\DrawPlace\Conformed Files\Footsteps, Human, Boots, Carpet, Wood, Hollow, Walk, Close SND125688 48000 1.wav" id="1" mediaHandler="AmioWav" recoveryID="7812da08-c0fb-418e-851a-a49ed9abfad0" relativePath="../Conformed Files/Footsteps, Human, Boots, Carpet, Wood, Hollow, Walk, Close SND125688 48000 1.wav"/>
+    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\DrawPlace\Conformed Files\Games, Board, Chess, Bishop Capturing Pawn SND56640_Seg 0 48000 1.wav" id="2" mediaHandler="AmioWav" recoveryID="c6639983-1ace-4a3e-8dc6-d155750f53a5" relativePath="../Conformed Files/Games, Board, Chess, Bishop Capturing Pawn SND56640_Seg 0 48000 1.wav"/>
+    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\DrawPlace\가져온 파일\Objects, Misc, Scissors, Cutting Cardboard SND3989 1_Seg 0 48000 1.wav" id="3" importerPrivateSettings="Compression:0:0;LargeFileSupport:0:0;SampleType:0:20;" mediaHandler="AmioWav" recoveryID="f2b4cc2c-32f9-4141-951c-ceae7116dcca" relativePath="../가져온 파일/Objects, Misc, Scissors, Cutting Cardboard SND3989 1_Seg 0 48000 1.wav"/>
   </files>
 
   <audioDevice inputID="22222222-2222-2222-2222-22222222" outputID="11111111-1111-1111-1111-11111111">
