@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class CardHandDetector : MonoBehaviour
+public sealed class CardHandDetector : SingletonBehaviour<CardHandDetector, SceneScope>
 {
     [SerializeField]
     [Required]

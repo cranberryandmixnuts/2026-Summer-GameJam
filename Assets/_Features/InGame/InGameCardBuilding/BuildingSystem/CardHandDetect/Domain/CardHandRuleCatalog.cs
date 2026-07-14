@@ -3,7 +3,7 @@ using UnityEngine;
 
 [CreateAssetMenu(
     fileName = nameof(CardHandRuleCatalog),
-    menuName = "Cards/Hands/Empty Hand Rule Catalog"
+    menuName = "Cards/Hands/Card Hand Rule Catalog"
 )]
 public sealed class CardHandRuleCatalog : ScriptableObject
 {

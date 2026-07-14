@@ -73,8 +73,8 @@ public sealed class CardHandLineVisualizer : MonoBehaviour
 
             binding.Match = match;
             binding.Renderer.positionCount = match.Cards.Count;
-            binding.Renderer.startColor = match.Rule.LineColor;
-            binding.Renderer.endColor = match.Rule.LineColor;
+            binding.Renderer.startColor = match.LineColor;
+            binding.Renderer.endColor = match.LineColor;
             binding.Renderer.enabled = true;
 
             UpdatePositions(binding);
