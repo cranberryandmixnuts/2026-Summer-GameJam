@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1776364971842617044}
   - component: {fileID: -4109969815565676872}
   - component: {fileID: 6419423960269545213}
+  - component: {fileID: 2292242429244234492}
   m_Layer: 6
   m_Name: ArmedSpadeSoldier
   m_TagString: Untagged
@@ -196,7 +197,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBrain
   body: {fileID: 4953755834393230172}
-  healthSource: {fileID: 0}
+  animator: {fileID: 2292242429244234492}
+  healthSource: {fileID: 1776364971842617044}
   graph:
     entryStateId: 319992e5c63c4947b4a957f97a23fac8
     globalTransitions: []
@@ -249,6 +251,7 @@ MonoBehaviour:
     - rid: 4264142789152604275
       type: {class: AimedShootEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         muzzle: {fileID: 8452529467183480273}
         projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
         projectileDamage: 1
@@ -263,6 +266,7 @@ MonoBehaviour:
     - rid: 4264142789152604276
       type: {class: MoveDirectionEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         direction: {x: 0, y: -1}
         speed: 1
         directionSpace: 0
@@ -274,10 +278,12 @@ MonoBehaviour:
     - rid: 4264142789152604280
       type: {class: DashTowardPlayerEnemyAction, ns: , asm: Assembly-CSharp}
       data:
+        animationStateName: 
         bodyCollider: {fileID: 3224923158160231124}
         damage: 1
         speed: 8
         maximumDistance: 3
+        stopOnPlayerHit: 0
 --- !u!114 &6419423960269545213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,3 +298,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DestroyBelowWorldY
   bodyCollider: {fileID: 3224923158160231124}
   escapeDamage: 1
+--- !u!95 &2292242429244234492
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6790217317713472905}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -197,8 +197,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBrain
   body: {fileID: 7985905613763274805}
-  animator: {fileID: 0}
-  healthSource: {fileID: 0}
+  animator: {fileID: 6673505290249670044}
+  healthSource: {fileID: 1480694097953996811}
   graph:
     entryStateId: 319992e5c63c4947b4a957f97a23fac8
     globalTransitions: []
