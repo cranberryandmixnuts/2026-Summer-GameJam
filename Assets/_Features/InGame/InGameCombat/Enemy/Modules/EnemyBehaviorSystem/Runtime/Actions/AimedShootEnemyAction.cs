@@ -8,7 +8,7 @@ public sealed class AimedShootEnemyAction : EnemyAction
     [SerializeField, Required, EnemyBehaviorField("발사 위치")] private Transform muzzle;
     [SerializeField, Required, EnemyBehaviorField("투사체 프리팹")] private EnemyProjectile projectilePrefab;
     [SerializeField, MinValue(1), EnemyBehaviorField("투사체 피해량", Minimum = 1f)] private int projectileDamage = 1;
-    [SerializeField, MinValue(0.01f), EnemyBehaviorField("투사체 속도", Minimum = 0.01f)] private float projectileSpeed = 6f;
+    [SerializeField, MinValue(0.01f), EnemyBehaviorField("투사체 속도", Minimum = 0.01f)] private float projectileSpeed = 30f;
     [SerializeField, MinValue(0f), EnemyBehaviorField("첫 발사 대기 시간", Minimum = 0f)] private float initialDelay = 0.5f;
 
     [SerializeField, MinValue(0.01f), HorizontalGroup("Shot Interval"), LabelText("Min"), EnemyBehaviorField("최소 발사 간격", Minimum = 0.01f)]

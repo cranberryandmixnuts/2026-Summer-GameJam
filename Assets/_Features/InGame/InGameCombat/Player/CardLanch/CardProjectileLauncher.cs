@@ -26,7 +26,7 @@ public sealed class CardProjectileLauncher : MonoBehaviour
         GameObject cards = args.Cards;
         Transform cardsTransform = cards.transform;
         cardsTransform.SetParent(Canvas.gameObject.transform, true);
-        cardsTransform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        cardsTransform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         cardsTransform.position = transform.position;
 
         Rigidbody2D body = GetOrAddBody(cards);

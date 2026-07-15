@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb10b4488880174b88e6965d89b9e1b, type: 3}
   m_Name: CardProjectileSettings
   m_EditorClassIdentifier: Assembly-CSharp::CardProjectileSettings
-  projectileLifetime: 10
+  projectileLifetime: 6
   fireDamagePerLevel: 1
   fireDurationPerLevel: 3
   waterTransitionDelayPerLevel: 0.1
