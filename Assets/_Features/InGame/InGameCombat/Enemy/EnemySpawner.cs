@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
-public sealed class GameManager : MonoBehaviour
+public sealed class EnemySpawner : MonoBehaviour
 {
     [Serializable]
     private sealed class SpawnEntry
