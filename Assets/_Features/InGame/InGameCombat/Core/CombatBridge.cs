@@ -3,14 +3,14 @@ using UnityEngine;
 
 public sealed class CombatBridge : SingletonBehaviour<CombatBridge, SceneScope>
 {
-    public event Action PlayerDamaged;
+    public event Action<float> PlayerDamaged;
     public event Action PlayerDied;
     public event Action FireRequested;
 
-    public void PublishPlayerDamaged()
+    public void PublishPlayerDamaged(float rate)
     {
         Debug.Log("아파");
-        PlayerDamaged?.Invoke();
+        PlayerDamaged?.Invoke(rate);
     }
 
     public void PublishPlayerDied()
