@@ -2,7 +2,7 @@
 - Project name: 2026-Summer-GameJam
 - Unity version: Unity 6000.5.3f1
 - Active game object:
-  - Name: PoisonArea
+  - Name: Player
   - Tag: Untagged
-  - Layer: PlayerProjectile
+  - Layer: Player
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

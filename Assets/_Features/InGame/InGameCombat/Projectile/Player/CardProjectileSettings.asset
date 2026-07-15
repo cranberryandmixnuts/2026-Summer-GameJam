@@ -19,8 +19,8 @@ MonoBehaviour:
   waterDurationPerLevel: 3
   electricSlowPercentPerLevel: 10
   electricDurationPerLevel: 3
-  poisonDropInterval: 0.5
-  poisonAreaDamage: 1
+  poisonDropInterval: 0.25
+  poisonAreaDamage: 20
   poisonDamageInterval: 1
   poisonAreaDuration: 3
   healPercentPerLevel: 5

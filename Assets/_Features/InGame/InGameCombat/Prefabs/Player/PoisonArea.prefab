@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3840166596848511170}
   - component: {fileID: 8339718194237223690}
-  - component: {fileID: 7196756114424977608}
+  - component: {fileID: 8589055551907407019}
   - component: {fileID: 4705658112776693599}
   m_Layer: 8
   m_Name: PoisonArea
@@ -29,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 15.12, y: 8.231999, z: 0.5213793}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -60,7 +60,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: -876546973899608171, guid: 47d911ec248ac604380bbf361046ccec, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.04094988, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -94,8 +94,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
---- !u!58 &7196756114424977608
-CircleCollider2D:
+--- !u!61 &8589055551907407019
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -129,7 +129,17 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.86, y: 0.88}
+  m_EdgeRadius: 0
 --- !u!114 &4705658112776693599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,4 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b8d29f7bc5bfe41af54b283545a3c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoisonArea
-  areaCollider: {fileID: 7196756114424977608}
+  areaCollider: {fileID: 8589055551907407019}
+  _startingAnimationDuration: 0.2
+  _startingAnimationEase: 3
+  _removeingAnimationDuration: 2
+  _removeingAnimationEase: 3

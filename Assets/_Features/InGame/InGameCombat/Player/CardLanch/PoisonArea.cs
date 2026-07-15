@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -22,9 +23,16 @@ public sealed class PoisonArea : MonoBehaviour
     }
 
     [SerializeField, Required] private Collider2D areaCollider;
+	[SerializeField] private float _startingAnimationDuration;
+	[SerializeField] private Ease _startingAnimationEase;
+	[SerializeField] private float _removeingAnimationDuration;
+	[SerializeField] private Ease _removeingAnimationEase;
+
+	private Tween tween;
 
     private readonly List<Target> targets = new();
 
+	private Material material;
     private CardProjectileSettings settings;
     private LayerMask enemyLayers;
     private GameObject source;
@@ -32,7 +40,10 @@ public sealed class PoisonArea : MonoBehaviour
     private float remainingLifetime;
     private bool isActive;
 
-    private void Awake() => areaCollider.isTrigger = true;
+    private void Awake() {
+		areaCollider.isTrigger = true;
+		material = GetComponent<SpriteRenderer>().material;
+	}
 
     public void Activate(
         Vector3 position,
@@ -51,6 +62,15 @@ public sealed class PoisonArea : MonoBehaviour
         targets.Clear();
         transform.SetPositionAndRotation(position, Quaternion.identity);
         gameObject.SetActive(true);
+
+		tween?.Kill();
+		material.SetFloat("_Display", 0f);
+		tween = DOTween.To(
+			() => material.GetFloat("_Display"),
+			x => material.SetFloat("_Display", x),
+			1f, _startingAnimationDuration
+		).SetEase(_startingAnimationEase);
+
     }
 
     private void Update()
@@ -60,10 +80,15 @@ public sealed class PoisonArea : MonoBehaviour
         float deltaTime = Time.deltaTime;
         remainingLifetime -= deltaTime;
 
-        if (remainingLifetime <= 0f)
+        if (remainingLifetime <= _removeingAnimationDuration)
         {
-            Release();
-            return;
+			remainingLifetime = float.MaxValue;
+			tween = DOTween.To(
+				() => material.GetFloat("_Display"),
+				x => material.SetFloat("_Display", x),
+				0f, _removeingAnimationDuration
+			).SetEase(_removeingAnimationEase)
+			.OnComplete(() => Release());
         }
 
         UpdateTargets(deltaTime);
@@ -148,6 +173,7 @@ public sealed class PoisonArea : MonoBehaviour
     {
         isActive = false;
         releaseAction(this);
+		tween?.Kill();
     }
 
     private void OnDisable()
