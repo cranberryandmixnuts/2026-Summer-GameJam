@@ -191,9 +191,9 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 		parent.transform.position = (_cardField.transform as RectTransform).GetGlobalBounds().center;
 
 		foreach (var card in TotalCards) {
+			Destroy(card.GetComponent<CardAnimator>());
 			card.transform.SetParent(parent.transform, false);
 		}
-
 
 
 		OnCardThrow.Invoke(new(
