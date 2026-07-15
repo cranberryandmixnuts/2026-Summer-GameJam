@@ -22,5 +22,5 @@ MonoBehaviour:
   poisonDropInterval: 0.25
   poisonAreaDamage: 20
   poisonDamageInterval: 1
-  poisonAreaDuration: 3
+  poisonAreaDuration: 15
   healPercentPerLevel: 5

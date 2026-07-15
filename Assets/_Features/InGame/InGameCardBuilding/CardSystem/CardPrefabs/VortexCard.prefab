@@ -148,4 +148,4 @@ MonoBehaviour:
   - 0.7
   - 1
   _slotRadius: 250
-  _spiningSpeed: 1
+  _spiningSpeed: 3
