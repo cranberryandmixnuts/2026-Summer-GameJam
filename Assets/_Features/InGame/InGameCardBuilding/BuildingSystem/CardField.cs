@@ -178,6 +178,8 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 	public void Shoot() {
 
+		if (_placedCards.Count + _specialPlacedCards.Count == 0)  return;
+
 		var multiplier = FinalMultiplier + CardHandDetector.Instance.CurrentMatches.Sum(m => m.Bonus);
 		CardEffect effect = new();
 
@@ -223,6 +225,17 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 		_placedCards.Clear();
 		_specialPlacedCards.Clear();
+
+		foreach (var slot in _specialSlotInstances) {
+			Destroy(slot.Key.gameObject);
+		}
+
+		_specialSlotInstances.Clear();
+
+		CalculateSlotPositions();
+		RedrawSlots();
+
+		RescaleAndMove();
 
 	}
 
