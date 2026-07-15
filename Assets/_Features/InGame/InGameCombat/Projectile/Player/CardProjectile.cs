@@ -36,7 +36,7 @@ public sealed class CardProjectile : MonoBehaviour
 
         foreach (Collider2D cardCollider in GetComponentsInChildren<Collider2D>(true)) cardCollider.isTrigger = true;
 
-        body.linearVelocity = Vector2.up * speed;
+        body.linearVelocity = Vector2.up * speed * 15;
         Destroy(gameObject, settings.ProjectileLifetime);
     }
 
