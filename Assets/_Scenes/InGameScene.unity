@@ -561,13 +561,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef6c0e5cb9b5178499b03b0227bc9dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardHandLineVisualizer
-  _detector: {fileID: 476660900}
-  _lineMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  _lineWidth: 0.05
-  _worldOffset: {x: 0, y: 0, z: -0.1}
-  _sortingLayerName: Default
-  _sortingOrder: 100
-  _activeBindingCount: 0
 --- !u!1 &492045090
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,7 +1065,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -3
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -3095434498861050858, guid: a130f6b8e71b1b148bc22e00e8d64f01, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a130f6b8e71b1b148bc22e00e8d64f01, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1080,7 +1073,7 @@ SpriteRenderer:
   m_Size: {x: 10.24, y: 15.36}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &862285468
