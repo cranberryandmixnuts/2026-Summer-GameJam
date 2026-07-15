@@ -1338,7 +1338,7 @@ RectTransform:
   m_GameObject: {fileID: 510611673}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.054151934, y: 0.054151934, z: 0.054151934}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1574,6 +1574,9 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 4694874223033281932, guid: abebd0bed2afac946b68723069edcf84, type: 3}
   worldCamera: {fileID: 1456490401}
   healthBarOffset: {x: 0, y: 1, z: 0}
+  successEndingObject: {fileID: 1448561783}
+  failureEndingObject: {fileID: 1295454153}
+  settingsOpenObject: {fileID: 1651012887}
   bossPrefab: {fileID: 3773766357352750942, guid: a7f926acecb69304da4e822a8597dfc1, type: 3}
   spawnEntries:
   - Prefab: {fileID: 8775158816998203423, guid: 34f68240febe14a4998ff890cef4d180, type: 3}
@@ -1586,8 +1589,8 @@ MonoBehaviour:
     Weight: 1
   initialDelay: 0
   spawnDuration: 360
-  minimumSpawnInterval: 3
-  maximumSpawnInterval: 6
+  minimumSpawnInterval: 10
+  maximumSpawnInterval: 20
   minimumInternalDifficultyFactor: 1
   maximumInternalDifficultyFactor: 3
   spawnOnEnable: 1
@@ -4000,7 +4003,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1295454154
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4653,7 +4656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af6b725e44c6dc4e90faab5b1ac3c46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 5000
+  maxHealth: 60
   invulnerabilityDuration: 0.6
   combatBridge: {fileID: 813994829}
 --- !u!114 &1475639968
@@ -7171,7 +7174,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2095324192}
   - component: {fileID: 2095324193}
-  - component: {fileID: 2095324194}
   m_Layer: 0
   m_Name: PlayerHand
   m_TagString: Untagged
@@ -7222,18 +7224,6 @@ MonoBehaviour:
   _hoverAnimationEase: 0
   _drawAnimationDuration: 0.5
   _drawAnimationEase: 15
---- !u!114 &2095324194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2095324191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68568f6d3edf59b4398ab63672f4c7c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CardDrawTest
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
