@@ -32,7 +32,7 @@ public sealed class EnemySpawner : MonoBehaviour
     [SerializeField, ValidateInput(nameof(HasSpawnEntries), "적 프리팹을 하나 이상 등록해야 합니다.")]
     private SpawnEntry[] spawnEntries;
     [SerializeField, MinValue(0f)] private float initialDelay = 1f;
-    [SerializeField, MinValue(0.01f)] private float spawnDuration = 30f;
+    [SerializeField, MinValue(0.01f)] private float spawnDuration = 360f;
     [SerializeField, MinValue(0.01f)] private float minimumSpawnInterval = 1f;
     [SerializeField, MinValue(0.01f), ValidateInput(nameof(IsValidMaximumSpawnInterval), "최대 스폰 간격은 최소 스폰 간격 이상이어야 합니다.")]
     private float maximumSpawnInterval = 2f;
