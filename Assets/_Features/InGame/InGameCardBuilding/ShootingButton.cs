@@ -1,9 +1,12 @@
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ShootingButton {
+public class ShootingButton : MonoBehaviour {
 
 	private void Update() {
-		CardField.Instance.Shoot();
+		if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+			CardField.Instance.Shoot();
+		}
 	}
 
 }
