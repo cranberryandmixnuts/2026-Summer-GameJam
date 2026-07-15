@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StraightHandRule
   _straightBonus: 290
   _straightFlushBonus: 7200
-  _royalStraightBonus: 10000
+  _royalStraightBonus: 12570
   _royalStraightFlushBonus: 28000
