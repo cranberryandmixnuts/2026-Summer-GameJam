@@ -8,7 +8,7 @@ public sealed class CardProjectileLauncher : MonoBehaviour
     [SerializeField, Required, InlineEditor] private CardProjectileSettings settings;
     [SerializeField, Required] private PoisonAreaPool poisonAreaPool;
     [SerializeField] private LayerMask enemyLayers;
-    [SerializeField] private Canvas Canvas;
+    [SerializeField] private Transform target;
 
     private void OnEnable()
     {
@@ -25,7 +25,7 @@ public sealed class CardProjectileLauncher : MonoBehaviour
         Debug.Log($"CardProjectileLauncher.HandleCardThrow: {args.FinalDamage}, {args.Speed}, {args.Effects}");
         GameObject cards = args.Cards;
         Transform cardsTransform = cards.transform;
-        cardsTransform.SetParent(Canvas.gameObject.transform, true);
+        cardsTransform.SetParent(target.transform, true);
         cardsTransform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         cardsTransform.position = transform.position;
 
