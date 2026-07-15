@@ -17,8 +17,6 @@ public abstract class Card : MonoBehaviour,
 	private CardBaseStatus _baseStatus;
 
 	private const float _slotReactiveRange = 5f;
-
-	private CardAudio _audio;
 	private GameObject _curentTargetSlot;
 	protected readonly Dictionary<int, Card> _cardOnSpecialSlot = new();
 
@@ -40,10 +38,6 @@ public abstract class Card : MonoBehaviour,
 	public event Action<Card> OnUpdate;
 
 	//======================================================================| Unity Methods
-
-	protected virtual void Awake() {
-		_audio = GetComponent<CardAudio>();
-	}
 
 	protected virtual void Update() {
 
@@ -78,16 +72,16 @@ public abstract class Card : MonoBehaviour,
 	public virtual float CalculateAdditionalMultiplier() => _baseStatus.AdditionalMultiplier;
 
 	public void PlayDrawSound() {
-		_audio.Draw.Play();
+		AudioManager.Instance.PlayOneShotSFX("CardDraw", gameObject);
 	}
 
 	public void PlayHoverSound() {
-		_audio.Hover.Play();
-	}
+        AudioManager.Instance.PlayOneShotSFX("CardHovered", gameObject);
+    }
 
 	public void PlayPlaceSound() {
-		_audio.Placed.Play();
-	}
+        AudioManager.Instance.PlayOneShotSFX("CardPlace", gameObject);
+    }
 
 	public void AddCardOnSpecialSlot(Card target, int index) {
 		_cardOnSpecialSlot.Add(index, target);
