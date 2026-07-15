@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7985905613763274805}
   - component: {fileID: 2260275828149108786}
   - component: {fileID: 1480694097953996811}
-  - component: {fileID: 1028617174220807028}
+  - component: {fileID: -8517917108842939032}
   - component: {fileID: 5254672658135210367}
   - component: {fileID: 6673505290249670044}
   m_Layer: 6
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 10
---- !u!114 &1028617174220807028
+--- !u!114 &-8517917108842939032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,183 +193,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 3773766357352750942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 629eec413ef7c9646bc7024715ac5700, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a7241edfaa9fc7499a6313334e6cfd4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyBrain
+  m_EditorClassIdentifier: Assembly-CSharp::HeartQueen
   body: {fileID: 7985905613763274805}
   animator: {fileID: 6673505290249670044}
-  healthSource: {fileID: 1480694097953996811}
-  graph:
-    entryStateId: 319992e5c63c4947b4a957f97a23fac8
-    globalTransitions: []
-    states:
-    - id: 319992e5c63c4947b4a957f97a23fac8
-      name: Internal Move
-      editorPosition: {x: 50.66667, y: 191.99998}
-      executionMode: 0
-      loopSequence: 1
-      actions:
-      - rid: 4264142789152604276
-      transitions:
-      - targetStateId: 03cc7afdab2f4b87bf8a2519b8311c0b
-        minimumStateDuration: 0
-        allowSelfTransition: 0
-        evaluationMode: 0
-        conditions:
-        - inverted: 0
-          condition:
-            rid: 4264142789152604285
-    - id: 03cc7afdab2f4b87bf8a2519b8311c0b
-      name: AreaAttack
-      editorPosition: {x: 262, y: 193.33337}
-      executionMode: 0
-      loopSequence: 0
-      actions:
-      - rid: 4264142789152604281
-      - rid: 4264142789152604282
-      transitions:
-      - targetStateId: 784542a4043b4090ac0b530acd8e9ef0
-        minimumStateDuration: 0
-        allowSelfTransition: 0
-        evaluationMode: 0
-        conditions:
-        - inverted: 0
-          condition:
-            rid: 4264142789152604286
-    - id: 784542a4043b4090ac0b530acd8e9ef0
-      name: SplitAreaAttack
-      editorPosition: {x: 359.33334, y: 393.99994}
-      executionMode: 0
-      loopSequence: 0
-      actions:
-      - rid: 4264142789152604283
-      - rid: 4264142789152604284
-      transitions:
-      - targetStateId: 670e48c19fe64481a26d9c822d579eaa
-        minimumStateDuration: 0
-        allowSelfTransition: 0
-        evaluationMode: 0
-        conditions:
-        - inverted: 0
-          condition:
-            rid: 4264142789152604287
-    - id: 670e48c19fe64481a26d9c822d579eaa
-      name: SpinningAttack
-      editorPosition: {x: 22.666687, y: 378.66678}
-      executionMode: 0
-      loopSequence: 0
-      actions:
-      - rid: 4264142789152604288
-      transitions:
-      - targetStateId: c02e4ce7b41445c7b20c90d57d3e50a0
-        minimumStateDuration: 5
-        allowSelfTransition: 0
-        evaluationMode: 0
-        conditions: []
-    - id: c02e4ce7b41445c7b20c90d57d3e50a0
-      name: CloseAttack
-      editorPosition: {x: 150.66669, y: 517.3333}
-      executionMode: 0
-      loopSequence: 0
-      actions:
-      - rid: 4264142789152604290
-      - rid: 4264142789152604292
-      transitions:
-      - targetStateId: 03cc7afdab2f4b87bf8a2519b8311c0b
-        minimumStateDuration: 0
-        allowSelfTransition: 0
-        evaluationMode: 0
-        conditions:
-        - inverted: 0
-          condition:
-            rid: 4264142789152604293
-  references:
-    version: 2
-    RefIds:
-    - rid: 4264142789152604276
-      type: {class: MoveDirectionEnemyAction, ns: , asm: Assembly-CSharp}
-      data:
-        animationStateName: 
-        direction: {x: 0, y: -1}
-        speed: 1
-        directionSpace: 0
-        useDuration: 1
-        duration: 1.3
-    - rid: 4264142789152604281
-      type: {class: CircleMeleeEnemyAction, ns: , asm: Assembly-CSharp}
-      data:
-        animationStateName: 
-        attackOrigin: {fileID: 2189487221122657475}
-        damage: 1
-        radius: 3
-        windupDuration: 0.3
-        recoveryDuration: 0.2
-    - rid: 4264142789152604282
-      type: {class: WaitEnemyAction, ns: , asm: Assembly-CSharp}
-      data:
-        animationStateName: 
-        duration: 3
-    - rid: 4264142789152604283
-      type: {class: RandomCircleHitscanEnemyAction, ns: , asm: Assembly-CSharp}
-      data:
-        animationStateName: 
-        damage: 1
-        radius: 1
-        minimumAttackCount: 3
-        maximumAttackCount: 6
-        windupDuration: 0.5
-        recoveryDuration: 0.2
-    - rid: 4264142789152604284
-      type: {class: WaitEnemyAction, ns: , asm: Assembly-CSharp}
-      data:
-        animationStateName: 
-        duration: 4
-    - rid: 4264142789152604285
-      type: {class: ActionsCompleteEnemyCondition, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 4264142789152604286
-      type: {class: ActionsCompleteEnemyCondition, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 4264142789152604287
-      type: {class: ActionsCompleteEnemyCondition, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 4264142789152604288
-      type: {class: PatternShootEnemyAction, ns: , asm: Assembly-CSharp}
-      data:
-        animationStateName: 
-        muzzle: {fileID: 2189487221122657475}
-        projectilePrefab: {fileID: 5016140944135401950, guid: 48bbc744d65b6fb41911134c516c4057, type: 3}
-        projectileDamage: 1
-        projectileSpeed: 10
-        projectileShots:
-        - angle: 0
-        - angle: 45
-        - angle: 90
-        - angle: 135
-        - angle: 180
-        - angle: 225
-        - angle: 270
-        - angle: 315
-        initialDelay: 0
-        minimumShotInterval: 10
-        maximumShotInterval: 10
-    - rid: 4264142789152604290
-      type: {class: DashTowardPlayerEnemyAction, ns: , asm: Assembly-CSharp}
-      data:
-        animationStateName: 
-        bodyCollider: {fileID: 2260275828149108786}
-        damage: 1
-        speed: 10
-        maximumDistance: 5
-        stopOnPlayerHit: 1
-    - rid: 4264142789152604292
-      type: {class: WaitEnemyAction, ns: , asm: Assembly-CSharp}
-      data:
-        animationStateName: 
-        duration: 6
-    - rid: 4264142789152604293
-      type: {class: ActionsCompleteEnemyCondition, ns: , asm: Assembly-CSharp}
-      data: 
+  bodyCollider: {fileID: 2260275828149108786}
+  areaAttackOrigin: {fileID: 2189487221122657475}
+  spinningAttackOrigin: {fileID: 2189487221122657475}
+  spinningProjectilePrefab: {fileID: 5016140944135401950, guid: 48bbc744d65b6fb41911134c516c4057, type: 3}
+  minimumPatternInterval: 0.01
+  maximumPatternInterval: 0.01
+  areaAttackDamage: 1
+  areaAttackRadius: 2
+  areaAttackWindupDuration: 0.3
+  areaAttackRecoveryDuration: 0.2
+  splitAreaAttackDamage: 1
+  splitAreaAttackRadius: 0.5
+  minimumSplitAreaAttackCount: 3
+  maximumSplitAreaAttackCount: 6
+  splitAreaAttackWindupDuration: 0.5
+  splitAreaAttackRecoveryDuration: 0.2
+  spinningProjectileDamage: 1
+  spinningOrbitRadius: 2
+  spinningRevolutionDuration: 2
+  spinningStartAngle: 0
+  spinningAttackRecoveryDuration: 0.2
+  closeAttackDamage: 1
+  closeAttackSpeed: 8
+  maximumCloseAttackDistance: 8
+  closeAttackRecoveryDuration: 0.2
+  idleAnimationStateName: 
+  areaAttackAnimationStateName: 
+  splitAreaAttackAnimationStateName: 
+  spinningAttackAnimationStateName: 
+  closeAttackAnimationStateName: 
 --- !u!114 &5254672658135210367
 MonoBehaviour:
   m_ObjectHideFlags: 0

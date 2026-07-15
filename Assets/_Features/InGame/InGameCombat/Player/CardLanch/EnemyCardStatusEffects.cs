@@ -2,13 +2,13 @@ using UnityEngine;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(EnemyHealth))]
-[RequireComponent(typeof(EnemyBrain))]
+[RequireComponent(typeof(Enemy))]
 public sealed class EnemyCardStatusEffects : MonoBehaviour
 {
     private const float FireTickInterval = 1f;
 
     private EnemyHealth health;
-    private EnemyBrain brain;
+    private Enemy enemy;
 
     private int fireLevel;
     private int fireDamagePerSecond;
@@ -25,7 +25,7 @@ public sealed class EnemyCardStatusEffects : MonoBehaviour
     private void Awake()
     {
         health = GetComponent<EnemyHealth>();
-        brain = GetComponent<EnemyBrain>();
+        enemy = GetComponent<Enemy>();
     }
 
     public void Apply(CardEffect effect, CardProjectileSettings settings, GameObject source)
@@ -61,7 +61,7 @@ public sealed class EnemyCardStatusEffects : MonoBehaviour
         bool isActive = waterRemainingDuration > 0f;
         waterLevel = isActive ? waterLevel + addedLevel : addedLevel;
         waterRemainingDuration = settings.WaterDurationPerLevel * waterLevel;
-        brain.TransitionDelay = settings.WaterTransitionDelayPerLevel * waterLevel;
+        enemy.TransitionDelay = settings.WaterTransitionDelayPerLevel * waterLevel;
     }
 
     private void ApplyElectric(int addedLevel, CardProjectileSettings settings)
@@ -71,7 +71,7 @@ public sealed class EnemyCardStatusEffects : MonoBehaviour
         electricRemainingDuration = settings.ElectricDurationPerLevel * electricLevel;
 
         float slowRatio = settings.ElectricSlowPercentPerLevel * 0.01f * electricLevel;
-        brain.MovementSpeedMultiplier = Mathf.Max(0f, 1f - slowRatio);
+        enemy.MovementSpeedMultiplier = Mathf.Max(0f, 1f - slowRatio);
     }
 
     private void UpdateFire(float deltaTime)
@@ -124,7 +124,7 @@ public sealed class EnemyCardStatusEffects : MonoBehaviour
 
         waterLevel = 0;
         waterRemainingDuration = 0f;
-        brain.TransitionDelay = 0f;
+        enemy.TransitionDelay = 0f;
     }
 
     private void ResetElectric()
@@ -133,7 +133,7 @@ public sealed class EnemyCardStatusEffects : MonoBehaviour
 
         electricLevel = 0;
         electricRemainingDuration = 0f;
-        brain.MovementSpeedMultiplier = 1f;
+        enemy.MovementSpeedMultiplier = 1f;
     }
 
     private void OnDisable()
