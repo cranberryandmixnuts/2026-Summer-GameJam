@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17ee5179b708bea4ca18c31bd334f00c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5646cface5b118a43b0fdd580e02ee37, type: 3}
   m_Name: AudioRegistry
   m_EditorClassIdentifier: Assembly-CSharp::AudioRegistry
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: a518f5fc4a60a414393535f2cd494dbc, type: 3}
+  - {fileID: 8300000, guid: 7905142e83ef0c74e85cc6053757454f, type: 3}
+  - {fileID: 8300000, guid: e3c5249f7b6598a45b7ef7f6c65e8d76, type: 3}

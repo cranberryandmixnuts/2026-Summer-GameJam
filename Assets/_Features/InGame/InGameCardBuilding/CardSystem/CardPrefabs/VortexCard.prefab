@@ -104,6 +104,10 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 2100000, guid: 6a7856bb0a746ee449086ec87d5f3f7b, type: 2}
+    - target: {fileID: 8406690229607155170, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2886948533877787642, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
     m_RemovedGameObjects: []
@@ -131,7 +135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VortexCard
   _baseStatus: {fileID: 11400000, guid: 0a869c82b350b594b968f5ca397e3911, type: 2}
-  _slotReactiveRange: 1.5
   _additionalDamageOverSlots:
   - 10
   - 25
