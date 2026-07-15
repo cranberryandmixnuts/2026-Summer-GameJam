@@ -16,7 +16,7 @@ public abstract class Card : MonoBehaviour,
 	[SerializeField]
 	private CardBaseStatus _baseStatus;
 
-	private const float _slotReactiveRange = 5f;
+	private const float _slotReactiveRange = 7.5f;
 	private GameObject _curentTargetSlot;
 	protected readonly Dictionary<int, Card> _cardOnSpecialSlot = new();
 

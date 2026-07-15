@@ -219,23 +219,37 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
     }
 
 	private void Initialize() {
-		
+
 		FinalBaseDamage = 0f;
 		FinalMultiplier = 1f;
 
 		_placedCards.Clear();
 		_specialPlacedCards.Clear();
 
-		foreach (var slot in _specialSlotInstances) {
-			Destroy(slot.Key.gameObject);
-		}
-
-		_specialSlotInstances.Clear();
+		ClearSpecialSlots();
 
 		CalculateSlotPositions();
 		RedrawSlots();
 
 		RescaleAndMove();
+
+	}
+
+	private void ClearSpecialSlots() {
+
+		foreach (var image in _specialSlotInstances.Keys) {
+
+			if (image == null) {
+				continue;
+			}
+
+			image.DOKill();
+			image.gameObject.SetActive(false);
+			Destroy(image.gameObject);
+
+		}
+
+		_specialSlotInstances.Clear();
 
 	}
 
