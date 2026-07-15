@@ -1184,6 +1184,8 @@ MonoBehaviour:
   combatBridge: {fileID: 813994829}
   combatBounds: {fileID: 493820818}
   despawnBounds: {fileID: 1349808646}
+  timerFillImage: {fileID: 0}
+  completionPrefab: {fileID: 0}
   spawnEntries:
   - Prefab: {fileID: 8775158816998203423, guid: 34f68240febe14a4998ff890cef4d180, type: 3}
     Weight: 1
@@ -1194,7 +1196,9 @@ MonoBehaviour:
   - Prefab: {fileID: 6790217317713472905, guid: 6a5c14d332ea99844a3c6f210f41b004, type: 3}
     Weight: 1
   initialDelay: 0
-  spawnInterval: 3
+  spawnDuration: 30
+  minimumSpawnInterval: 1
+  maximumSpawnInterval: 2
   spawnOnEnable: 1
 --- !u!4 &614515215
 Transform:
@@ -4550,6 +4554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1779212295}
+  - component: {fileID: 1779212296}
   m_Layer: 5
   m_Name: Projectiles
   m_TagString: Untagged
@@ -4576,6 +4581,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 607.5, y: 0}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &1779212296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779212294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
+  m_ShowMaskGraphic: 1
 --- !u!1 &1781923893
 GameObject:
   m_ObjectHideFlags: 0
