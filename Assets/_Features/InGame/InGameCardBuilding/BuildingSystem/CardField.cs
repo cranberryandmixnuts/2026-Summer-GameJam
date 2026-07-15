@@ -51,7 +51,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 	//======================================================================| Properties
 
 	public float FinalBaseDamage { get; private set; } = 0f;
-	public float FinalMultiplier { get; private set; } = 0f;
+	public float FinalMultiplier { get; private set; } = 1f;
 
 	public Transform SlotField => _slotField;
 	public Transform SpecialSlotField => _specialSlotField;
@@ -199,8 +199,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 			effect
 		));
 
-		FinalBaseDamage = 0f;
-		FinalMultiplier = 0f;
+		Initialize();
 
 	}
 
@@ -213,8 +212,19 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
         CardsChanged?.Invoke();
 
 		RescaleAndMove();
+		Initialize();
 
     }
+
+	private void Initialize() {
+		
+		FinalBaseDamage = 0f;
+		FinalMultiplier = 1f;
+
+		_placedCards.Clear();
+		_specialPlacedCards.Clear();
+
+	}
 
     private void CalculateSlotPositions() {
 

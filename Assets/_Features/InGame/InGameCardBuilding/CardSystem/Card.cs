@@ -25,6 +25,7 @@ public abstract class Card : MonoBehaviour,
 	public CardBaseStatus BaseStatus => _baseStatus;
 	public bool IsHovered { get; private set; }
 	public bool IsGrabed { get; private set; }
+	public bool IsAttached { get; private set; }
 
 	public int? PreviousIndex { get; set; } = null;
 	public GameObject AttachedSlot { get; private set; } = null;
@@ -41,22 +42,22 @@ public abstract class Card : MonoBehaviour,
 
 	protected virtual void Update() {
 
-		var currentPosition = transform.position;
+		if (AttachedSlot == null) {
 
-		if (IsGrabed) {
+			if (IsGrabed) {
 
-			currentPosition = Camera.main
-				.ScreenToWorldPoint(Mouse.current.position.ReadValue().ToVector3WithZ(100f))
-				.WithZ(transform.position.z);
+				transform.position = Camera.main
+					.ScreenToWorldPoint(Mouse.current.position.ReadValue().ToVector3WithZ(100f))
+					.WithZ(transform.position.z);
 
-			transform.position = currentPosition;
+				_curentTargetSlot = GetAttachSlot();
 
-			_curentTargetSlot = GetAttachSlot();
+			}
+
+			OnUpdate?.Invoke(this);
 
 		}
 
-		OnUpdate?.Invoke(this);
-		
 		foreach (var (index, card) in _cardOnSpecialSlot) {
 			card.transform.SetPositionAndRotation(
 				SpecialCardSlots[index].transform.position,
@@ -97,7 +98,7 @@ public abstract class Card : MonoBehaviour,
 
 	public void OnPointerEnter(PointerEventData eventData) {
 
-		if (AttachedSlot != null) return;
+		if (IsAttached) return;
 		IsHovered = true;
 
 	}
@@ -108,7 +109,7 @@ public abstract class Card : MonoBehaviour,
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {
-		if (AttachedSlot != null) return;
+		if (IsAttached) return;
 		IsGrabed = true;
 	}
 
@@ -121,7 +122,8 @@ public abstract class Card : MonoBehaviour,
 		IsHovered = false;
 
 		if (_curentTargetSlot != null) {
-
+		
+			IsAttached = true;
 			AttachedSlot = _curentTargetSlot;
 
 			PlayerHand.Instance.RemoveCard(this);
