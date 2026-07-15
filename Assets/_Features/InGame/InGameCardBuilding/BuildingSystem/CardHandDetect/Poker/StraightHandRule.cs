@@ -8,10 +8,10 @@ using UnityEngine;
 )]
 public sealed class StraightHandRule : CardHandRule
 {
-    private const string StraightId = "poker.straight";
-    private const string StraightFlushId = "poker.straight-flush";
-    private const string RoyalStraightId = "poker.royal-straight";
-    private const string RoyalStraightFlushId = "poker.royal-straight-flush";
+    public const string StraightId = "poker.straight";
+    public const string StraightFlushId = "poker.straight-flush";
+    public const string RoyalStraightId = "poker.royal-straight";
+    public const string RoyalStraightFlushId = "poker.royal-straight-flush";
     private const int StraightPriority = 300;
     private const int RoyalStraightPriority = 301;
     private const int StraightFlushPriority = 700;

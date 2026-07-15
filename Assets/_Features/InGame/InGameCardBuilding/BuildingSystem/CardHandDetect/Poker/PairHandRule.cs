@@ -8,8 +8,8 @@ using UnityEngine;
 )]
 public sealed class PairHandRule : CardHandRule
 {
-    private const string PairId = "poker.one-pair";
-    private const string PairPlusId = "poker.one-pair-plus";
+    public const string PairId = "poker.one-pair";
+    public const string PairPlusId = "poker.one-pair-plus";
     private const int PairPriority = 100;
     private const int PairPlusPriority = 101;
 

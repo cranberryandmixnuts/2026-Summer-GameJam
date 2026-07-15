@@ -2283,7 +2283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b1879d8994da504ba0f5d1eddcc2696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrawTimer
-  _drawCooldown: 3
+  _drawCooldown: 2
 --- !u!114 &977107249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3853,6 +3853,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1468701782}
   - component: {fileID: 1468701781}
+  - component: {fileID: 1468701783}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -3892,6 +3893,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1468701783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468701780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a83a7c48931cb94eb1206e07b9a2b17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathEffect
+  _volume: {fileID: 1468701781}
+  _vignette: {fileID: 0}
 --- !u!1 &1475639964
 GameObject:
   m_ObjectHideFlags: 0

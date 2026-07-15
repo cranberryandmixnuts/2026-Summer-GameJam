@@ -8,11 +8,11 @@ using UnityEngine;
 )]
 public sealed class FlushHandRule : CardHandRule
 {
-    private const string FlushId = "poker.flush";
-    private const string FlushPlusId = "poker.flush-plus";
-    private const string FlushPlusPlusId = "poker.flush-plus-plus";
-    private const string FlushPlusPlusPlusId = "poker.flush-plus-plus-plus";
-    private const string YachtId = "poker.yacht";
+    public const string FlushId = "poker.flush";
+    public const string FlushPlusId = "poker.flush-plus";
+    public const string FlushPlusPlusId = "poker.flush-plus-plus";
+    public const string FlushPlusPlusPlusId = "poker.flush-plus-plus-plus";
+    public const string YachtId = "poker.yacht";
     private const int FlushPriority = 400;
     private const int FlushPlusPriority = 401;
     private const int FlushPlusPlusPriority = 402;

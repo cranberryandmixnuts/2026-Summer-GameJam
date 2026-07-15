@@ -6,28 +6,24 @@ public static class SceneTypeMap
     private static readonly string[] SceneNames =
     {
         "",
-        "MainScreen",
-        "InGameScene",
+        "LobbyScene",
     };
 
     private static readonly string[] ScenePaths =
     {
         "",
-        "Assets/_Scenes/MainScreen.unity",
-        "Assets/_Scenes/InGameScene.unity",
+        "Assets/_Scenes/LobbyScene.unity",
     };
 
     private static readonly bool[] EnabledInBuildSettings =
     {
         false,
         true,
-        true,
     };
 
     private static readonly Dictionary<string, SceneType> NameToType = new(StringComparer.Ordinal)
     {
-        { "MainScreen", SceneType.MainScreen },
-        { "InGameScene", SceneType.InGameScene },
+        { "LobbyScene", SceneType.LobbyScene },
     };
 
     public static int TotalCount => SceneNames.Length;
