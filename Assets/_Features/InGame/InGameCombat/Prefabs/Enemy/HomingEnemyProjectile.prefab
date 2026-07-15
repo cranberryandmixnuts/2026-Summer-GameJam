@@ -139,7 +139,7 @@ MonoBehaviour:
   targetLayers:
     serializedVersion: 2
     m_Bits: 8
-  trackingSpeed: 60
+  trackingSpeed: 40
 --- !u!61 &8098808558600551292
 BoxCollider2D:
   m_ObjectHideFlags: 0

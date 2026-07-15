@@ -31,7 +31,7 @@ public sealed class PlayerHealth : MonoBehaviour, IDamageable
 
         Damaged?.Invoke(damageInfo);
         HealthChanged?.Invoke(CurrentHealth, MaxHealth);
-        combatBridge.PublishPlayerDamaged();
+        combatBridge.PublishPlayerDamaged((float)CurrentHealth / MaxHealth);
 
         if (CurrentHealth > 0) return true;
 
