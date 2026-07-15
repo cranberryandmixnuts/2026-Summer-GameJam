@@ -90,8 +90,10 @@ public sealed class CardHandLineVisualizer : MonoBehaviour
 
     private LineBinding CreateBinding(int index)
     {
-        GameObject instance = new($"CardHandLine_{index}");
-        instance.layer = gameObject.layer;
+        GameObject instance = new($"CardHandLine_{index}")
+        {
+            layer = gameObject.layer
+        };
         instance.transform.SetParent(transform, false);
 
         LineRenderer lineRenderer = instance.AddComponent<LineRenderer>();

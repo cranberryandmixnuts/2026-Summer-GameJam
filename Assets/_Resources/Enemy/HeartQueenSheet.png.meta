@@ -1,0 +1,743 @@
+fileFormatVersion: 2
+guid: d3725bd3985c10e4ba5424bd3317fa67
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2411864438623880776
+    second: HeartQueenSheet_0
+  - first:
+      213: -8686871850143144818
+    second: HeartQueenSheet_1
+  - first:
+      213: -2683730973889354695
+    second: HeartQueenSheet_2
+  - first:
+      213: 2779418414741261496
+    second: HeartQueenSheet_3
+  - first:
+      213: 7759576446720788080
+    second: HeartQueenSheet_4
+  - first:
+      213: 5631951412192054850
+    second: HeartQueenSheet_5
+  - first:
+      213: 6322726969353085205
+    second: HeartQueenSheet_6
+  - first:
+      213: -7793043080874761377
+    second: HeartQueenSheet_7
+  - first:
+      213: 2801474975480028927
+    second: HeartQueenSheet_8
+  - first:
+      213: -9121575949933571385
+    second: HeartQueenSheet_9
+  - first:
+      213: -7815566742579128964
+    second: HeartQueenSheet_10
+  - first:
+      213: -2381035458897386292
+    second: HeartQueenSheet_11
+  - first:
+      213: 8603167326678398123
+    second: HeartQueenSheet_12
+  - first:
+      213: -560544928440714243
+    second: HeartQueenSheet_13
+  - first:
+      213: -7943105620854405349
+    second: HeartQueenSheet_14
+  - first:
+      213: -3133177422839901397
+    second: HeartQueenSheet_15
+  - first:
+      213: -8763118700740075912
+    second: HeartQueenSheet_16
+  - first:
+      213: -3812640901863275690
+    second: HeartQueenSheet_17
+  - first:
+      213: -5499977880099529992
+    second: HeartQueenSheet_18
+  - first:
+      213: 5422561815074539526
+    second: HeartQueenSheet_19
+  - first:
+      213: 6398072678843071257
+    second: HeartQueenSheet_20
+  - first:
+      213: 1338614362634630274
+    second: HeartQueenSheet_21
+  - first:
+      213: -3988912523350477758
+    second: HeartQueenSheet_22
+  - first:
+      213: -5956614866210172253
+    second: HeartQueenSheet_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HeartQueenSheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 155
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 846c296ade9a87120800000000000000
+      internalID: 2411864438623880776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_1
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 155
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e84a0eac318027780800000000000000
+      internalID: -8686871850143144818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_2
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 155
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 934ac94f5e871cad0800000000000000
+      internalID: -2683730973889354695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_3
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 155
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bc05dc725a729620800000000000000
+      internalID: 2779418414741261496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_4
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 155
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 076c7429aad8fab60800000000000000
+      internalID: 7759576446720788080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_5
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 155
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24e87f358f5b82e40800000000000000
+      internalID: 5631951412192054850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 104
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 511a21ceda6deb750800000000000000
+      internalID: 6322726969353085205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_7
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 104
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f53e4257b9c89d390800000000000000
+      internalID: -7793043080874761377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_8
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 104
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffe12a8b5a6d0e620800000000000000
+      internalID: 2801474975480028927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_9
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 104
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c296707007a96180800000000000000
+      internalID: -9121575949933571385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_10
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 104
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c75d63ec477898390800000000000000
+      internalID: -7815566742579128964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_11
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 104
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc4efca8ddcd4fed0800000000000000
+      internalID: -2381035458897386292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 53
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba4b9e12a17946770800000000000000
+      internalID: 8603167326678398123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_13
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 53
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfbf4a38b5b8838f0800000000000000
+      internalID: -560544928440714243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_14
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 53
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b17809fa58b64c190800000000000000
+      internalID: -7943105620854405349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_15
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 53
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b239a55fbb7b484d0800000000000000
+      internalID: -3133177422839901397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_16
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 53
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87e1ecd78f5236680800000000000000
+      internalID: -8763118700740075912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_17
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 53
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 653805ccc47c61bc0800000000000000
+      internalID: -3812640901863275690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fa592812472ca3b0800000000000000
+      internalID: -5499977880099529992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_19
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 2
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6088d18ad3fc04b40800000000000000
+      internalID: 5422561815074539526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_20
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 2
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91bb295f3358ac850800000000000000
+      internalID: 6398072678843071257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_21
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 2
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 284b218aba6b39210800000000000000
+      internalID: 1338614362634630274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_22
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 2
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2447695b13984a8c0800000000000000
+      internalID: -3988912523350477758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HeartQueenSheet_23
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 2
+        width: 53
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a25bb3b65ad55da0800000000000000
+      internalID: -5956614866210172253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: dec7a9f6815df4940bd9154c9ed7d736
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":4.0},"gridSpriteSize":{"x":53.0,"y":51.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      HeartQueenSheet_0: 2411864438623880776
+      HeartQueenSheet_1: -8686871850143144818
+      HeartQueenSheet_10: -7815566742579128964
+      HeartQueenSheet_11: -2381035458897386292
+      HeartQueenSheet_12: 8603167326678398123
+      HeartQueenSheet_13: -560544928440714243
+      HeartQueenSheet_14: -7943105620854405349
+      HeartQueenSheet_15: -3133177422839901397
+      HeartQueenSheet_16: -8763118700740075912
+      HeartQueenSheet_17: -3812640901863275690
+      HeartQueenSheet_18: -5499977880099529992
+      HeartQueenSheet_19: 5422561815074539526
+      HeartQueenSheet_2: -2683730973889354695
+      HeartQueenSheet_20: 6398072678843071257
+      HeartQueenSheet_21: 1338614362634630274
+      HeartQueenSheet_22: -3988912523350477758
+      HeartQueenSheet_23: -5956614866210172253
+      HeartQueenSheet_3: 2779418414741261496
+      HeartQueenSheet_4: 7759576446720788080
+      HeartQueenSheet_5: 5631951412192054850
+      HeartQueenSheet_6: 6322726969353085205
+      HeartQueenSheet_7: -7793043080874761377
+      HeartQueenSheet_8: 2801474975480028927
+      HeartQueenSheet_9: -9121575949933571385
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

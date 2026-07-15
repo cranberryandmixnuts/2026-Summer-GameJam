@@ -32,8 +32,8 @@ Transform:
   m_GameObject: {fileID: 8775158816998203423}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -288,7 +288,7 @@ MonoBehaviour:
         muzzle: {fileID: 4843542327885399348}
         projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
         projectileDamage: 1
-        projectileSpeed: 6
+        projectileSpeed: 30
         initialDelay: 0.5
         minimumShotInterval: 3
         maximumShotInterval: 6

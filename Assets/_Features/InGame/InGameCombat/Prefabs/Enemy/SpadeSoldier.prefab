@@ -32,8 +32,8 @@ Transform:
   m_GameObject: {fileID: 7952293206075562448}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.63556, y: 0.23956, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -222,7 +222,7 @@ MonoBehaviour:
             rid: 4264142789152604246
     - id: 0e7f2d13d84f475b97ae1cf1688a03b0
       name: FanMeleeAttack
-      editorPosition: {x: 272.66666, y: 208.6666}
+      editorPosition: {x: 275.3333, y: 208.6666}
       executionMode: 0
       loopSequence: 0
       actions:
