@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StoneCardBaseStatus
   m_EditorClassIdentifier: Assembly-CSharp::CardBaseStatus
   _baseDamage: 120
-  _additionalMultiplier: 0
+  _additionalMultiplier: 5
   _isJoker: 0
   _isSpecial: 1
   _isBlockingAttachment: 1

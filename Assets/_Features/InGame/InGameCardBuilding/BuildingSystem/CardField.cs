@@ -104,9 +104,6 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 	public bool PlaceCard(GameObject target, Card card) {
 
-		FinalBaseDamage += card.BaseStatus.BaseDamage;
-		FinalMultiplier += card.BaseStatus.AdditionalMultiplier;
-
 		var releasedWorldPosition = card.transform.position;
 		var targetLocalPosition = target.transform.localPosition;
 
@@ -154,7 +151,18 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 		CardsChanged?.Invoke();
 
+		UpdateStatus();
+
 		return true;
+
+	}
+
+	public void UpdateStatus() {
+		
+		FinalBaseDamage = TotalCards.Sum(card => card.BaseStatus.BaseDamage);
+		FinalMultiplier = TotalCards.Sum(card => card.BaseStatus.AdditionalMultiplier) + 1f;
+		CardStatusTextDisplay.Instance.UpdateBaseDamage(FinalBaseDamage);
+		CardStatusTextDisplay.Instance.UpdateMultiplier(FinalMultiplier);
 
 	}
 
@@ -217,6 +225,8 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 		RescaleAndMove();
 		Initialize();
 
+		UpdateStatus();
+
     }
 
 	private void Initialize() {
@@ -233,6 +243,9 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 		RedrawSlots();
 
 		RescaleAndMove();
+
+		CardStatusTextDisplay.Instance.UpdateBaseDamage(0f);
+		CardStatusTextDisplay.Instance.UpdateMultiplier(1f);
 
 	}
 

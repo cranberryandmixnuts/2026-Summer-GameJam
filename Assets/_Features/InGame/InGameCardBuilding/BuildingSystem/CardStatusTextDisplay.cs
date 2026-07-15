@@ -8,7 +8,7 @@ public class CardStatusTextDisplay : SingletonBehaviour<CardStatusTextDisplay, S
 	private TMP_Text _text;
 
 	private float _baseDamage;
-	private float _multiplier;
+	private float _multiplier = 1f;
 
 	private Tween _baseDamageTween;
 	private Tween _multiplierTween;
@@ -19,6 +19,14 @@ public class CardStatusTextDisplay : SingletonBehaviour<CardStatusTextDisplay, S
 		_text = GetComponent<TMP_Text>();
 	}
 
+	private void Update() {
+		
+		_text.text =
+			$"데미지: {_baseDamage:0.00}\n" +
+			$"배수: {_multiplier:0.00}\n";
+
+	}
+
 	//======================================================================| Methods
 
 	public void UpdateBaseDamage(float value) {
@@ -26,8 +34,8 @@ public class CardStatusTextDisplay : SingletonBehaviour<CardStatusTextDisplay, S
 		_baseDamageTween = DOTween.To(
 			() => _baseDamage,
 			x => _baseDamage = x,
-			value, 0.25f
-		).SetEase(Ease.OutExpo);
+			value, 0.5f
+		).SetEase(Ease.OutQuad);
 	}
 
 	public void UpdateMultiplier(float value) {
@@ -35,8 +43,8 @@ public class CardStatusTextDisplay : SingletonBehaviour<CardStatusTextDisplay, S
 		_multiplierTween = DOTween.To(
 			() => _multiplier,
 			x => _multiplier = x,
-			value, 0.25f
-		).SetEase(Ease.OutExpo);
+			value, 0.5f
+		).SetEase(Ease.OutQuad);
 	}
 
 }

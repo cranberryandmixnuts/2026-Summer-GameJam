@@ -104,8 +104,7 @@ public abstract class Card : MonoBehaviour,
 	}
 
 	public void OnPointerExit(PointerEventData eventData) {
-		if (!IsGrabed)
-			IsHovered = false;
+		if (!IsGrabed) IsHovered = false;
 	}
 
 	public void OnPointerDown(PointerEventData eventData) {
