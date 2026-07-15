@@ -8,10 +8,10 @@ using UnityEngine;
 )]
 public sealed class FourCardHandRule : CardHandRule
 {
-    private const string FourCardId = "poker.four-of-a-kind";
-    private const string FourCardPlusId = "poker.four-of-a-kind-plus";
-    private const string FourCardPlusPlusId = "poker.four-of-a-kind-plus-plus";
-    private const string FourCardPlusPlusPlusId = "poker.four-of-a-kind-plus-plus-plus";
+    public const string FourCardId = "poker.four-of-a-kind";
+    public const string FourCardPlusId = "poker.four-of-a-kind-plus";
+    public const string FourCardPlusPlusId = "poker.four-of-a-kind-plus-plus";
+    public const string FourCardPlusPlusPlusId = "poker.four-of-a-kind-plus-plus-plus";
     private const int FourCardPriority = 600;
     private const int FourCardPlusPriority = 601;
     private const int FourCardPlusPlusPriority = 602;

@@ -152,6 +152,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 		CardsChanged?.Invoke();
 
 		UpdateStatus();
+		CardStatusTextDisplay.Instance.UpdateMatches();
 
 		return true;
 
@@ -250,6 +251,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 		CardStatusTextDisplay.Instance.UpdateBaseDamage(0f);
 		CardStatusTextDisplay.Instance.UpdateMultiplier(1f);
+		CardStatusTextDisplay.Instance.RemoveMatches();
 
 	}
 

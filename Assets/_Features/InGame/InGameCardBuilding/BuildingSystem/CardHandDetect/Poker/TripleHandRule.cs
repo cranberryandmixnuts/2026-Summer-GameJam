@@ -8,9 +8,9 @@ using UnityEngine;
 )]
 public sealed class TripleHandRule : CardHandRule
 {
-    private const string TripleId = "poker.three-of-a-kind";
-    private const string TriplePlusId = "poker.three-of-a-kind-plus";
-    private const string TriplePlusPlusId = "poker.three-of-a-kind-plus-plus";
+    public const string TripleId = "poker.three-of-a-kind";
+    public const string TriplePlusId = "poker.three-of-a-kind-plus";
+    public const string TriplePlusPlusId = "poker.three-of-a-kind-plus-plus";
     private const int TriplePriority = 200;
     private const int TriplePlusPriority = 201;
     private const int TriplePlusPlusPriority = 202;

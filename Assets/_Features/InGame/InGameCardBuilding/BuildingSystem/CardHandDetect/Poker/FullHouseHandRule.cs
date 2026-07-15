@@ -8,11 +8,11 @@ using UnityEngine;
 )]
 public sealed class FullHouseHandRule : CardHandRule
 {
-    private const string FullHouseId = "poker.full-house";
-    private const string FullHousePlusId = "poker.full-house-plus";
-    private const string FullHousePlusPlusId = "poker.full-house-plus-plus";
-    private const string PerfectFullHouseId = "poker.perfect-full-house";
-    private const string PerfectFullHousePlusId = "poker.perfect-full-house-plus";
+    public const string FullHouseId = "poker.full-house";
+    public const string FullHousePlusId = "poker.full-house-plus";
+    public const string FullHousePlusPlusId = "poker.full-house-plus-plus";
+    public const string PerfectFullHouseId = "poker.perfect-full-house";
+    public const string PerfectFullHousePlusId = "poker.perfect-full-house-plus";
     private const int FullHousePriority = 500;
     private const int FullHousePlusPriority = 501;
     private const int FullHousePlusPlusPriority = 502;
