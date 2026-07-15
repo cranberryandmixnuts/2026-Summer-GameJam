@@ -24,7 +24,7 @@ public sealed class EnemySpawner : MonoBehaviour
     [SerializeField, Required] private CombatBounds combatBounds;
     [SerializeField, Required] private DespawnBounds despawnBounds;
     [SerializeField, Required] private Image timerFillImage;
-    [SerializeField, Required] private GameObject completionPrefab;
+    [SerializeField, Required] private GameObject bossPrefab;
     [SerializeField, ValidateInput(nameof(HasSpawnEntries), "적 프리팹을 하나 이상 등록해야 합니다.")]
     private SpawnEntry[] spawnEntries;
     [SerializeField, MinValue(0f)] private float initialDelay = 1f;
@@ -128,7 +128,7 @@ public sealed class EnemySpawner : MonoBehaviour
     private GameObject SpawnCompletionPrefab()
     {
         Vector2 position = spawnArea.bounds.center;
-        return SpawnPrefab(completionPrefab, position);
+        return SpawnPrefab(bossPrefab, position);
     }
 
     private GameObject SpawnPrefab(GameObject prefab, Vector2 position)
