@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public sealed class GameManager : MonoBehaviour
@@ -23,15 +23,14 @@ public sealed class GameManager : MonoBehaviour
     [SerializeField, Required] private CombatBridge combatBridge;
     [SerializeField, Required] private CombatBounds combatBounds;
     [SerializeField, Required] private DespawnBounds despawnBounds;
-    [SerializeField, Required] private Image timerFillImage;
     [SerializeField, Required] private RectTransform healthBarsRoot;
     [SerializeField, Required] private EnemyHealthBar healthBarPrefab;
     [SerializeField, Required] private Camera worldCamera;
     [SerializeField] private Vector3 healthBarOffset = new(0f, 1f, 0f);
 
-    [TitleGroup("엔딩")]
-    [SerializeField, Required, LabelText("성공 화면")]
-    private GameObject successEndingObject;
+    [TitleGroup("UI")]
+    [SerializeField, Required, LabelText("경과 시간 텍스트")]
+    private TMP_Text elapsedTimeText;
 
     [TitleGroup("엔딩")]
     [SerializeField, Required, LabelText("실패 화면")]
@@ -41,13 +40,10 @@ public sealed class GameManager : MonoBehaviour
     [SerializeField, Required, LabelText("설정창 열기 오브젝트")]
     private GameObject settingsOpenObject;
 
-    [SerializeField, Required] private GameObject bossPrefab;
-
     [SerializeField, ValidateInput(nameof(HasSpawnEntries), "적 프리팹을 하나 이상 등록해야 합니다.")]
     private SpawnEntry[] spawnEntries;
 
     [SerializeField, MinValue(0f)] private float initialDelay = 1f;
-    [SerializeField, MinValue(0.01f)] private float spawnDuration = 360f;
     [SerializeField, MinValue(0.01f)] private float minimumSpawnInterval = 1f;
 
     [SerializeField, MinValue(0.01f), ValidateInput(nameof(IsValidMaximumSpawnInterval), "최대 스폰 간격은 최소 스폰 간격 이상이어야 합니다.")]
@@ -58,8 +54,8 @@ public sealed class GameManager : MonoBehaviour
     private float minimumInternalDifficultyFactor = 1f;
 
     [TitleGroup("난이도")]
-    [SerializeField, MinValue(EnemyDifficultyUtility.MinimumDifficultyFactor), LabelText("최대 내부 난이도 인수"), ValidateInput(nameof(IsValidMaximumInternalDifficulty), "최대 내부 난이도 인수는 최소 내부 난이도 인수 이상이어야 합니다.")]
-    private float maximumInternalDifficultyFactor = 1f;
+    [SerializeField, MinValue(0f), LabelText("초당 내부 난이도 인수 증가량")]
+    private float internalDifficultyIncreasePerSecond = 0.01f;
 
     [SerializeField] private bool spawnOnEnable = true;
 
@@ -75,8 +71,8 @@ public sealed class GameManager : MonoBehaviour
 
     private Coroutine spawnRoutine;
     private EnemyRuntimeContext runtimeContext;
-    private EnemyHealth bossHealth;
     private float totalWeight;
+    private int displayedElapsedSeconds = -1;
     private bool hasGameEnded;
 
     private void Awake()
@@ -92,8 +88,7 @@ public sealed class GameManager : MonoBehaviour
         for (int i = 0; i < spawnEntries.Length; i++) totalWeight += spawnEntries[i].Weight;
 
         InternalDifficultyFactor = minimumInternalDifficultyFactor;
-        timerFillImage.fillAmount = 0f;
-        successEndingObject.SetActive(false);
+        UpdateElapsedTimeText(0f);
         failureEndingObject.SetActive(false);
         combatBridge.PlayerDied += HandlePlayerDied;
     }
@@ -105,11 +100,7 @@ public sealed class GameManager : MonoBehaviour
 
     private void OnDisable() => StopSpawning();
 
-    private void OnDestroy()
-    {
-        combatBridge.PlayerDied -= HandlePlayerDied;
-        UnsubscribeBossHealth();
-    }
+    private void OnDestroy() => combatBridge.PlayerDied -= HandlePlayerDied;
 
     public void StartSpawning()
     {
@@ -136,26 +127,24 @@ public sealed class GameManager : MonoBehaviour
             UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
             UnityEngine.Random.Range(bounds.min.y, bounds.max.y));
 
-        return SpawnPrefab(entry.Prefab, position, out _);
+        return SpawnPrefab(entry.Prefab, position);
     }
 
     private IEnumerator SpawnSequence()
     {
         InternalDifficultyFactor = minimumInternalDifficultyFactor;
-        timerFillImage.fillAmount = 0f;
+        UpdateElapsedTimeText(0f);
 
         if (initialDelay > 0f) yield return new WaitForSeconds(initialDelay);
 
         float elapsedTime = 0f;
         float nextSpawnTime = 0f;
 
-        while (elapsedTime < spawnDuration)
+        while (!hasGameEnded)
         {
-            float progress = Mathf.Clamp01(elapsedTime / spawnDuration);
-            InternalDifficultyFactor = Mathf.Lerp(
-                minimumInternalDifficultyFactor,
-                maximumInternalDifficultyFactor,
-                progress);
+            InternalDifficultyFactor =
+                minimumInternalDifficultyFactor +
+                elapsedTime * internalDifficultyIncreasePerSecond;
 
             if (elapsedTime >= nextSpawnTime)
             {
@@ -164,27 +153,14 @@ public sealed class GameManager : MonoBehaviour
             }
 
             elapsedTime += Time.deltaTime;
-            timerFillImage.fillAmount = Mathf.Clamp01(elapsedTime / spawnDuration);
+            UpdateElapsedTimeText(elapsedTime);
             yield return null;
         }
 
-        InternalDifficultyFactor = maximumInternalDifficultyFactor;
-        timerFillImage.fillAmount = 1f;
-        SpawnBoss();
         spawnRoutine = null;
     }
 
-    private void SpawnBoss()
-    {
-        Vector2 position = spawnArea.bounds.center;
-        SpawnPrefab(bossPrefab, position, out bossHealth);
-        bossHealth.Died += HandleBossDied;
-    }
-
-    private GameObject SpawnPrefab(
-        GameObject prefab,
-        Vector2 position,
-        out EnemyHealth enemyHealth)
+    private GameObject SpawnPrefab(GameObject prefab, Vector2 position)
     {
         GameObject enemy = Instantiate(
             prefab,
@@ -193,7 +169,8 @@ public sealed class GameManager : MonoBehaviour
             enemiesRoot);
 
         InitializeEnemy(enemy);
-        enemyHealth = GetEnemyHealth(enemy);
+
+        EnemyHealth enemyHealth = GetEnemyHealth(enemy);
         AttachHealthBar(enemyHealth);
         return enemy;
     }
@@ -259,28 +236,29 @@ public sealed class GameManager : MonoBehaviour
         UnityEngine.Random.Range(minimumSpawnInterval, maximumSpawnInterval) /
         EnemyDifficultyUtility.ClampFactor(FinalDifficultyFactor);
 
-    private void HandlePlayerDied() => EndGame(false);
+    private void UpdateElapsedTimeText(float elapsedTime)
+    {
+        int totalSeconds = Mathf.FloorToInt(elapsedTime);
+        if (totalSeconds == displayedElapsedSeconds) return;
 
-    private void HandleBossDied(EnemyHealth _) => EndGame(true);
+        displayedElapsedSeconds = totalSeconds;
 
-    private void EndGame(bool isSuccess)
+        int hours = totalSeconds / 3600;
+        int minutes = totalSeconds / 60 % 60;
+        int seconds = totalSeconds % 60;
+        elapsedTimeText.text = $"{hours:00}:{minutes:00}:{seconds:00}";
+    }
+
+    private void HandlePlayerDied() => EndGame();
+
+    private void EndGame()
     {
         if (hasGameEnded) return;
 
         hasGameEnded = true;
         StopSpawning();
-        UnsubscribeBossHealth();
         settingsOpenObject.SetActive(false);
-        successEndingObject.SetActive(isSuccess);
-        failureEndingObject.SetActive(!isSuccess);
-    }
-
-    private void UnsubscribeBossHealth()
-    {
-        if (!bossHealth) return;
-
-        bossHealth.Died -= HandleBossDied;
-        bossHealth = null;
+        failureEndingObject.SetActive(true);
     }
 
     private bool HasSpawnEntries(SpawnEntry[] value) =>
@@ -289,16 +267,13 @@ public sealed class GameManager : MonoBehaviour
     private bool IsValidMaximumSpawnInterval(float value) =>
         value >= minimumSpawnInterval;
 
-    private bool IsValidMaximumInternalDifficulty(float value) =>
-        value >= minimumInternalDifficultyFactor;
-
     private void OnValidate()
     {
         minimumInternalDifficultyFactor = EnemyDifficultyUtility.ClampFactor(
             minimumInternalDifficultyFactor);
 
-        maximumInternalDifficultyFactor = Mathf.Max(
-            minimumInternalDifficultyFactor,
-            maximumInternalDifficultyFactor);
+        internalDifficultyIncreasePerSecond = Mathf.Max(
+            0f,
+            internalDifficultyIncreasePerSecond);
     }
 }
