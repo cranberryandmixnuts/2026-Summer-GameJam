@@ -4,7 +4,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializable
+public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
 {
     private const float PositionToleranceSquared = 0.000001f;
     private const int ProjectileCount = 4;
@@ -75,6 +75,7 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
     private float remainingPhaseTime;
     private float travelledDashDistance;
     private float transitionDelay;
+    private float difficultyFactor = 1f;
     private float movementSpeedMultiplier = 1f;
     private int currentAnimationHash;
     private bool hasCompletedEntry;
@@ -86,6 +87,11 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
     private bool isRunning;
 
     public EnemyRuntimeContext RuntimeContext { get; private set; }
+
+    public float DifficultyFactor => difficultyFactor;
+
+    public void InitializeDifficulty(float value) =>
+        difficultyFactor = EnemyDifficultyUtility.ClampFactor(value);
 
     public float TransitionDelay
     {
@@ -303,7 +309,7 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
                 muzzle.position,
                 direction,
                 projectileSpeed,
-                projectileDamage,
+                ScaleDamage(projectileDamage),
                 gameObject,
                 RuntimeContext,
                 RuntimeContext.Player);
@@ -324,7 +330,7 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
         hasHitPlayerDuringDash = true;
 
         DamageInfo damageInfo = new(
-            dashDamage,
+            ScaleDamage(dashDamage),
             gameObject,
             hitPoint,
             dashDirection);
@@ -476,6 +482,9 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         muzzle = transform;
     }
+
+    private int ScaleDamage(int baseDamage) =>
+        EnemyDifficultyUtility.ScaleStat(baseDamage, difficultyFactor);
 
     private void HandlePlayerDied() => StopBehavior();
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public abstract class Enemy : MonoBehaviour, IEnemyRuntimeInitializable
+public abstract class Enemy : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
 {
     [TitleGroup("공통 참조")]
     [SerializeField, Required] private Rigidbody2D body;
@@ -13,9 +13,11 @@ public abstract class Enemy : MonoBehaviour, IEnemyRuntimeInitializable
 
     private float transitionDelay;
     private float movementSpeedMultiplier = 1f;
+    private float difficultyFactor = 1f;
     private bool isInitialized;
 
     public EnemyRuntimeContext RuntimeContext { get; private set; }
+    public float DifficultyFactor => difficultyFactor;
     public float TransitionDelay
     {
         get => transitionDelay;
@@ -30,6 +32,9 @@ public abstract class Enemy : MonoBehaviour, IEnemyRuntimeInitializable
 
     protected Rigidbody2D Body => body;
     protected bool IsRunning { get; private set; }
+
+    public void InitializeDifficulty(float value) =>
+        difficultyFactor = EnemyDifficultyUtility.ClampFactor(value);
 
     public void Initialize(in EnemyRuntimeContext context)
     {
@@ -50,6 +55,9 @@ public abstract class Enemy : MonoBehaviour, IEnemyRuntimeInitializable
     protected virtual void OnBehaviorStopped() { }
 
     protected virtual void OnReset() { }
+
+    protected int ScaleDamage(int baseDamage) =>
+        EnemyDifficultyUtility.ScaleStat(baseDamage, difficultyFactor);
 
     protected void PlayAnimation(string stateName)
     {
