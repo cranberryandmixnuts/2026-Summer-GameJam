@@ -803,8 +803,14 @@ MonoBehaviour:
   spawnEntries:
   - Prefab: {fileID: 8775158816998203423, guid: 34f68240febe14a4998ff890cef4d180, type: 3}
     Weight: 1
+  - Prefab: {fileID: 7952293206075562448, guid: f510f2af65cfbba4b84206cdaf6eb419, type: 3}
+    Weight: 1
+  - Prefab: {fileID: 8508378361576631075, guid: c83447d88b04255419bd509786e53b36, type: 3}
+    Weight: 1
+  - Prefab: {fileID: 6790217317713472905, guid: 6a5c14d332ea99844a3c6f210f41b004, type: 3}
+    Weight: 1
   initialDelay: 0
-  spawnInterval: 3
+  spawnInterval: 9
   spawnOnEnable: 1
 --- !u!4 &614515215
 Transform:
