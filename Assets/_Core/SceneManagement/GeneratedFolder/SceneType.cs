@@ -1,5 +1,6 @@
 public enum SceneType
 {
     None = 0,
-    LobbyScene = 1,
+    MainScreen = 1,
+    InGameScene = 2,
 }
