@@ -1919,7 +1919,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
-  Canvas: {fileID: 790383845}
+  Canvas: {fileID: 790383844}
 --- !u!114 &1475639966
 MonoBehaviour:
   m_ObjectHideFlags: 0
