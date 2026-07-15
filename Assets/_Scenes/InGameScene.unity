@@ -1370,7 +1370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281f6cc2024612549b1ba354599dd137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardProvider
-  _database: {fileID: 11400000, guid: f7e19e4f8967e2e44bd5189080c5d0e5, type: 2}
+  _database: {fileID: 11400000, guid: 39ef3ac3ce536a246bf2cfd7b2cc4925, type: 2}
 --- !u!1 &1061635680
 GameObject:
   m_ObjectHideFlags: 0
