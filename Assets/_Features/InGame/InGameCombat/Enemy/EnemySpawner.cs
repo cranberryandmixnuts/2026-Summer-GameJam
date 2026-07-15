@@ -24,6 +24,10 @@ public sealed class EnemySpawner : MonoBehaviour
     [SerializeField, Required] private CombatBounds combatBounds;
     [SerializeField, Required] private DespawnBounds despawnBounds;
     [SerializeField, Required] private Image timerFillImage;
+    [SerializeField, Required] private RectTransform healthBarsRoot;
+    [SerializeField, Required] private EnemyHealthBar healthBarPrefab;
+    [SerializeField, Required] private Camera worldCamera;
+    [SerializeField] private Vector3 healthBarOffset = new(0f, 1f, 0f);
     [SerializeField, Required] private GameObject bossPrefab;
     [SerializeField, ValidateInput(nameof(HasSpawnEntries), "적 프리팹을 하나 이상 등록해야 합니다.")]
     private SpawnEntry[] spawnEntries;
@@ -140,6 +144,7 @@ public sealed class EnemySpawner : MonoBehaviour
             enemiesRoot);
 
         InitializeEnemy(enemy);
+        AttachHealthBar(enemy);
         return enemy;
     }
 
@@ -167,6 +172,17 @@ public sealed class EnemySpawner : MonoBehaviour
     private void InitializeComponent(MonoBehaviour component)
     {
         if (component is IEnemyRuntimeInitializable initializable) initializable.Initialize(runtimeContext);
+    }
+
+    private void AttachHealthBar(GameObject enemy)
+    {
+        EnemyHealth enemyHealth = enemy.GetComponentInChildren<EnemyHealth>(true);
+
+        if (enemyHealth == null)
+            throw new MissingComponentException($"{enemy.name}에 {nameof(EnemyHealth)}가 없습니다.");
+
+        EnemyHealthBar healthBar = Instantiate(healthBarPrefab, healthBarsRoot);
+        healthBar.Initialize(enemyHealth, healthBarsRoot, worldCamera, healthBarOffset);
     }
 
     private void HandlePlayerDied()
