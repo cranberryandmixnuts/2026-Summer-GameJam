@@ -51,6 +51,10 @@ public class CardAnimator : MonoBehaviour {
 
 	//======================================================================| Methods
 
+	public void RemoveAngle() {
+		_maxTiltAngle = 0f;
+	}
+
 	private void UpdateMouseTilt() {
 
 		Quaternion targetRotation;

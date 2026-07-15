@@ -191,10 +191,9 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 		parent.transform.position = (_cardField.transform as RectTransform).GetGlobalBounds().center;
 
 		foreach (var card in TotalCards) {
+			card.GetComponent<CardAnimator>().RemoveAngle();
 			card.transform.SetParent(parent.transform, false);
 		}
-
-
 
 		OnCardThrow.Invoke(new(
 			FinalBaseDamage * multiplier,
