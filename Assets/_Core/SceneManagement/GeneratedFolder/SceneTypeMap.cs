@@ -18,7 +18,7 @@ public static class SceneTypeMap
     private static readonly bool[] EnabledInBuildSettings =
     {
         false,
-        true,
+        false,
     };
 
     private static readonly Dictionary<string, SceneType> NameToType = new(StringComparer.Ordinal)

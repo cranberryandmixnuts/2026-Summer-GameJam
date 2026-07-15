@@ -6,7 +6,7 @@ public sealed class CombatBridge : SingletonBehaviour<CombatBridge, SceneScope>
     [SerializeField, Min(EnemyDifficultyUtility.MinimumDifficultyFactor), InspectorName("외부 난이도 인수")]
     private float externalDifficultyFactor = 1f;
 
-    public event Action<float> PlayerDamaged;
+    public static event Action<float> PlayerDamaged;
     public event Action PlayerDied;
     public event Action FireRequested;
 

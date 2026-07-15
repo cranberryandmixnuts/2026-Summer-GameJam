@@ -47,7 +47,9 @@ public class DrawTimer : SingletonBehaviour<DrawTimer, SceneScope> {
 		
 			if (CurrentDrawCooldown <= 0f) {
 				CurrentDrawCooldown += DrawCooldown;
-				OnDrawTiming?.Invoke();
+				if (PlayerHand.Instance.Cards.Count < PlayerHand.Instance.HandCardLimit) {
+					OnDrawTiming?.Invoke();
+				}
 			}
 
 			yield return null;
