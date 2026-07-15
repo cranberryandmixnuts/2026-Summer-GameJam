@@ -17,11 +17,11 @@ public class DeathEffect : MonoBehaviour {
 	}
 
 	private void OnEnable() {
-		CombatBridge.Instance.PlayerDamaged += Instance_PlayerDamaged;
+		CombatBridge.PlayerDamaged += Instance_PlayerDamaged;
 	}
 
 	private void OnDisable() {
-		CombatBridge.Instance.PlayerDamaged -= Instance_PlayerDamaged;
+		CombatBridge.PlayerDamaged -= Instance_PlayerDamaged;
 	}
 
 	private void Instance_PlayerDamaged(float range) => _daethValue = 1f - range;

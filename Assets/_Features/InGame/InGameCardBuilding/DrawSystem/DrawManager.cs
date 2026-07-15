@@ -3,11 +3,11 @@ public class DrawManager : SingletonBehaviour<DrawManager, SceneScope> {
 	//======================================================================| Unity Methods
 
 	private void OnEnable() {
-		DrawTimer.OnDrawTiming += DrawAnyNormal;
+		DrawTimer.OnDrawTiming += DrawAny;
 	}
 
 	private void OnDisable() {
-		DrawTimer.OnDrawTiming -= DrawAnyNormal;
+		DrawTimer.OnDrawTiming -= DrawAny;
 	}
 
 	//======================================================================| Methods
