@@ -34,21 +34,25 @@ public class DrawTimer : SingletonBehaviour<DrawTimer, SceneScope> {
 
 		CurrentDrawCooldown = _drawCooldown;
 
-		StopCoroutine(_drawTimingRoutine);
+		if (_drawTimingRoutine != null) StopCoroutine(_drawTimingRoutine);
 		_drawTimingRoutine = StartCoroutine(DrawTiming());
 
 	}
 
 	private IEnumerator DrawTiming() {
 		
-		CurrentDrawCooldown -= Time.deltaTime * DrawCooldownTimeScale;
+		while(true) {
 		
-		if (CurrentDrawCooldown <= 0f) {
-			CurrentDrawCooldown += DrawCooldown;
-			OnDrawTiming?.Invoke();
-		}
+			CurrentDrawCooldown -= Time.deltaTime * DrawCooldownTimeScale;
+		
+			if (CurrentDrawCooldown <= 0f) {
+				CurrentDrawCooldown += DrawCooldown;
+				OnDrawTiming?.Invoke();
+			}
 
-		yield return null;
+			yield return null;
+
+		}
 
 	}
 
