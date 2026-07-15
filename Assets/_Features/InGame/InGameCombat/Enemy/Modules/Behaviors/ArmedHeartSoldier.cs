@@ -1,0 +1,337 @@
+using Sirenix.OdinInspector;
+using UnityEngine;
+
+[DisallowMultipleComponent]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
+public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializable
+{
+    private const float PositionToleranceSquared = 0.000001f;
+    private const int ProjectileCount = 4;
+
+    private enum Phase
+    {
+        Waiting,
+        Dashing,
+        Recovering
+    }
+
+    [TitleGroup("참조")]
+    [SerializeField, Required] private Rigidbody2D body;
+    [TitleGroup("참조")]
+    [SerializeField, Required] private Collider2D bodyCollider;
+    [TitleGroup("참조")]
+    [SerializeField, Required] private Transform muzzle;
+    [TitleGroup("참조")]
+    [SerializeField, Required] private EnemyProjectile projectilePrefab;
+
+    [TitleGroup("공격 주기")]
+    [SerializeField, MinValue(0.01f), HorizontalGroup("공격 주기/간격"), LabelText("최소")]
+    private float minimumAttackInterval = 3f;
+    [TitleGroup("공격 주기")]
+    [SerializeField, MinValue(0.01f), HorizontalGroup("공격 주기/간격"), LabelText("최대")]
+    private float maximumAttackInterval = 6f;
+    [TitleGroup("공격 주기")]
+    [SerializeField, MinValue(0f), SuffixLabel("초")] private float recoveryDuration = 0.2f;
+
+    [TitleGroup("관통 돌진")]
+    [SerializeField, MinValue(1)] private int dashDamage = 1;
+    [TitleGroup("관통 돌진")]
+    [SerializeField, MinValue(0.01f)] private float dashSpeed = 8f;
+    [TitleGroup("관통 돌진")]
+    [SerializeField, MinValue(0.01f)] private float maximumDashDistance = 4f;
+
+    [TitleGroup("4방향 유도 사격")]
+    [SerializeField, MinValue(1)] private int projectileDamage = 1;
+    [TitleGroup("4방향 유도 사격")]
+    [SerializeField, MinValue(0.01f)] private float projectileSpeed = 6f;
+
+    private readonly RaycastHit2D[] castResults = new RaycastHit2D[8];
+
+    private ContactFilter2D playerContactFilter;
+    private Phase phase;
+    private Vector2 dashDirection;
+    private float remainingPhaseTime;
+    private float travelledDashDistance;
+    private float transitionDelay;
+    private float movementSpeedMultiplier = 1f;
+    private bool hasHitPlayerDuringDash;
+    private bool playerCollisionWasIgnored;
+    private bool collisionOverrideActive;
+    private bool isInitialized;
+    private bool isRunning;
+
+    public EnemyRuntimeContext RuntimeContext { get; private set; }
+    public float TransitionDelay
+    {
+        get => transitionDelay;
+        set => transitionDelay = Mathf.Max(0f, value);
+    }
+
+    public float MovementSpeedMultiplier
+    {
+        get => movementSpeedMultiplier;
+        set => movementSpeedMultiplier = Mathf.Max(0f, value);
+    }
+
+    public void Initialize(in EnemyRuntimeContext context)
+    {
+        if (isInitialized)
+        {
+            StopBehavior();
+            RuntimeContext.CombatBridge.PlayerDied -= HandlePlayerDied;
+        }
+
+        RuntimeContext = context;
+        isInitialized = true;
+        RuntimeContext.CombatBridge.PlayerDied += HandlePlayerDied;
+        StartBehavior();
+    }
+
+    private void Update()
+    {
+        if (!isRunning || phase == Phase.Dashing) return;
+
+        remainingPhaseTime -= Time.deltaTime;
+        if (remainingPhaseTime > 0f) return;
+
+        if (phase == Phase.Waiting)
+        {
+            BeginDash();
+            return;
+        }
+
+        BeginWaiting(true);
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isRunning || phase != Phase.Dashing) return;
+
+        UpdateDash();
+    }
+
+    private void BeginDash()
+    {
+        Vector2 playerOffset = (Vector2)RuntimeContext.PlayerCollider.bounds.center - body.position;
+
+        dashDirection = playerOffset.sqrMagnitude > Mathf.Epsilon
+            ? playerOffset.normalized
+            : (Vector2)transform.up;
+        playerContactFilter = new ContactFilter2D
+        {
+            useLayerMask = true,
+            layerMask = 1 << RuntimeContext.PlayerCollider.gameObject.layer,
+            useTriggers = true
+        };
+        phase = Phase.Dashing;
+        travelledDashDistance = 0f;
+        hasHitPlayerDuringDash = false;
+        body.linearVelocity = Vector2.zero;
+
+        if (!IsInsideCombatBounds(body.position))
+        {
+            CompleteDash();
+            return;
+        }
+
+        playerCollisionWasIgnored = Physics2D.GetIgnoreCollision(
+            bodyCollider,
+            RuntimeContext.PlayerCollider);
+        collisionOverrideActive = true;
+        Physics2D.IgnoreCollision(bodyCollider, RuntimeContext.PlayerCollider, true);
+        TryDamagePlayer(0f, out _);
+    }
+
+    private void UpdateDash()
+    {
+        float remainingDistance = maximumDashDistance - travelledDashDistance;
+
+        if (remainingDistance <= Mathf.Epsilon)
+        {
+            CompleteDash();
+            return;
+        }
+
+        float requestedDistance = Mathf.Min(
+            dashSpeed * MovementSpeedMultiplier * Time.fixedDeltaTime,
+            remainingDistance);
+        Vector2 currentPosition = body.position;
+        Vector2 targetPosition = currentPosition + dashDirection * requestedDistance;
+        Vector2 clampedPosition = RuntimeContext.CombatBounds.Clamp(
+            currentPosition,
+            targetPosition,
+            bodyCollider);
+        float movementDistance = Vector2.Distance(currentPosition, clampedPosition);
+        bool reachedCombatBounds =
+            (clampedPosition - targetPosition).sqrMagnitude > PositionToleranceSquared;
+
+        TryDamagePlayer(movementDistance, out _);
+        if (!isRunning) return;
+
+        if (movementDistance > Mathf.Epsilon) body.MovePosition(clampedPosition);
+
+        travelledDashDistance += movementDistance;
+        if (reachedCombatBounds || maximumDashDistance - travelledDashDistance <= Mathf.Epsilon)
+            CompleteDash();
+    }
+
+    private void CompleteDash()
+    {
+        RestorePlayerCollision();
+        body.linearVelocity = Vector2.zero;
+        FireFourWayProjectiles();
+        phase = Phase.Recovering;
+        remainingPhaseTime = recoveryDuration;
+
+        if (remainingPhaseTime <= 0f) BeginWaiting(true);
+    }
+
+    private void FireFourWayProjectiles()
+    {
+        float angleStep = 360f / ProjectileCount;
+
+        for (int index = 0; index < ProjectileCount; index++)
+        {
+            Vector2 direction = Quaternion.Euler(0f, 0f, angleStep * index) * muzzle.right;
+            EnemyProjectile projectile = Instantiate(
+                projectilePrefab,
+                muzzle.position,
+                Quaternion.identity);
+            projectile.Launch(
+                muzzle.position,
+                direction,
+                projectileSpeed,
+                projectileDamage,
+                gameObject,
+                RuntimeContext,
+                RuntimeContext.Player);
+        }
+    }
+
+    private bool TryDamagePlayer(float castDistance, out float hitDistance)
+    {
+        hitDistance = 0f;
+        if (hasHitPlayerDuringDash) return false;
+
+        Physics2D.IgnoreCollision(bodyCollider, RuntimeContext.PlayerCollider, false);
+        bool hasHit = TryGetPlayerHitPoint(castDistance, out Vector2 hitPoint, out hitDistance);
+        Physics2D.IgnoreCollision(bodyCollider, RuntimeContext.PlayerCollider, true);
+
+        if (!hasHit) return false;
+
+        hasHitPlayerDuringDash = true;
+        DamageInfo damageInfo = new(dashDamage, gameObject, hitPoint, dashDirection);
+        RuntimeContext.PlayerHealth.TryTakeDamage(damageInfo);
+        return true;
+    }
+
+    private bool TryGetPlayerHitPoint(
+        float castDistance,
+        out Vector2 hitPoint,
+        out float hitDistance)
+    {
+        if (bodyCollider.Distance(RuntimeContext.PlayerCollider).isOverlapped)
+        {
+            hitPoint = RuntimeContext.PlayerCollider.ClosestPoint(bodyCollider.bounds.center);
+            hitDistance = 0f;
+            return true;
+        }
+
+        if (castDistance <= Mathf.Epsilon)
+        {
+            hitPoint = default;
+            hitDistance = default;
+            return false;
+        }
+
+        int hitCount = bodyCollider.Cast(
+            dashDirection,
+            playerContactFilter,
+            castResults,
+            castDistance);
+
+        for (int index = 0; index < hitCount; index++)
+        {
+            if (castResults[index].collider != RuntimeContext.PlayerCollider) continue;
+
+            hitPoint = castResults[index].point;
+            hitDistance = castResults[index].distance;
+            return true;
+        }
+
+        hitPoint = default;
+        hitDistance = default;
+        return false;
+    }
+
+    private bool IsInsideCombatBounds(Vector2 position)
+    {
+        Vector2 clampedPosition = RuntimeContext.CombatBounds.Clamp(
+            body.position,
+            position,
+            bodyCollider);
+        return (clampedPosition - position).sqrMagnitude <= PositionToleranceSquared;
+    }
+
+    private void BeginWaiting(bool includeTransitionDelay)
+    {
+        phase = Phase.Waiting;
+        remainingPhaseTime = Random.Range(minimumAttackInterval, maximumAttackInterval);
+        if (includeTransitionDelay) remainingPhaseTime += TransitionDelay;
+    }
+
+    private void StartBehavior()
+    {
+        isRunning = true;
+        BeginWaiting(false);
+    }
+
+    private void StopBehavior()
+    {
+        isRunning = false;
+        phase = Phase.Waiting;
+        RestorePlayerCollision();
+        body.linearVelocity = Vector2.zero;
+        body.angularVelocity = 0f;
+    }
+
+    private void RestorePlayerCollision()
+    {
+        if (!collisionOverrideActive) return;
+
+        Physics2D.IgnoreCollision(
+            bodyCollider,
+            RuntimeContext.PlayerCollider,
+            playerCollisionWasIgnored);
+        collisionOverrideActive = false;
+    }
+
+    private void OnEnable()
+    {
+        if (!isInitialized || isRunning) return;
+
+        StartBehavior();
+    }
+
+    private void OnDisable() => StopBehavior();
+
+    private void OnDestroy()
+    {
+        if (!isInitialized) return;
+
+        RuntimeContext.CombatBridge.PlayerDied -= HandlePlayerDied;
+    }
+
+    private void OnValidate() =>
+        maximumAttackInterval = Mathf.Max(minimumAttackInterval, maximumAttackInterval);
+
+    private void Reset()
+    {
+        body = GetComponent<Rigidbody2D>();
+        bodyCollider = GetComponent<Collider2D>();
+        muzzle = transform;
+    }
+
+    private void HandlePlayerDied() => StopBehavior();
+}

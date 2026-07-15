@@ -8,7 +8,7 @@ public sealed class HomingEnemyProjectile : EnemyProjectile
     [SerializeField, Required] private Rigidbody2D body;
     [SerializeField, Required] private Collider2D bodyCollider;
     [SerializeField] private LayerMask targetLayers;
-    [SerializeField, MinValue(0f), SuffixLabel("°/s")] private float trackingSpeed = 180f;
+    [SerializeField, MinValue(0f), SuffixLabel("°/s")] private float trackingSpeed = 60f;
 
     private float movementSpeed;
 
