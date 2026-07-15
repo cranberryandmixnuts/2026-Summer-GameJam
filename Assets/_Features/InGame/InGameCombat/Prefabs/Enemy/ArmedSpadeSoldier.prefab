@@ -370,6 +370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArmedSpadeSoldier
   body: {fileID: 4953755834393230172}
   detectionCollider: {fileID: 2539037579404393471}
+  animator: {fileID: 2292242429244234492}
   muzzle: {fileID: 8452529467183480273}
   projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
   downwardMovementSpeed: 1
@@ -380,6 +381,9 @@ MonoBehaviour:
   burstInterval: 0.6
   minimumShotInterval: 3
   maximumShotInterval: 6
+  attackPreparationDuration: 0.5
+  recoveryDuration: 0.2
+  animationTransitionDuration: 0.08
 --- !u!114 &6419423960269545213
 MonoBehaviour:
   m_ObjectHideFlags: 0

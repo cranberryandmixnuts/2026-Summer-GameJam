@@ -9,9 +9,16 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
     private const float PositionToleranceSquared = 0.000001f;
     private const int ProjectileCount = 4;
 
+    private static readonly int MoveAnimationHash = Animator.StringToHash("Move");
+    private static readonly int ReadyAnimationHash = Animator.StringToHash("ready");
+    private static readonly int RushAnimationHash = Animator.StringToHash("rush");
+    private static readonly int AttackAnimationHash = Animator.StringToHash("attack");
+
     private enum Phase
     {
+        Entering,
         Waiting,
+        PreparingDash,
         Dashing,
         Recovering
     }
@@ -21,9 +28,18 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
     [TitleGroup("참조")]
     [SerializeField, Required] private Collider2D bodyCollider;
     [TitleGroup("참조")]
+    [SerializeField, Required] private Animator animator;
+    [TitleGroup("참조")]
+    [SerializeField, Required] private SpriteRenderer spriteRenderer;
+    [TitleGroup("참조")]
     [SerializeField, Required] private Transform muzzle;
     [TitleGroup("참조")]
     [SerializeField, Required] private EnemyProjectile projectilePrefab;
+
+    [TitleGroup("등장 연출")]
+    [SerializeField, MinValue(0f), SuffixLabel("초")] private float entryDuration = 1.5f;
+    [TitleGroup("등장 연출")]
+    [SerializeField, MinValue(0f), SuffixLabel("unit/s")] private float entrySpeed = 2f;
 
     [TitleGroup("공격 주기")]
     [SerializeField, MinValue(0.01f), HorizontalGroup("공격 주기/간격"), LabelText("최소")]
@@ -31,6 +47,8 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
     [TitleGroup("공격 주기")]
     [SerializeField, MinValue(0.01f), HorizontalGroup("공격 주기/간격"), LabelText("최대")]
     private float maximumAttackInterval = 6f;
+    [TitleGroup("공격 주기")]
+    [SerializeField, MinValue(0f), SuffixLabel("초")] private float dashPreparationDuration = 0.5f;
     [TitleGroup("공격 주기")]
     [SerializeField, MinValue(0f), SuffixLabel("초")] private float recoveryDuration = 0.2f;
 
@@ -46,6 +64,9 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
     [TitleGroup("4방향 유도 사격")]
     [SerializeField, MinValue(0.01f)] private float projectileSpeed = 6f;
 
+    [TitleGroup("애니메이션")]
+    [SerializeField, MinValue(0f), SuffixLabel("초")] private float animationTransitionDuration = 0.08f;
+
     private readonly RaycastHit2D[] castResults = new RaycastHit2D[8];
 
     private ContactFilter2D playerContactFilter;
@@ -55,13 +76,17 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
     private float travelledDashDistance;
     private float transitionDelay;
     private float movementSpeedMultiplier = 1f;
+    private int currentAnimationHash;
+    private bool hasCompletedEntry;
     private bool hasHitPlayerDuringDash;
+    private bool defaultSpriteFlipX;
     private bool playerCollisionWasIgnored;
     private bool collisionOverrideActive;
     private bool isInitialized;
     private bool isRunning;
 
     public EnemyRuntimeContext RuntimeContext { get; private set; }
+
     public float TransitionDelay
     {
         get => transitionDelay;
@@ -74,6 +99,8 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
         set => movementSpeedMultiplier = Mathf.Max(0f, value);
     }
 
+    private void Awake() => defaultSpriteFlipX = spriteRenderer.flipX;
+
     public void Initialize(in EnemyRuntimeContext context)
     {
         if (isInitialized)
@@ -84,50 +111,115 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
 
         RuntimeContext = context;
         isInitialized = true;
+        hasCompletedEntry = false;
         RuntimeContext.CombatBridge.PlayerDied += HandlePlayerDied;
         StartBehavior();
     }
 
     private void Update()
     {
-        if (!isRunning || phase == Phase.Dashing) return;
+        if (!isRunning || phase is Phase.Entering or Phase.Dashing) return;
 
         remainingPhaseTime -= Time.deltaTime;
         if (remainingPhaseTime > 0f) return;
 
-        if (phase == Phase.Waiting)
+        switch (phase)
         {
-            BeginDash();
-            return;
+            case Phase.Waiting:
+                BeginDashPreparation();
+                break;
+            case Phase.PreparingDash:
+                BeginDash();
+                break;
+            case Phase.Recovering:
+                BeginWaiting(true);
+                break;
         }
-
-        BeginWaiting(true);
     }
 
     private void FixedUpdate()
     {
-        if (!isRunning || phase != Phase.Dashing) return;
+        if (!isRunning) return;
 
-        UpdateDash();
+        switch (phase)
+        {
+            case Phase.Entering:
+                UpdateEntry();
+                break;
+            case Phase.Dashing:
+                UpdateDash();
+                break;
+        }
     }
 
-    private void BeginDash()
+    private void BeginEntry()
+    {
+        phase = Phase.Entering;
+        remainingPhaseTime = entryDuration;
+        body.linearVelocity = Vector2.zero;
+        PlayAnimation(MoveAnimationHash);
+
+        if (remainingPhaseTime <= 0f) CompleteEntry();
+    }
+
+    private void UpdateEntry()
+    {
+        float movementDuration = Mathf.Min(remainingPhaseTime, Time.fixedDeltaTime);
+        float movementDistance = entrySpeed * MovementSpeedMultiplier * movementDuration;
+
+        if (movementDistance > Mathf.Epsilon)
+            body.MovePosition(body.position + Vector2.down * movementDistance);
+
+        remainingPhaseTime -= Time.fixedDeltaTime;
+        if (remainingPhaseTime <= 0f) CompleteEntry();
+    }
+
+    private void CompleteEntry()
+    {
+        hasCompletedEntry = true;
+        body.linearVelocity = Vector2.zero;
+        BeginDashPreparation();
+    }
+
+    private void BeginWaiting(bool includeTransitionDelay)
+    {
+        phase = Phase.Waiting;
+        remainingPhaseTime = Random.Range(minimumAttackInterval, maximumAttackInterval);
+        if (includeTransitionDelay) remainingPhaseTime += TransitionDelay;
+        PlayAnimation(MoveAnimationHash);
+    }
+
+    private void BeginDashPreparation()
     {
         Vector2 playerOffset = (Vector2)RuntimeContext.PlayerCollider.bounds.center - body.position;
 
         dashDirection = playerOffset.sqrMagnitude > Mathf.Epsilon
             ? playerOffset.normalized
-            : (Vector2)transform.up;
+            : Vector2.down;
+        phase = Phase.PreparingDash;
+        remainingPhaseTime = dashPreparationDuration;
+        body.linearVelocity = Vector2.zero;
+        PlayAnimation(ReadyAnimationHash);
+
+        if (remainingPhaseTime <= 0f) BeginDash();
+    }
+
+    private void BeginDash()
+    {
         playerContactFilter = new ContactFilter2D
         {
             useLayerMask = true,
             layerMask = 1 << RuntimeContext.PlayerCollider.gameObject.layer,
             useTriggers = true
         };
+
         phase = Phase.Dashing;
         travelledDashDistance = 0f;
         hasHitPlayerDuringDash = false;
         body.linearVelocity = Vector2.zero;
+
+        ApplyDashFacing();
+        PlayAnimation(RushAnimationHash);
 
         if (!IsInsideCombatBounds(body.position))
         {
@@ -138,6 +230,7 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
         playerCollisionWasIgnored = Physics2D.GetIgnoreCollision(
             bodyCollider,
             RuntimeContext.PlayerCollider);
+
         collisionOverrideActive = true;
         Physics2D.IgnoreCollision(bodyCollider, RuntimeContext.PlayerCollider, true);
         TryDamagePlayer(0f, out _);
@@ -156,12 +249,14 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
         float requestedDistance = Mathf.Min(
             dashSpeed * MovementSpeedMultiplier * Time.fixedDeltaTime,
             remainingDistance);
+
         Vector2 currentPosition = body.position;
         Vector2 targetPosition = currentPosition + dashDirection * requestedDistance;
         Vector2 clampedPosition = RuntimeContext.CombatBounds.Clamp(
             currentPosition,
             targetPosition,
             bodyCollider);
+
         float movementDistance = Vector2.Distance(currentPosition, clampedPosition);
         bool reachedCombatBounds =
             (clampedPosition - targetPosition).sqrMagnitude > PositionToleranceSquared;
@@ -172,6 +267,7 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
         if (movementDistance > Mathf.Epsilon) body.MovePosition(clampedPosition);
 
         travelledDashDistance += movementDistance;
+
         if (reachedCombatBounds || maximumDashDistance - travelledDashDistance <= Mathf.Epsilon)
             CompleteDash();
     }
@@ -179,10 +275,14 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
     private void CompleteDash()
     {
         RestorePlayerCollision();
+        RestoreDefaultFacing();
+
         body.linearVelocity = Vector2.zero;
-        FireFourWayProjectiles();
         phase = Phase.Recovering;
         remainingPhaseTime = recoveryDuration;
+
+        PlayAnimation(AttackAnimationHash);
+        FireFourWayProjectiles();
 
         if (remainingPhaseTime <= 0f) BeginWaiting(true);
     }
@@ -198,6 +298,7 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
                 projectilePrefab,
                 muzzle.position,
                 Quaternion.identity);
+
             projectile.Launch(
                 muzzle.position,
                 direction,
@@ -221,7 +322,13 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
         if (!hasHit) return false;
 
         hasHitPlayerDuringDash = true;
-        DamageInfo damageInfo = new(dashDamage, gameObject, hitPoint, dashDirection);
+
+        DamageInfo damageInfo = new(
+            dashDamage,
+            gameObject,
+            hitPoint,
+            dashDirection);
+
         RuntimeContext.PlayerHealth.TryTakeDamage(damageInfo);
         return true;
     }
@@ -271,27 +378,59 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
             body.position,
             position,
             bodyCollider);
+
         return (clampedPosition - position).sqrMagnitude <= PositionToleranceSquared;
     }
 
-    private void BeginWaiting(bool includeTransitionDelay)
+    private void ApplyDashFacing() =>
+        spriteRenderer.flipX = dashDirection.x < 0f
+            ? !defaultSpriteFlipX
+            : defaultSpriteFlipX;
+
+    private void RestoreDefaultFacing() => spriteRenderer.flipX = defaultSpriteFlipX;
+
+    private void PlayAnimation(int stateHash)
     {
-        phase = Phase.Waiting;
-        remainingPhaseTime = Random.Range(minimumAttackInterval, maximumAttackInterval);
-        if (includeTransitionDelay) remainingPhaseTime += TransitionDelay;
+        if (currentAnimationHash == stateHash) return;
+
+        currentAnimationHash = stateHash;
+
+        if (animationTransitionDuration <= 0f)
+        {
+            animator.Play(stateHash, 0, 0f);
+            return;
+        }
+
+        animator.CrossFadeInFixedTime(
+            stateHash,
+            animationTransitionDuration,
+            0,
+            0f);
     }
 
     private void StartBehavior()
     {
         isRunning = true;
-        BeginWaiting(false);
+        body.linearVelocity = Vector2.zero;
+
+        if (hasCompletedEntry)
+        {
+            BeginWaiting(false);
+            return;
+        }
+
+        BeginEntry();
     }
 
     private void StopBehavior()
     {
         isRunning = false;
         phase = Phase.Waiting;
+        currentAnimationHash = 0;
+
         RestorePlayerCollision();
+        RestoreDefaultFacing();
+
         body.linearVelocity = Vector2.zero;
         body.angularVelocity = 0f;
     }
@@ -304,6 +443,7 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
             bodyCollider,
             RuntimeContext.PlayerCollider,
             playerCollisionWasIgnored);
+
         collisionOverrideActive = false;
     }
 
@@ -324,12 +464,16 @@ public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
     }
 
     private void OnValidate() =>
-        maximumAttackInterval = Mathf.Max(minimumAttackInterval, maximumAttackInterval);
+        maximumAttackInterval = Mathf.Max(
+            minimumAttackInterval,
+            maximumAttackInterval);
 
     private void Reset()
     {
         body = GetComponent<Rigidbody2D>();
         bodyCollider = GetComponent<Collider2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         muzzle = transform;
     }
 

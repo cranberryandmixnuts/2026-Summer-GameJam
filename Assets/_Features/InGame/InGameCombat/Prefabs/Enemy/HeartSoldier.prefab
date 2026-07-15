@@ -290,6 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeartSoldier
   body: {fileID: 9076739801807007853}
+  animator: {fileID: 1125213392490763358}
   muzzle: {fileID: 4843542327885399348}
   projectilePrefab: {fileID: 5419971654352854959, guid: 5f83e7600b291c148b77a88613a43fa4, type: 3}
   movementSpeed: 1
@@ -297,6 +298,9 @@ MonoBehaviour:
   projectileSpeed: 30
   minimumShotInterval: 6
   maximumShotInterval: 9
+  attackPreparationDuration: 0.5
+  recoveryDuration: 0.2
+  animationTransitionDuration: 0.08
 --- !u!114 &5171296244792463833
 MonoBehaviour:
   m_ObjectHideFlags: 0

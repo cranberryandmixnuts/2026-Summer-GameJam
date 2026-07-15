@@ -291,16 +291,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArmedHeartSoldier
   body: {fileID: 5581154455435580085}
   bodyCollider: {fileID: 4381739228166026471}
+  animator: {fileID: 5798232094105854732}
+  spriteRenderer: {fileID: 428171986875982729}
   muzzle: {fileID: 7772445035699773196}
   projectilePrefab: {fileID: 1859484797668547739, guid: e758b3e161a1c6d4d9cfb70ef1a22a6b, type: 3}
+  entryDuration: 3
+  entrySpeed: 3
   minimumAttackInterval: 3
   maximumAttackInterval: 6
+  dashPreparationDuration: 0.5
   recoveryDuration: 0.2
   dashDamage: 1
   dashSpeed: 30
   maximumDashDistance: 10
   projectileDamage: 1
   projectileSpeed: 6
+  animationTransitionDuration: 0.08
 --- !u!114 &6884140542187831867
 MonoBehaviour:
   m_ObjectHideFlags: 0
