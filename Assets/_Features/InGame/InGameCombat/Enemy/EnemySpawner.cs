@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public sealed class EnemySpawner : MonoBehaviour
@@ -22,10 +23,15 @@ public sealed class EnemySpawner : MonoBehaviour
     [SerializeField, Required] private CombatBridge combatBridge;
     [SerializeField, Required] private CombatBounds combatBounds;
     [SerializeField, Required] private DespawnBounds despawnBounds;
+    [SerializeField, Required] private Image timerFillImage;
+    [SerializeField, Required] private GameObject completionPrefab;
     [SerializeField, ValidateInput(nameof(HasSpawnEntries), "적 프리팹을 하나 이상 등록해야 합니다.")]
     private SpawnEntry[] spawnEntries;
     [SerializeField, MinValue(0f)] private float initialDelay = 1f;
-    [SerializeField, MinValue(0.01f)] private float spawnInterval = 1.5f;
+    [SerializeField, MinValue(0.01f)] private float spawnDuration = 30f;
+    [SerializeField, MinValue(0.01f)] private float minimumSpawnInterval = 1f;
+    [SerializeField, MinValue(0.01f), ValidateInput(nameof(IsValidMaximumSpawnInterval), "최대 스폰 간격은 최소 스폰 간격 이상이어야 합니다.")]
+    private float maximumSpawnInterval = 2f;
     [SerializeField] private bool spawnOnEnable = true;
 
     public bool IsSpawning => spawnRoutine != null;
@@ -49,6 +55,7 @@ public sealed class EnemySpawner : MonoBehaviour
 
         for (int i = 0; i < spawnEntries.Length; i++) totalWeight += spawnEntries[i].Weight;
 
+        timerFillImage.fillAmount = 0f;
         combatBridge.PlayerDied += HandlePlayerDied;
     }
 
@@ -86,20 +93,54 @@ public sealed class EnemySpawner : MonoBehaviour
             UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
             UnityEngine.Random.Range(bounds.min.y, bounds.max.y));
 
-        GameObject enemy = Instantiate(entry.Prefab, position, Quaternion.identity, enemiesRoot);
-        InitializeEnemy(enemy);
-        return enemy;
+        return SpawnPrefab(entry.Prefab, position);
     }
 
     private IEnumerator SpawnSequence()
     {
+        timerFillImage.fillAmount = 0f;
+
         if (initialDelay > 0f) yield return new WaitForSeconds(initialDelay);
 
-        while (true)
+        float elapsedTime = 0f;
+        float nextSpawnTime = 0f;
+
+        while (elapsedTime < spawnDuration)
         {
-            SpawnImmediately();
-            yield return new WaitForSeconds(spawnInterval);
+            if (elapsedTime >= nextSpawnTime)
+            {
+                SpawnImmediately();
+                nextSpawnTime = elapsedTime + UnityEngine.Random.Range(
+                    minimumSpawnInterval,
+                    maximumSpawnInterval);
+            }
+
+            elapsedTime += Time.deltaTime;
+            timerFillImage.fillAmount = Mathf.Clamp01(elapsedTime / spawnDuration);
+            yield return null;
         }
+
+        timerFillImage.fillAmount = 1f;
+        SpawnCompletionPrefab();
+        spawnRoutine = null;
+    }
+
+    private GameObject SpawnCompletionPrefab()
+    {
+        Vector2 position = spawnArea.bounds.center;
+        return SpawnPrefab(completionPrefab, position);
+    }
+
+    private GameObject SpawnPrefab(GameObject prefab, Vector2 position)
+    {
+        GameObject enemy = Instantiate(
+            prefab,
+            position,
+            Quaternion.identity,
+            enemiesRoot);
+
+        InitializeEnemy(enemy);
+        return enemy;
     }
 
     private SpawnEntry SelectSpawnEntry()
@@ -135,4 +176,6 @@ public sealed class EnemySpawner : MonoBehaviour
     }
 
     private bool HasSpawnEntries(SpawnEntry[] value) => value != null && value.Length > 0;
+
+    private bool IsValidMaximumSpawnInterval(float value) => value >= minimumSpawnInterval;
 }
