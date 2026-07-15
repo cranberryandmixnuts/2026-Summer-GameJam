@@ -194,6 +194,8 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 			card.transform.SetParent(parent.transform, false);
 		}
 
+
+
 		OnCardThrow.Invoke(new(
 			FinalBaseDamage * multiplier,
 			1f,

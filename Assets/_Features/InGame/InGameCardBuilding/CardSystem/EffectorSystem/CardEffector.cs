@@ -2,16 +2,16 @@ public class CardEffect {
 
 	//======================================================================| Properties
 
-	public bool IsPoison { get; protected set; } = false;
-    public int FireLevel { get; protected set; } = 0;
-	public int WaterLevel { get; protected set; } = 0;
-	public int ElectricLevel { get; protected set;  } = 0;
-	public int HealLevel { get; protected set; } = 0;
+	public bool IsPoison { get; init; } = false;
+    public int FireLevel { get; init; } = 0;
+	public int WaterLevel { get; init; } = 0;
+	public int ElectricLevel { get; init;  } = 0;
+	public int HealLevel { get; init; } = 0;
 
-    public float SizeMultiplier { get; protected set; } = 0f;
-	public float SpeedMutliplier { get; protected set; } = 0f;
+    public float SizeMultiplier { get; init; } = 0f;
+	public float SpeedMutliplier { get; init; } = 0f;
 
-	public float AdditionalMultiplier { get; protected set; } = 0f;
+	public float AdditionalMultiplier { get; init; } = 0f;
 
 	//======================================================================| Operators
 
