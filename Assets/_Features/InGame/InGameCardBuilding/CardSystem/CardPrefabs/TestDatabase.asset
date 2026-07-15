@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardDatabase
   _cards:
   - {fileID: 2918038444514818267, guid: 4e0cdfc25ec3bb741a6197fd0194da04, type: 3}
-  - {fileID: 6687051369092383191, guid: 708ff7e09700ae043b4bbf464f9a1526, type: 3}
-  - {fileID: 6687051369092383191, guid: c86cf81b0ba2a1f4a89ab44c7507c753, type: 3}
   - {fileID: 7093140058054884989, guid: dbc79172817ab1f49b37260aaf1494a8, type: 3}
   - {fileID: 928399901809824425, guid: 1cc7e09a107fd0d47b06c807afef5c97, type: 3}
   - {fileID: 2082507449539737109, guid: 1dfd13f407122894595e94e8e98dbb55, type: 3}

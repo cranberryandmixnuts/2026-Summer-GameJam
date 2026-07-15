@@ -159,8 +159,12 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 	public void UpdateStatus() {
 		
-		FinalBaseDamage = TotalCards.Sum(card => card.BaseStatus.BaseDamage);
-		FinalMultiplier = TotalCards.Sum(card => card.BaseStatus.AdditionalMultiplier) + 1f;
+		FinalBaseDamage = TotalCards.Sum(card => card.CalculateDamage());
+		FinalMultiplier = TotalCards.Sum(card => card.CalculateAdditionalMultiplier()) + 1f;
+		FinalMultiplier += CardHandDetector.Instance.CurrentMatches
+			.Select(match => match.Bonus)
+			.Sum();
+
 		CardStatusTextDisplay.Instance.UpdateBaseDamage(FinalBaseDamage);
 		CardStatusTextDisplay.Instance.UpdateMultiplier(FinalMultiplier);
 

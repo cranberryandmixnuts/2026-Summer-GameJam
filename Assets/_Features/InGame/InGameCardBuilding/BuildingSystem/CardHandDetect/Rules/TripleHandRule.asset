@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38507dfb7be88ed41b5a0c3619ea2f09, type: 3}
   m_Name: TripleHandRule
   m_EditorClassIdentifier: Assembly-CSharp::TripleHandRule
-  _tripleBonus: 0
-  _triplePlusBonus: 0
-  _triplePlusPlusBonus: 0
+  _tripleBonus: 17
+  _triplePlusBonus: 67
+  _triplePlusPlusBonus: 281

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c202d5e4fbc97e45874412265739c90, type: 3}
   m_Name: FourCardHandRule
   m_EditorClassIdentifier: Assembly-CSharp::FourCardHandRule
-  _fourCardBonus: 0
-  _fourCardPlusBonus: 0
-  _fourCardPlusPlusBonus: 0
-  _fourCardPlusPlusPlusBonus: 0
+  _fourCardBonus: 220
+  _fourCardPlusBonus: 880
+  _fourCardPlusPlusBonus: 3515
+  _fourCardPlusPlusPlusBonus: 14060

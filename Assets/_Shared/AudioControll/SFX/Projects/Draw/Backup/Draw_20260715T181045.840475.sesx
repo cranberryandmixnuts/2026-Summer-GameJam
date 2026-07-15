@@ -4,25 +4,25 @@
 
   <session appBuild="25.6.6.5" appVersion="25.6" audioChannelType="stereo" bitDepth="32" duration="1440000" sampleRate="48000">
     <tracks>
-      <audioTrack automationLaneOpenState="false" id="10002" index="1" select="true" visible="true">
-        <trackParameters trackHeight="450" trackHue="267" trackMinimized="false">
-          <name>트랙 2</name>
+      <audioTrack automationLaneOpenState="false" id="10001" index="1" select="false" visible="true">
+        <trackParameters trackHeight="134" trackHue="160" trackMinimized="false">
+          <name>트랙 1</name>
         </trackParameters>
         <trackAudioParameters audioChannelType="stereo" automationMode="1" monitoring="false" recordArmed="false" solo="false" soloSafe="false">
           <trackOutput outputID="10000" type="trackID"/>
           <trackInput inputID="1"/>
-          <component componentGuid="cc2e9342-b4ba-4a9d-8afd-facc26eac031" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
+          <component componentGuid="f65fa9ef-b0f8-4af0-9b82-4b73c60257e1" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
             <parameter index="0" name="volume" parameterValue="1"/>
             <parameter index="1" name="static gain" parameterValue="1"/>
           </component>
-          <component componentGuid="8fddc0dd-833d-48ad-b3dc-5c6361c830c9" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
+          <component componentGuid="1eac0b7f-6a29-4761-9ee3-f7a2149a931f" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
             <parameter index="0" parameterValue="0"/>
             <parameter index="1" name="mute" parameterValue="0"/>
           </component>
-          <component componentGuid="7bed5349-ffe7-45e7-b7d1-fae58a7ec351" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
+          <component componentGuid="a2ddb372-9327-48b2-a891-cda1b21828e3" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
             <parameter index="0" name="팬" parameterValue="0"/>
           </component>
-          <component componentGuid="10570121-8ba2-4592-8eee-202da30aeaf1" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
+          <component componentGuid="21e10a08-a9ce-4acd-90fe-c97ba9effae5" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
             <parameter index="0" name="로우 셸프 주파수" parameterValue="0.000834028352983295917510986328125"/>
             <parameter index="1" name="로우 셸프 게인" parameterValue="0.5"/>
             <parameter index="2" name="하이 셸프 주파수" parameterValue="0.74979150295257568359375"/>
@@ -70,103 +70,144 @@
             <parameter index="44" name="낮은 그래프 범위" parameterValue="1"/>
           </component>
         </trackAudioParameters>
-        <effectsRack preFader="true">
-          <component componentGuid="9e6def5d-bb2c-48a9-9876-0261b21efbd7" componentID="Audition.ComponentGroup" id="rackMix" powered="true">
-            <parameter index="0" parameterValue="0"/>
-            <parameter index="1" parameterValue="0"/>
-          </component>
-          <component componentGuid="9712e17d-446c-4684-91df-30d366b4ae4b" id="rackInput" powered="true">
-            <parameter index="0" parameterValue="1"/>
-            <parameter index="1" parameterValue="0"/>
-          </component>
-          <component componentGuid="1ea23686-2e65-4b72-92f8-4fc54f186726" id="rackOutput" powered="true">
-            <parameter index="0" parameterValue="1"/>
-            <parameter index="1" parameterValue="0"/>
-          </component>
-          <slot powered="true" slotIndex="0">
-            <component componentGuid="60572fb5-0c77-4e82-87d0-e8d91f613769" componentID="3792d46f-5036-4be6-ab5a-177622246a5d" editorHeight="606" editorLeft="963" editorTop="472" editorWidth="635" name="그래픽 이퀄라이저(10밴드)" presetName="(사용자 정의)">
-              <busConfig><![CDATA[{"in":[{"layout":[100,101],"name":"","type":0}],"out":[{"layout":[100,101],"name":"","type":0}]}]]></busConfig>
-              <parameter index="0" name="정확도" parameterValue="0.12099699676036834716796875"/>
-              <parameter index="1" name="게인" parameterValue="0.5"/>
-              <parameter index="2" name="범위" parameterValue="0.3924050629138946533203125"/>
-              <parameter index="3" name="다시 설정" parameterValue="0"/>
-              <parameter index="4" name="EQ 밴드 1" parameterValue="0.4501298367977142333984375"/>
-              <parameter index="5" name="EQ 밴드 2" parameterValue="0.470909059047698974609375"/>
-              <parameter index="6" name="EQ 밴드 3" parameterValue="0.493766248226165771484375"/>
-              <parameter index="7" name="EQ 밴드 4" parameterValue="0.541558444499969482421875"/>
-              <parameter index="8" name="EQ 밴드 5" parameterValue="0.493766248226165771484375"/>
-              <parameter index="9" name="EQ 밴드 6" parameterValue="0.535324633121490478515625"/>
-              <parameter index="10" name="EQ 밴드 7" parameterValue="0.527012884616851806640625"/>
-              <parameter index="11" name="EQ 밴드 8" parameterValue="0.4896104037761688232421875"/>
-              <parameter index="12" name="EQ 밴드 9" parameterValue="0.4605195224285125732421875"/>
-              <parameter index="13" name="EQ 밴드 10" parameterValue="0.4667532145977020263671875"/>
-              <parameter index="14" name="처리 여부" parameterValue="0"/>
-            </component>
-          </slot>
-        </effectsRack>
         <editParameter parameterIndex="0" slotIndex="4294967280"/>
-        <audioClip clipAutoCrossfade="true" crossFadeHeadClipID="-1" crossFadeTailClipID="-1" endPoint="11487" fileID="0" hue="-1" id="0" lockedInTime="false" looped="false" name="Objects, Misc, Credit Card, Swipe In Machine SND16889 48000 1" offline="false" select="true" sourceInPoint="5049" sourceOutPoint="16536" startPoint="0" zOrder="1">
-          <component componentGuid="662be7a4-b486-43f0-aecf-bd3c4a1d1313" componentID="Audition.Fader" id="clipGain" name="volume" powered="true">
-            <parameter index="0" name="volume" parameterValue="1"/>
+        <audioClip clipAutoCrossfade="true" crossFadeHeadClipID="-1" crossFadeTailClipID="-1" endPoint="23377" fileID="0" hue="-1" id="0" lockedInTime="false" looped="false" name="Objects, Misc, Scissors, Cutting Cardboard SND3989 1_Seg 0 48000 1" offline="false" select="false" sourceInPoint="0" sourceOutPoint="19200" startPoint="4177" zOrder="0">
+          <component componentGuid="8f2a0a57-479b-4ca9-be4d-76db38e13e83" componentID="Audition.Fader" id="clipGain" name="volume" powered="true">
+            <parameter index="0" name="volume" parameterValue="0.1594676673412322998046875">
+              <parameterKeyframes enableSplines="false" readOnly="false">
+                <parameterKeyframe sampleOffset="496" select="true" type="linear" value="0.2999999821186065673828125"/>
+                <parameterKeyframe sampleOffset="3972" select="false" type="linear" value="0.64999997615814208984375"/>
+                <parameterKeyframe sampleOffset="14522" select="false" type="linear" value="0.285714089870452880859375"/>
+              </parameterKeyframes>
+            </parameter>
             <parameter index="1" name="static gain" parameterValue="1"/>
           </component>
-          <component componentGuid="7f1aeb9e-fa2f-4250-9015-cef2142ce102" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
+          <component componentGuid="92102cdd-2a79-4038-9212-aee636050447" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
             <parameter index="0" parameterValue="0"/>
             <parameter index="1" name="mute" parameterValue="0"/>
           </component>
-          <component componentGuid="679d48c4-fc04-4569-a00d-621e29b68dfd" componentID="Audition.StereoPanner" id="clipPan" name="StereoPanner" powered="true">
+          <component componentGuid="18082e66-75e9-4f03-ae79-8a4c6fa759f6" componentID="Audition.StereoPanner" id="clipPan" name="StereoPanner" powered="true">
             <parameter index="0" name="팬" parameterValue="0"/>
           </component>
-          <fadeIn crossFadeLinkType="linkedAsymmetric" endPoint="878" shape="19" startPoint="0" type="log"/>
-          <fadeOut crossFadeLinkType="linkedAsymmetric" endPoint="11487" shape="12" startPoint="11487" type="log"/>
-          <editParameter parameterIndex="0" slotIndex="4294967280"/>
+          <fadeIn crossFadeLinkType="linkedAsymmetric" endPoint="3475" shape="19" startPoint="0" type="log"/>
+          <fadeOut crossFadeLinkType="linkedAsymmetric" endPoint="19200" shape="19" startPoint="7038" type="log"/>
           <editParameter parameterIndex="0" slotIndex="4294967281"/>
-          <channelMap>
-            <channel index="0" sourceIndex="0"/>
-            <channel index="1" sourceIndex="1"/>
-          </channelMap>
-        </audioClip>
-        <audioClip clipAutoCrossfade="true" crossFadeHeadClipID="-1" crossFadeTailClipID="-1" endPoint="47072" fileID="1" hue="-1" id="1" lockedInTime="false" looped="false" name="Objects, Misc, Credit Card, Drop On Table Then Pick Up SND16901 48000 1" offline="false" select="false" sourceInPoint="0" sourceOutPoint="5357" startPoint="41715" zOrder="2">
-          <component componentGuid="9fe69031-8e4c-457b-8a14-999cb2f7579f" componentID="Audition.Fader" id="clipGain" name="volume" powered="true">
-            <parameter index="0" name="volume" parameterValue="1"/>
-            <parameter index="1" name="static gain" parameterValue="1"/>
-          </component>
-          <component componentGuid="9e230413-e149-4454-a6cc-7e69eb425b06" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
-            <parameter index="0" parameterValue="0"/>
-            <parameter index="1" name="mute" parameterValue="0"/>
-          </component>
-          <component componentGuid="0144ec2a-3871-4f47-a3f7-162366765e30" componentID="Audition.StereoPanner" id="clipPan" name="StereoPanner" powered="true">
-            <parameter index="0" name="팬" parameterValue="0"/>
-          </component>
-          <fadeIn crossFadeLinkType="linkedAsymmetric" endPoint="0" shape="19" startPoint="0" type="log"/>
-          <fadeOut crossFadeLinkType="linkedAsymmetric" endPoint="5357" shape="19" startPoint="5357" type="log"/>
           <editParameter parameterIndex="0" slotIndex="4294967280"/>
-          <editParameter parameterIndex="0" slotIndex="4294967281"/>
           <channelMap>
             <channel index="0" sourceIndex="0"/>
             <channel index="1" sourceIndex="1"/>
           </channelMap>
         </audioClip>
       </audioTrack>
-      <audioTrack automationLaneOpenState="false" id="10001" index="2" select="false" visible="true">
-        <trackParameters trackHeight="270" trackHue="160" trackMinimized="false">
-          <name>트랙 1</name>
+      <audioTrack automationLaneOpenState="false" id="10002" index="2" select="false" visible="true">
+        <trackParameters trackHeight="134" trackHue="267" trackMinimized="false">
+          <name>트랙 2</name>
         </trackParameters>
         <trackAudioParameters audioChannelType="stereo" automationMode="1" monitoring="false" recordArmed="false" solo="false" soloSafe="false">
           <trackOutput outputID="10000" type="trackID"/>
           <trackInput inputID="1"/>
-          <component componentGuid="ee21ff66-934c-48e6-92e9-f4b3df059dc4" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
+          <component componentGuid="fe13331f-4e71-4f75-96bf-460044eec63b" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
             <parameter index="0" name="volume" parameterValue="1"/>
             <parameter index="1" name="static gain" parameterValue="1"/>
           </component>
-          <component componentGuid="37397324-3b0c-4612-98ed-26f66b279f61" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
+          <component componentGuid="b09ea043-2de0-4dfb-9b0b-dc0cfe0d4c23" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
             <parameter index="0" parameterValue="0"/>
             <parameter index="1" name="mute" parameterValue="0"/>
           </component>
-          <component componentGuid="d6cab4b3-f7db-4905-bce5-0be06fbfce27" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
+          <component componentGuid="35df1143-8c3e-467f-a0f7-4ea7f14d888c" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
             <parameter index="0" name="팬" parameterValue="0"/>
           </component>
-          <component componentGuid="e21bb271-1f7a-45bb-953e-f739400fe746" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
+          <component componentGuid="028b88fd-f09f-480d-81e6-c8db45223d67" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
+            <parameter index="0" name="로우 셸프 주파수" parameterValue="0.000834028352983295917510986328125"/>
+            <parameter index="1" name="로우 셸프 게인" parameterValue="0.5"/>
+            <parameter index="2" name="하이 셸프 주파수" parameterValue="0.74979150295257568359375"/>
+            <parameter index="3" name="하이 셸프 게인" parameterValue="0.5"/>
+            <parameter index="4" name="EQ 밴드 1 가운데 주파수" parameterValue="0.00125104258768260478973388671875"/>
+            <parameter index="5" name="EQ 밴드 1 Q" parameterValue="0.000199989997781813144683837890625"/>
+            <parameter index="6" name="EQ 밴드 1 게인" parameterValue="0.5"/>
+            <parameter index="7" name="EQ 밴드 1 사용" parameterValue="1"/>
+            <parameter index="8" name="EQ 밴드 2 가운데 주파수" parameterValue="0.0075062550604343414306640625"/>
+            <parameter index="9" name="EQ 밴드 2 Q" parameterValue="0.000199989997781813144683837890625"/>
+            <parameter index="10" name="EQ 밴드 2 게인" parameterValue="0.5"/>
+            <parameter index="11" name="EQ 밴드 2 사용" parameterValue="1"/>
+            <parameter index="12" name="EQ 밴드 3 가운데 주파수" parameterValue="0.0325271077454090118408203125"/>
+            <parameter index="13" name="EQ 밴드 3 Q" parameterValue="0.000199989997781813144683837890625"/>
+            <parameter index="14" name="EQ 밴드 3 게인" parameterValue="0.5"/>
+            <parameter index="15" name="EQ 밴드 3 사용" parameterValue="1"/>
+            <parameter index="16" name="EQ 밴드 4 가운데 주파수" parameterValue="0.13261051476001739501953125"/>
+            <parameter index="17" name="EQ 밴드 4 Q" parameterValue="0.000199989997781813144683837890625"/>
+            <parameter index="18" name="EQ 밴드 4 게인" parameterValue="0.5"/>
+            <parameter index="19" name="EQ 밴드 4 사용" parameterValue="1"/>
+            <parameter index="20" name="EQ 밴드 5 가운데 주파수" parameterValue="0.532944142818450927734375"/>
+            <parameter index="21" name="EQ 밴드 5 Q" parameterValue="0.000199989997781813144683837890625"/>
+            <parameter index="22" name="EQ 밴드 5 게인" parameterValue="0.5"/>
+            <parameter index="23" name="EQ 밴드 5 사용" parameterValue="1"/>
+            <parameter index="24" name="게인" parameterValue="0.666666686534881591796875"/>
+            <parameter index="25" name="ConstantQ" parameterValue="1"/>
+            <parameter index="26" name="로우 셸프 필터 순서" parameterValue="0"/>
+            <parameter index="27" name="하이 셸프 필터 순서" parameterValue="0"/>
+            <parameter index="28" name="매우 작게 모드" parameterValue="0"/>
+            <parameter index="29" name="로우 셸프 사용" parameterValue="1"/>
+            <parameter index="30" name="하이 셸프 사용" parameterValue="1"/>
+            <parameter index="31" name="원래 샘플 속도" parameterValue="0.25"/>
+            <parameter index="32" name="EQ 밴드 1 대역폭" parameterValue="0.002499990165233612060546875"/>
+            <parameter index="33" name="EQ 밴드 2 대역폭" parameterValue="0.0099999904632568359375"/>
+            <parameter index="34" name="EQ 밴드 3 대역폭" parameterValue="0.0399999916553497314453125"/>
+            <parameter index="35" name="EQ 밴드 4 대역폭" parameterValue="0.15999998152256011962890625"/>
+            <parameter index="36" name="EQ 밴드 5 대역폭" parameterValue="0.63999998569488525390625"/>
+            <parameter index="37" name="하이 패스 필터 사용" parameterValue="0"/>
+            <parameter index="38" name="하이 패스 차단 주파수" parameterValue="0"/>
+            <parameter index="39" name="하이 패스 기울기" parameterValue="0.4000000059604644775390625"/>
+            <parameter index="40" name="로우 패스 필터 사용" parameterValue="0"/>
+            <parameter index="41" name="로우 패스 차단 주파수" parameterValue="0.833194315433502197265625"/>
+            <parameter index="42" name="로우 패스 기울기" parameterValue="0.4000000059604644775390625"/>
+            <parameter index="43" name="무시" parameterValue="0"/>
+            <parameter index="44" name="낮은 그래프 범위" parameterValue="1"/>
+          </component>
+        </trackAudioParameters>
+        <editParameter parameterIndex="0" slotIndex="4294967280"/>
+        <audioClip clipAutoCrossfade="true" crossFadeHeadClipID="-1" crossFadeTailClipID="-1" endPoint="37116" fileID="1" hue="-1" id="0" lockedInTime="false" looped="false" name="Objects, Misc, Credit Card, Swipe In Machine SND16889 1_Seg 0 48000 1" offline="false" select="false" sourceInPoint="3101" sourceOutPoint="40217" startPoint="0" zOrder="0">
+          <component componentGuid="305e65f0-9c59-40ee-9990-9ebea0634b98" componentID="Audition.Fader" id="clipGain" name="volume" powered="true">
+            <parameter index="0" name="volume" parameterValue="0.668769896030426025390625"/>
+            <parameter index="1" name="static gain" parameterValue="1"/>
+          </component>
+          <component componentGuid="bb5f059a-5bdd-49a0-bb60-382713a9264e" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
+            <parameter index="0" parameterValue="0"/>
+            <parameter index="1" name="mute" parameterValue="0"/>
+          </component>
+          <component componentGuid="25a3e34a-f93a-47f5-943d-4b15cde17810" componentID="Audition.StereoPanner" id="clipPan" name="StereoPanner" powered="true">
+            <parameter index="0" name="팬" parameterValue="0"/>
+          </component>
+          <fadeIn crossFadeLinkType="linkedAsymmetric" endPoint="0" shape="19" startPoint="0" type="log"/>
+          <fadeOut crossFadeLinkType="linkedAsymmetric" endPoint="37116" shape="9" startPoint="21726" type="log"/>
+          <clipStretch adaptiveWindowSize="37" pitchAdjustment="0" preserveFormants="true" stretchMode="realtime" stretchQuality="high" stretchRatio="0.92572046772857008445356541415094397962093353271484375" stretchType="solo" transientSensitivity="40"/>
+          <editParameter parameterIndex="0" slotIndex="4294967281"/>
+          <editParameter parameterIndex="0" slotIndex="4294967280"/>
+          <channelMap>
+            <channel index="0" sourceIndex="0"/>
+            <channel index="1" sourceIndex="1"/>
+          </channelMap>
+        </audioClip>
+      </audioTrack>
+      <audioTrack automationLaneOpenState="false" id="10004" index="3" select="true" visible="true">
+        <trackParameters trackHeight="134" trackHue="182" trackMinimized="false">
+          <name>트랙 4</name>
+        </trackParameters>
+        <trackAudioParameters audioChannelType="stereo" automationMode="1" monitoring="false" recordArmed="false" solo="false" soloSafe="false">
+          <trackOutput outputID="10000" type="trackID"/>
+          <trackInput inputID="1"/>
+          <component componentGuid="b8c79871-956b-4c10-89f8-674ea3336d06" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
+            <parameter index="0" name="volume" parameterValue="1"/>
+            <parameter index="1" name="static gain" parameterValue="1"/>
+          </component>
+          <component componentGuid="7247b028-e4e6-4c5f-8e83-89217290bc04" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
+            <parameter index="0" parameterValue="0"/>
+            <parameter index="1" name="mute" parameterValue="0"/>
+          </component>
+          <component componentGuid="0ff1e9c6-fe7b-4571-82bc-c100859a571a" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
+            <parameter index="0" name="팬" parameterValue="0"/>
+          </component>
+          <component componentGuid="72e3c814-5127-49d4-b918-cd70dd1e406e" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
             <parameter index="0" name="로우 셸프 주파수" parameterValue="0.000834028352983295917510986328125"/>
             <parameter index="1" name="로우 셸프 게인" parameterValue="0.5"/>
             <parameter index="2" name="하이 셸프 주파수" parameterValue="0.74979150295257568359375"/>
@@ -215,57 +256,140 @@
           </component>
         </trackAudioParameters>
         <effectsRack preFader="true">
-          <component componentGuid="b09bb8ce-ebb0-4725-89a5-f8b6a45a96eb" componentID="Audition.ComponentGroup" id="rackMix" powered="true">
+          <component componentGuid="7ec9519f-bee6-45b0-83d9-b9fcde42f8a5" componentID="Audition.ComponentGroup" id="rackMix" powered="true">
             <parameter index="0" parameterValue="0"/>
             <parameter index="1" parameterValue="0"/>
           </component>
-          <component componentGuid="324f3fec-d6d3-4b5d-8fd3-f08eae7932ad" id="rackInput" powered="true">
+          <component componentGuid="38331367-9b42-4d20-89ff-401cb5148573" id="rackInput" powered="true">
             <parameter index="0" parameterValue="1"/>
             <parameter index="1" parameterValue="0"/>
           </component>
-          <component componentGuid="6d8e7fd6-9eac-49cc-bb74-ac594b5e6a08" id="rackOutput" powered="true">
+          <component componentGuid="6a429ccf-b277-45f1-b88a-5977a34f0689" id="rackOutput" powered="true">
             <parameter index="0" parameterValue="1"/>
             <parameter index="1" parameterValue="0"/>
           </component>
           <slot powered="true" slotIndex="0">
-            <component componentGuid="49bfc946-cd1d-4948-9879-74a9de204e69" componentID="3792d46f-5036-4be6-ab5a-177622246a5d" editorHeight="606" editorLeft="963" editorTop="472" editorWidth="635" name="그래픽 이퀄라이저(10밴드)" presetName="(사용자 정의)">
+            <component componentGuid="79a1f326-f89a-494c-892a-be89f9088910" componentID="164b4e8a-7105-406b-b23b-1ef2cc4d8957" editorHeight="575" editorLeft="1379" editorTop="505" editorVisible="true" editorWidth="637" name="피치 변환" presetName="(사용자 정의)">
               <busConfig><![CDATA[{"in":[{"layout":[100,101],"name":"","type":0}],"out":[{"layout":[100,101],"name":"","type":0}]}]]></busConfig>
-              <parameter index="0" name="정확도" parameterValue="0.12099699676036834716796875"/>
-              <parameter index="1" name="게인" parameterValue="0.5"/>
-              <parameter index="2" name="범위" parameterValue="0.3924050629138946533203125"/>
-              <parameter index="3" name="다시 설정" parameterValue="0"/>
-              <parameter index="4" name="EQ 밴드 1" parameterValue="0.4812987148761749267578125"/>
-              <parameter index="5" name="EQ 밴드 2" parameterValue="0.4979220926761627197265625"/>
-              <parameter index="6" name="EQ 밴드 3" parameterValue="0.5062334537506103515625"/>
-              <parameter index="7" name="EQ 밴드 4" parameterValue="0.4937659800052642822265625"/>
-              <parameter index="8" name="EQ 밴드 5" parameterValue="0.4646751880645751953125"/>
-              <parameter index="9" name="EQ 밴드 6" parameterValue="0.46675312519073486328125"/>
-              <parameter index="10" name="EQ 밴드 7" parameterValue="0.510389626026153564453125"/>
-              <parameter index="11" name="EQ 밴드 8" parameterValue="0.477142870426177978515625"/>
-              <parameter index="12" name="EQ 밴드 9" parameterValue="0.4542857110500335693359375"/>
-              <parameter index="13" name="EQ 밴드 10" parameterValue="0.466753065586090087890625"/>
-              <parameter index="14" name="처리 여부" parameterValue="0"/>
+              <parameter index="0" name="전치 비율" parameterValue="1"/>
+              <parameter index="1" name="정밀도" parameterValue="1"/>
+              <parameter index="2" name="주파수" parameterValue="0.11349122226238250732421875"/>
+              <parameter index="3" name="겹침" parameterValue="0.612111032009124755859375"/>
+              <parameter index="4" name="기본 설정 사용" parameterValue="0.75"/>
+              <parameter index="5" name="포지티브 센트 사용" parameterValue="0.75"/>
             </component>
           </slot>
-          <slot powered="true" slotIndex="1">
-            <component componentGuid="61002ddf-cf4a-47cb-b5c9-e7c1fcda1215" componentID="e0b23f05-f1a7-4ef7-9b50-7ec3e3002058" editorHeight="467" editorLeft="984" editorTop="542" editorWidth="592" name="선택적 제한" presetName="두껍게">
+        </effectsRack>
+        <editParameter parameterIndex="0" slotIndex="4294967280"/>
+        <audioClip clipAutoCrossfade="true" crossFadeHeadClipID="-1" crossFadeTailClipID="-1" endPoint="11461" fileID="2" hue="-1" id="0" lockedInTime="false" looped="false" name="Paper, Handle, Poster, Large, Movement SND20239_Seg 0 48000 1" offline="false" select="true" sourceInPoint="2454" sourceOutPoint="7877" startPoint="6038" zOrder="4">
+          <component componentGuid="e69c990d-e40a-4562-8e29-dc3339f0f982" componentID="Audition.Fader" id="clipGain" name="volume" powered="true">
+            <parameter index="0" name="volume" parameterValue="0.55655157566070556640625"/>
+            <parameter index="1" name="static gain" parameterValue="1"/>
+          </component>
+          <component componentGuid="ad518998-e0f5-41c2-bd62-96f3b2a44854" componentID="Audition.Mute" id="clipMute" name="Mute" powered="true">
+            <parameter index="0" parameterValue="0"/>
+            <parameter index="1" name="mute" parameterValue="0"/>
+          </component>
+          <component componentGuid="3a208d69-2533-4cc2-b86d-638973711372" componentID="Audition.StereoPanner" id="clipPan" name="StereoPanner" powered="true">
+            <parameter index="0" name="팬" parameterValue="0"/>
+          </component>
+          <fadeIn crossFadeLinkType="linkedAsymmetric" endPoint="0" shape="19" startPoint="0" type="log"/>
+          <fadeOut crossFadeLinkType="linkedAsymmetric" endPoint="5423" shape="24" startPoint="569" type="log"/>
+          <clipStretch adaptiveWindowSize="37" pitchAdjustment="0" preserveFormants="true" stretchMode="realtime" stretchQuality="high" stretchRatio="0.439465153970826583051945135593996383249759674072265625" stretchType="solo" transientSensitivity="40"/>
+          <editParameter parameterIndex="0" slotIndex="4294967281"/>
+          <editParameter parameterIndex="0" slotIndex="4294967280"/>
+          <channelMap>
+            <channel index="0" sourceIndex="0"/>
+            <channel index="1" sourceIndex="1"/>
+          </channelMap>
+        </audioClip>
+      </audioTrack>
+      <audioTrack automationLaneOpenState="false" id="10005" index="4" select="false" visible="true">
+        <trackParameters trackHeight="134" trackHue="294" trackMinimized="false">
+          <name>트랙 5</name>
+        </trackParameters>
+        <trackAudioParameters audioChannelType="stereo" automationMode="1" monitoring="false" recordArmed="false" solo="false" soloSafe="false">
+          <trackOutput outputID="10000" type="trackID"/>
+          <trackInput inputID="1"/>
+          <component componentGuid="65efbe2a-10e9-49ca-aa28-9f2c2439b4c3" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
+            <parameter index="0" name="volume" parameterValue="1"/>
+            <parameter index="1" name="static gain" parameterValue="1"/>
+          </component>
+          <component componentGuid="139c757e-e368-4fe6-8a61-3dee89da0d42" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
+            <parameter index="0" parameterValue="0"/>
+            <parameter index="1" name="mute" parameterValue="0"/>
+          </component>
+          <component componentGuid="7b9df336-bf5e-4a7e-b990-fbcd545c51c7" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
+            <parameter index="0" name="팬" parameterValue="0"/>
+          </component>
+          <component componentGuid="0548e979-7fff-4e35-8f39-bb21402db9fb" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
+            <parameter index="0" name="로우 셸프 주파수" parameterValue="0.000834028352983295917510986328125"/>
+            <parameter index="1" name="로우 셸프 게인" parameterValue="0.5"/>
+            <parameter index="2" name="하이 셸프 주파수" parameterValue="0.74979150295257568359375"/>
+            <parameter index="3" name="하이 셸프 게인" parameterValue="0.5"/>
+            <parameter index="4" name="EQ 밴드 1 가운데 주파수" parameterValue="0.00125104258768260478973388671875"/>
+            <parameter index="5" name="EQ 밴드 1 Q" parameterValue="0.000199989997781813144683837890625"/>
+            <parameter index="6" name="EQ 밴드 1 게인" parameterValue="0.5"/>
+            <parameter index="7" name="EQ 밴드 1 사용" parameterValue="1"/>
+            <parameter index="8" name="EQ 밴드 2 가운데 주파수" parameterValue="0.0075062550604343414306640625"/>
+            <parameter index="9" name="EQ 밴드 2 Q" parameterValue="0.000199989997781813144683837890625"/>
+            <parameter index="10" name="EQ 밴드 2 게인" parameterValue="0.5"/>
+            <parameter index="11" name="EQ 밴드 2 사용" parameterValue="1"/>
+            <parameter index="12" name="EQ 밴드 3 가운데 주파수" parameterValue="0.0325271077454090118408203125"/>
+            <parameter index="13" name="EQ 밴드 3 Q" parameterValue="0.000199989997781813144683837890625"/>
+            <parameter index="14" name="EQ 밴드 3 게인" parameterValue="0.5"/>
+            <parameter index="15" name="EQ 밴드 3 사용" parameterValue="1"/>
+            <parameter index="16" name="EQ 밴드 4 가운데 주파수" parameterValue="0.13261051476001739501953125"/>
+            <parameter index="17" name="EQ 밴드 4 Q" parameterValue="0.000199989997781813144683837890625"/>
+            <parameter index="18" name="EQ 밴드 4 게인" parameterValue="0.5"/>
+            <parameter index="19" name="EQ 밴드 4 사용" parameterValue="1"/>
+            <parameter index="20" name="EQ 밴드 5 가운데 주파수" parameterValue="0.532944142818450927734375"/>
+            <parameter index="21" name="EQ 밴드 5 Q" parameterValue="0.000199989997781813144683837890625"/>
+            <parameter index="22" name="EQ 밴드 5 게인" parameterValue="0.5"/>
+            <parameter index="23" name="EQ 밴드 5 사용" parameterValue="1"/>
+            <parameter index="24" name="게인" parameterValue="0.666666686534881591796875"/>
+            <parameter index="25" name="ConstantQ" parameterValue="1"/>
+            <parameter index="26" name="로우 셸프 필터 순서" parameterValue="0"/>
+            <parameter index="27" name="하이 셸프 필터 순서" parameterValue="0"/>
+            <parameter index="28" name="매우 작게 모드" parameterValue="0"/>
+            <parameter index="29" name="로우 셸프 사용" parameterValue="1"/>
+            <parameter index="30" name="하이 셸프 사용" parameterValue="1"/>
+            <parameter index="31" name="원래 샘플 속도" parameterValue="0.25"/>
+            <parameter index="32" name="EQ 밴드 1 대역폭" parameterValue="0.002499990165233612060546875"/>
+            <parameter index="33" name="EQ 밴드 2 대역폭" parameterValue="0.0099999904632568359375"/>
+            <parameter index="34" name="EQ 밴드 3 대역폭" parameterValue="0.0399999916553497314453125"/>
+            <parameter index="35" name="EQ 밴드 4 대역폭" parameterValue="0.15999998152256011962890625"/>
+            <parameter index="36" name="EQ 밴드 5 대역폭" parameterValue="0.63999998569488525390625"/>
+            <parameter index="37" name="하이 패스 필터 사용" parameterValue="0"/>
+            <parameter index="38" name="하이 패스 차단 주파수" parameterValue="0"/>
+            <parameter index="39" name="하이 패스 기울기" parameterValue="0.4000000059604644775390625"/>
+            <parameter index="40" name="로우 패스 필터 사용" parameterValue="0"/>
+            <parameter index="41" name="로우 패스 차단 주파수" parameterValue="0.833194315433502197265625"/>
+            <parameter index="42" name="로우 패스 기울기" parameterValue="0.4000000059604644775390625"/>
+            <parameter index="43" name="무시" parameterValue="0"/>
+            <parameter index="44" name="낮은 그래프 범위" parameterValue="1"/>
+          </component>
+        </trackAudioParameters>
+        <effectsRack preFader="true">
+          <component componentGuid="f240960b-235d-4549-a661-aa776ee7a921" componentID="Audition.ComponentGroup" id="rackMix" powered="true">
+            <parameter index="0" parameterValue="0"/>
+            <parameter index="1" parameterValue="0"/>
+          </component>
+          <component componentGuid="4e8e1586-2a45-4fd0-82d2-b491cde21e69" id="rackInput" powered="true">
+            <parameter index="0" parameterValue="1"/>
+            <parameter index="1" parameterValue="0"/>
+          </component>
+          <component componentGuid="cfbe59fc-0b3f-4eeb-a09d-843794428037" id="rackOutput" powered="true">
+            <parameter index="0" parameterValue="1"/>
+            <parameter index="1" parameterValue="0"/>
+          </component>
+          <slot powered="true" slotIndex="0">
+            <component componentGuid="7dcfb873-e015-4327-bea8-7150af045860" componentID="164b4e8a-7105-406b-b23b-1ef2cc4d8957" editorHeight="575" editorLeft="1443" editorTop="799" editorWidth="637" name="피치 변환" presetName="(사용자 정의)">
               <busConfig><![CDATA[{"in":[{"layout":[100,101],"name":"","type":0}],"out":[{"layout":[100,101],"name":"","type":0}]}]]></busConfig>
-              <parameter index="0" name="최대 진폭" parameterValue="0.8136360645294189453125"/>
-              <parameter index="1" name="입력 증폭" parameterValue="0.64545440673828125"/>
-              <parameter index="2" name="사전 스캔 시간" parameterValue="0.13333301246166229248046875"/>
-              <parameter index="3" name="릴리스 시간" parameterValue="0.375"/>
-              <parameter index="4" name="채널 연결" parameterValue="1"/>
-              <parameter index="5" name="올림으로 감소" parameterValue="1"/>
-              <parameter index="6" name="트루 피크 제한" parameterValue="1"/>
-            </component>
-          </slot>
-          <slot powered="true" slotIndex="2">
-            <component componentGuid="43545dce-522d-47c5-9d00-9987a601525a" componentID="164b4e8a-7105-406b-b23b-1ef2cc4d8957" editorHeight="575" editorLeft="962" editorTop="488" editorWidth="637" name="피치 변환" presetName="(사용자 정의)">
-              <busConfig><![CDATA[{"in":[{"layout":[100,101],"name":"","type":0}],"out":[{"layout":[100,101],"name":"","type":0}]}]]></busConfig>
-              <parameter index="0" name="전치 비율" parameterValue="0.4937736093997955322265625"/>
-              <parameter index="1" name="정밀도" parameterValue="0.833333313465118408203125"/>
-              <parameter index="2" name="주파수" parameterValue="0.080246768891811370849609375"/>
-              <parameter index="3" name="겹침" parameterValue="0.545879900455474853515625"/>
+              <parameter index="0" name="전치 비율" parameterValue="0.556559860706329345703125"/>
+              <parameter index="1" name="정밀도" parameterValue="1"/>
+              <parameter index="2" name="주파수" parameterValue="0.077999956905841827392578125"/>
+              <parameter index="3" name="겹침" parameterValue="0.540993630886077880859375"/>
               <parameter index="4" name="기본 설정 사용" parameterValue="0.75"/>
               <parameter index="5" name="포지티브 센트 사용" parameterValue="0.75"/>
             </component>
@@ -273,161 +397,25 @@
         </effectsRack>
         <editParameter parameterIndex="0" slotIndex="4294967280"/>
       </audioTrack>
-      <audioTrack automationLaneOpenState="false" id="10003" index="3" select="false" visible="true">
+      <audioTrack automationLaneOpenState="false" id="10003" index="5" select="false" visible="true">
         <trackParameters trackHeight="134" trackHue="51" trackMinimized="false">
           <name>트랙 3</name>
         </trackParameters>
         <trackAudioParameters audioChannelType="stereo" automationMode="1" monitoring="false" recordArmed="false" solo="false" soloSafe="false">
           <trackOutput outputID="10000" type="trackID"/>
           <trackInput inputID="1"/>
-          <component componentGuid="388dbf65-ebfa-4b5f-9bfc-bc948b73a46b" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
-            <parameter index="0" name="volume" parameterValue="1"/>
+          <component componentGuid="b03cc9a4-1274-46c1-bc3f-c359a6ac6b6e" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
+            <parameter index="0" name="volume" parameterValue="0.4677352011203765869140625"/>
             <parameter index="1" name="static gain" parameterValue="1"/>
           </component>
-          <component componentGuid="31e865c6-9075-40ac-8625-9b95e799b313" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
+          <component componentGuid="0def45b2-813f-46fa-8049-2f4f6a5d17e6" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
             <parameter index="0" parameterValue="0"/>
-            <parameter index="1" name="mute" parameterValue="0"/>
+            <parameter index="1" name="mute" parameterValue="1"/>
           </component>
-          <component componentGuid="dfbbb941-5f4f-4673-945b-a2b80213645a" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
+          <component componentGuid="62b066d1-c71e-46b4-a5ac-acd7ba25ef30" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
             <parameter index="0" name="팬" parameterValue="0"/>
           </component>
-          <component componentGuid="33a884ab-e64c-42a2-8efd-ace9a098ee35" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
-            <parameter index="0" name="로우 셸프 주파수" parameterValue="0.000834028352983295917510986328125"/>
-            <parameter index="1" name="로우 셸프 게인" parameterValue="0.5"/>
-            <parameter index="2" name="하이 셸프 주파수" parameterValue="0.74979150295257568359375"/>
-            <parameter index="3" name="하이 셸프 게인" parameterValue="0.5"/>
-            <parameter index="4" name="EQ 밴드 1 가운데 주파수" parameterValue="0.00125104258768260478973388671875"/>
-            <parameter index="5" name="EQ 밴드 1 Q" parameterValue="0.000199989997781813144683837890625"/>
-            <parameter index="6" name="EQ 밴드 1 게인" parameterValue="0.5"/>
-            <parameter index="7" name="EQ 밴드 1 사용" parameterValue="1"/>
-            <parameter index="8" name="EQ 밴드 2 가운데 주파수" parameterValue="0.0075062550604343414306640625"/>
-            <parameter index="9" name="EQ 밴드 2 Q" parameterValue="0.000199989997781813144683837890625"/>
-            <parameter index="10" name="EQ 밴드 2 게인" parameterValue="0.5"/>
-            <parameter index="11" name="EQ 밴드 2 사용" parameterValue="1"/>
-            <parameter index="12" name="EQ 밴드 3 가운데 주파수" parameterValue="0.0325271077454090118408203125"/>
-            <parameter index="13" name="EQ 밴드 3 Q" parameterValue="0.000199989997781813144683837890625"/>
-            <parameter index="14" name="EQ 밴드 3 게인" parameterValue="0.5"/>
-            <parameter index="15" name="EQ 밴드 3 사용" parameterValue="1"/>
-            <parameter index="16" name="EQ 밴드 4 가운데 주파수" parameterValue="0.13261051476001739501953125"/>
-            <parameter index="17" name="EQ 밴드 4 Q" parameterValue="0.000199989997781813144683837890625"/>
-            <parameter index="18" name="EQ 밴드 4 게인" parameterValue="0.5"/>
-            <parameter index="19" name="EQ 밴드 4 사용" parameterValue="1"/>
-            <parameter index="20" name="EQ 밴드 5 가운데 주파수" parameterValue="0.532944142818450927734375"/>
-            <parameter index="21" name="EQ 밴드 5 Q" parameterValue="0.000199989997781813144683837890625"/>
-            <parameter index="22" name="EQ 밴드 5 게인" parameterValue="0.5"/>
-            <parameter index="23" name="EQ 밴드 5 사용" parameterValue="1"/>
-            <parameter index="24" name="게인" parameterValue="0.666666686534881591796875"/>
-            <parameter index="25" name="ConstantQ" parameterValue="1"/>
-            <parameter index="26" name="로우 셸프 필터 순서" parameterValue="0"/>
-            <parameter index="27" name="하이 셸프 필터 순서" parameterValue="0"/>
-            <parameter index="28" name="매우 작게 모드" parameterValue="0"/>
-            <parameter index="29" name="로우 셸프 사용" parameterValue="1"/>
-            <parameter index="30" name="하이 셸프 사용" parameterValue="1"/>
-            <parameter index="31" name="원래 샘플 속도" parameterValue="0.25"/>
-            <parameter index="32" name="EQ 밴드 1 대역폭" parameterValue="0.002499990165233612060546875"/>
-            <parameter index="33" name="EQ 밴드 2 대역폭" parameterValue="0.0099999904632568359375"/>
-            <parameter index="34" name="EQ 밴드 3 대역폭" parameterValue="0.0399999916553497314453125"/>
-            <parameter index="35" name="EQ 밴드 4 대역폭" parameterValue="0.15999998152256011962890625"/>
-            <parameter index="36" name="EQ 밴드 5 대역폭" parameterValue="0.63999998569488525390625"/>
-            <parameter index="37" name="하이 패스 필터 사용" parameterValue="0"/>
-            <parameter index="38" name="하이 패스 차단 주파수" parameterValue="0"/>
-            <parameter index="39" name="하이 패스 기울기" parameterValue="0.4000000059604644775390625"/>
-            <parameter index="40" name="로우 패스 필터 사용" parameterValue="0"/>
-            <parameter index="41" name="로우 패스 차단 주파수" parameterValue="0.833194315433502197265625"/>
-            <parameter index="42" name="로우 패스 기울기" parameterValue="0.4000000059604644775390625"/>
-            <parameter index="43" name="무시" parameterValue="0"/>
-            <parameter index="44" name="낮은 그래프 범위" parameterValue="1"/>
-          </component>
-        </trackAudioParameters>
-        <editParameter parameterIndex="0" slotIndex="4294967280"/>
-      </audioTrack>
-      <audioTrack automationLaneOpenState="false" id="10004" index="4" select="false" visible="true">
-        <trackParameters trackHeight="134" trackHue="182" trackMinimized="false">
-          <name>트랙 4</name>
-        </trackParameters>
-        <trackAudioParameters audioChannelType="stereo" automationMode="1" monitoring="false" recordArmed="false" solo="false" soloSafe="false">
-          <trackOutput outputID="10000" type="trackID"/>
-          <trackInput inputID="1"/>
-          <component componentGuid="d80212ba-c4d2-4e8d-ae3c-4aa164fde0d0" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
-            <parameter index="0" name="volume" parameterValue="1"/>
-            <parameter index="1" name="static gain" parameterValue="1"/>
-          </component>
-          <component componentGuid="84548be6-b3f3-491d-8e26-fa340a860411" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
-            <parameter index="0" parameterValue="0"/>
-            <parameter index="1" name="mute" parameterValue="0"/>
-          </component>
-          <component componentGuid="6b78901c-546a-454a-876e-de6f3e951322" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
-            <parameter index="0" name="팬" parameterValue="0"/>
-          </component>
-          <component componentGuid="5bb85c76-7f11-423f-8079-161a23ed18be" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
-            <parameter index="0" name="로우 셸프 주파수" parameterValue="0.000834028352983295917510986328125"/>
-            <parameter index="1" name="로우 셸프 게인" parameterValue="0.5"/>
-            <parameter index="2" name="하이 셸프 주파수" parameterValue="0.74979150295257568359375"/>
-            <parameter index="3" name="하이 셸프 게인" parameterValue="0.5"/>
-            <parameter index="4" name="EQ 밴드 1 가운데 주파수" parameterValue="0.00125104258768260478973388671875"/>
-            <parameter index="5" name="EQ 밴드 1 Q" parameterValue="0.000199989997781813144683837890625"/>
-            <parameter index="6" name="EQ 밴드 1 게인" parameterValue="0.5"/>
-            <parameter index="7" name="EQ 밴드 1 사용" parameterValue="1"/>
-            <parameter index="8" name="EQ 밴드 2 가운데 주파수" parameterValue="0.0075062550604343414306640625"/>
-            <parameter index="9" name="EQ 밴드 2 Q" parameterValue="0.000199989997781813144683837890625"/>
-            <parameter index="10" name="EQ 밴드 2 게인" parameterValue="0.5"/>
-            <parameter index="11" name="EQ 밴드 2 사용" parameterValue="1"/>
-            <parameter index="12" name="EQ 밴드 3 가운데 주파수" parameterValue="0.0325271077454090118408203125"/>
-            <parameter index="13" name="EQ 밴드 3 Q" parameterValue="0.000199989997781813144683837890625"/>
-            <parameter index="14" name="EQ 밴드 3 게인" parameterValue="0.5"/>
-            <parameter index="15" name="EQ 밴드 3 사용" parameterValue="1"/>
-            <parameter index="16" name="EQ 밴드 4 가운데 주파수" parameterValue="0.13261051476001739501953125"/>
-            <parameter index="17" name="EQ 밴드 4 Q" parameterValue="0.000199989997781813144683837890625"/>
-            <parameter index="18" name="EQ 밴드 4 게인" parameterValue="0.5"/>
-            <parameter index="19" name="EQ 밴드 4 사용" parameterValue="1"/>
-            <parameter index="20" name="EQ 밴드 5 가운데 주파수" parameterValue="0.532944142818450927734375"/>
-            <parameter index="21" name="EQ 밴드 5 Q" parameterValue="0.000199989997781813144683837890625"/>
-            <parameter index="22" name="EQ 밴드 5 게인" parameterValue="0.5"/>
-            <parameter index="23" name="EQ 밴드 5 사용" parameterValue="1"/>
-            <parameter index="24" name="게인" parameterValue="0.666666686534881591796875"/>
-            <parameter index="25" name="ConstantQ" parameterValue="1"/>
-            <parameter index="26" name="로우 셸프 필터 순서" parameterValue="0"/>
-            <parameter index="27" name="하이 셸프 필터 순서" parameterValue="0"/>
-            <parameter index="28" name="매우 작게 모드" parameterValue="0"/>
-            <parameter index="29" name="로우 셸프 사용" parameterValue="1"/>
-            <parameter index="30" name="하이 셸프 사용" parameterValue="1"/>
-            <parameter index="31" name="원래 샘플 속도" parameterValue="0.25"/>
-            <parameter index="32" name="EQ 밴드 1 대역폭" parameterValue="0.002499990165233612060546875"/>
-            <parameter index="33" name="EQ 밴드 2 대역폭" parameterValue="0.0099999904632568359375"/>
-            <parameter index="34" name="EQ 밴드 3 대역폭" parameterValue="0.0399999916553497314453125"/>
-            <parameter index="35" name="EQ 밴드 4 대역폭" parameterValue="0.15999998152256011962890625"/>
-            <parameter index="36" name="EQ 밴드 5 대역폭" parameterValue="0.63999998569488525390625"/>
-            <parameter index="37" name="하이 패스 필터 사용" parameterValue="0"/>
-            <parameter index="38" name="하이 패스 차단 주파수" parameterValue="0"/>
-            <parameter index="39" name="하이 패스 기울기" parameterValue="0.4000000059604644775390625"/>
-            <parameter index="40" name="로우 패스 필터 사용" parameterValue="0"/>
-            <parameter index="41" name="로우 패스 차단 주파수" parameterValue="0.833194315433502197265625"/>
-            <parameter index="42" name="로우 패스 기울기" parameterValue="0.4000000059604644775390625"/>
-            <parameter index="43" name="무시" parameterValue="0"/>
-            <parameter index="44" name="낮은 그래프 범위" parameterValue="1"/>
-          </component>
-        </trackAudioParameters>
-        <editParameter parameterIndex="0" slotIndex="4294967280"/>
-      </audioTrack>
-      <audioTrack automationLaneOpenState="false" id="10005" index="5" select="false" visible="true">
-        <trackParameters trackHeight="134" trackHue="294" trackMinimized="false">
-          <name>트랙 5</name>
-        </trackParameters>
-        <trackAudioParameters audioChannelType="stereo" automationMode="1" monitoring="false" recordArmed="false" solo="false" soloSafe="false">
-          <trackOutput outputID="10000" type="trackID"/>
-          <trackInput inputID="1"/>
-          <component componentGuid="a2d7ebb3-b5bb-472a-83f0-5ebd2de8e524" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
-            <parameter index="0" name="volume" parameterValue="1"/>
-            <parameter index="1" name="static gain" parameterValue="1"/>
-          </component>
-          <component componentGuid="c92487c5-77f6-4eb1-83f9-bdeea96c14ca" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
-            <parameter index="0" parameterValue="0"/>
-            <parameter index="1" name="mute" parameterValue="0"/>
-          </component>
-          <component componentGuid="fa226299-e17a-4c2e-a6d3-4c238586eef2" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
-            <parameter index="0" name="팬" parameterValue="0"/>
-          </component>
-          <component componentGuid="56e5cf5b-7af4-414d-9d54-ac33ba08d9e5" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
+          <component componentGuid="87eff206-56c4-47f8-bd71-466570fffc49" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
             <parameter index="0" name="로우 셸프 주파수" parameterValue="0.000834028352983295917510986328125"/>
             <parameter index="1" name="로우 셸프 게인" parameterValue="0.5"/>
             <parameter index="2" name="하이 셸프 주파수" parameterValue="0.74979150295257568359375"/>
@@ -484,18 +472,18 @@
         <trackAudioParameters audioChannelType="stereo" automationMode="1" monitoring="false" recordArmed="false" solo="false" soloSafe="false">
           <trackOutput outputID="10000" type="trackID"/>
           <trackInput inputID="1"/>
-          <component componentGuid="89e75f96-6eab-40dc-977e-36fa3d1ba32c" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
+          <component componentGuid="11ff4322-3150-4171-be4b-936797a8a47b" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
             <parameter index="0" name="volume" parameterValue="1"/>
             <parameter index="1" name="static gain" parameterValue="1"/>
           </component>
-          <component componentGuid="89174703-0a5a-47e5-9328-063e9d22952e" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
+          <component componentGuid="f99990be-ea6e-44be-aec5-51f421e95640" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
             <parameter index="0" parameterValue="0"/>
             <parameter index="1" name="mute" parameterValue="0"/>
           </component>
-          <component componentGuid="ad0e1972-8ec5-4252-a667-bd427b3120f0" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
+          <component componentGuid="177dfee0-dc7c-4db6-abce-39971dc5d0a4" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
             <parameter index="0" name="팬" parameterValue="0"/>
           </component>
-          <component componentGuid="4243fffb-7c22-4d09-8c13-6ef0d3a40b4b" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
+          <component componentGuid="b23d4ba3-e59e-40d3-98f5-b436bc355069" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
             <parameter index="0" name="로우 셸프 주파수" parameterValue="0.000834028352983295917510986328125"/>
             <parameter index="1" name="로우 셸프 게인" parameterValue="0.5"/>
             <parameter index="2" name="하이 셸프 주파수" parameterValue="0.74979150295257568359375"/>
@@ -552,18 +540,18 @@
         <trackAudioParameters audioChannelType="stereo" automationMode="1" monitoring="false" recordArmed="false" solo="false" soloSafe="true">
           <trackOutput outputID="1" type="hardwareOutput"/>
           <trackInput inputID="-1"/>
-          <component componentGuid="972a85c0-31bc-4cf5-9fad-4020d9cf2cf6" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
+          <component componentGuid="b327d061-598c-48f0-8e0d-a8617ce158f3" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
             <parameter index="0" name="volume" parameterValue="1"/>
             <parameter index="1" name="static gain" parameterValue="1"/>
           </component>
-          <component componentGuid="7ef1e765-e055-42c2-9202-0ea4fe882a74" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
+          <component componentGuid="77e424c6-35fe-449a-85cd-3657c9f0a6c3" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
             <parameter index="0" parameterValue="0"/>
             <parameter index="1" name="mute" parameterValue="0"/>
           </component>
-          <component componentGuid="0ded758d-f1c7-4200-affb-a51777704040" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
+          <component componentGuid="125f3caa-0773-4576-ab39-ee25838f27bf" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
             <parameter index="0" name="팬" parameterValue="0"/>
           </component>
-          <component componentGuid="d7329f2c-0f74-4d18-89e8-0091ca8f87c0" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
+          <component componentGuid="2a875f37-bc88-4309-bac6-6959116725e7" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
             <parameter index="0" name="로우 셸프 주파수" parameterValue="0.000834028352983295917510986328125"/>
             <parameter index="1" name="로우 셸프 게인" parameterValue="0.5"/>
             <parameter index="2" name="하이 셸프 주파수" parameterValue="0.74979150295257568359375"/>
@@ -614,9 +602,9 @@
         <editParameter parameterIndex="0" slotIndex="4294967280"/>
       </masterTrack>
     </tracks>
-    <sessionState ctiPosition="13465" smpteStart="0">
-      <selectionState selectionDuration="0" selectionStart="13465"/>
-      <viewState horizontalViewDuration="258191" horizontalViewStart="0" trackControlsWidth="233" verticalScrollOffset="0"/>
+    <sessionState ctiPosition="28292" smpteStart="0">
+      <selectionState selectionDuration="0" selectionStart="28292"/>
+      <viewState horizontalViewDuration="123519" horizontalViewStart="0" trackControlsWidth="241" verticalScrollOffset="0"/>
       <timeFormatState beatsPerBar="4" beatsPerMinute="120" customFrameRate="12" linkToDefaultTimeSettings="true" noteLength="4" subdivisions="16" timeCodeDropFrame="false" timeCodeFrameRate="30" timeCodeNTSC="false" timeFormat="timeFormatDecimal"/>
       <mixingOptionState defaultPanModeLogarithmic="false" panPower="-3" playOverlappingClips="false"/>
     </sessionState>
@@ -631,153 +619,55 @@
             xmlns:dc="http://purl.org/dc/elements/1.1/"
             xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
          <xmp:CreatorTool>Adobe Audition 25.6 (Windows)</xmp:CreatorTool>
-         <xmp:CreateDate>2026-07-15T01:58:38+09:00</xmp:CreateDate>
-         <xmp:MetadataDate>2026-07-15T02:43:51+09:00</xmp:MetadataDate>
-         <xmp:ModifyDate>2026-07-15T02:43:51+09:00</xmp:ModifyDate>
-         <xmpMM:InstanceID>xmp.iid:1db6872b-833a-fa4f-bb52-019476161077</xmpMM:InstanceID>
-         <xmpMM:DocumentID>xmp.did:1db6872b-833a-fa4f-bb52-019476161077</xmpMM:DocumentID>
-         <xmpMM:OriginalDocumentID>xmp.did:2b90de62-cfee-8d48-abee-99564edc399f</xmpMM:OriginalDocumentID>
+         <xmp:CreateDate>2026-07-15T02:53:07+09:00</xmp:CreateDate>
+         <xmp:MetadataDate>2026-07-15T18:10:45+09:00</xmp:MetadataDate>
+         <xmp:ModifyDate>2026-07-15T18:10:45+09:00</xmp:ModifyDate>
+         <xmpMM:InstanceID>xmp.iid:7d6e5a63-1057-b147-b57b-911a6834ebbc</xmpMM:InstanceID>
+         <xmpMM:DocumentID>xmp.did:7d6e5a63-1057-b147-b57b-911a6834ebbc</xmpMM:DocumentID>
+         <xmpMM:OriginalDocumentID>xmp.did:8155192f-828c-3145-afb1-ba6bea83394e</xmpMM:OriginalDocumentID>
          <xmpMM:History>
             <rdf:Seq>
                <rdf:li rdf:parseType="Resource">
                   <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:2b90de62-cfee-8d48-abee-99564edc399f</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T01:58:38+09:00</stEvt:when>
+                  <stEvt:instanceID>xmp.iid:8155192f-828c-3145-afb1-ba6bea83394e</stEvt:instanceID>
+                  <stEvt:when>2026-07-15T02:53:07+09:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/metadata</stEvt:changed>
                </rdf:li>
                <rdf:li rdf:parseType="Resource">
                   <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:3aa37ffd-d611-794a-8b85-9cd020e1f9e4</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:01:48+09:00</stEvt:when>
+                  <stEvt:instanceID>xmp.iid:73d8ded4-5368-4c49-9305-fd58d7121edb</stEvt:instanceID>
+                  <stEvt:when>2026-07-15T03:02:16+09:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/metadata</stEvt:changed>
                </rdf:li>
                <rdf:li rdf:parseType="Resource">
                   <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:0dc9fdfd-96d6-7a49-b71e-9ef2a2c026ad</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:01:48+09:00</stEvt:when>
+                  <stEvt:instanceID>xmp.iid:c9183b62-ce0d-164b-aec9-5aab95d908f8</stEvt:instanceID>
+                  <stEvt:when>2026-07-15T03:02:16+09:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/</stEvt:changed>
                </rdf:li>
                <rdf:li rdf:parseType="Resource">
                   <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:55084488-581b-4c44-9a08-513cdab5d160</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:11:28+09:00</stEvt:when>
+                  <stEvt:instanceID>xmp.iid:0c696b13-318e-8e44-ba49-5559fefb28fd</stEvt:instanceID>
+                  <stEvt:when>2026-07-15T18:10:45+09:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/metadata</stEvt:changed>
                </rdf:li>
                <rdf:li rdf:parseType="Resource">
                   <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:c0708960-86e4-9a4d-a5f0-4a0219e1fe3d</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:11:28+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:6475f924-da75-064e-bf70-8b5f37507ac3</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:13:35+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/metadata</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:e71c79bb-4a74-0442-9c3f-e03bafb7e23c</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:13:35+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:9eb4cd7f-109a-6840-ac52-9581680af88e</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:13:37+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/metadata</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:49b71bfb-5dc3-3740-bd09-ca362a0dfba5</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:13:37+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:c57530af-ff72-0e43-96cf-41379404fa1f</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:13:40+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/metadata</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:5f814534-8148-c84d-87aa-f6e49b3a85e8</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:13:40+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:ecab4976-0d2c-0b48-b9e1-38a0ca7b30b2</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:21:15+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/metadata</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:3dcdcd15-4e71-5f4d-ae91-56d2056a3cc9</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:21:15+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:22511b28-c272-0747-aa84-265f601ff356</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:24:06+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/metadata</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:c53dbec1-c96b-e646-b389-04c0a7becbf5</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:24:06+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:23c209f7-3b3c-a540-999b-37106924dabc</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:30:09+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/metadata</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:983c8fcd-c733-9e43-a2d3-be7d93cd8e2a</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:30:09+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:4a4ea036-a59f-0245-a687-c0ab8f933f0e</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:43:51+09:00</stEvt:when>
-                  <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
-                  <stEvt:changed>/metadata</stEvt:changed>
-               </rdf:li>
-               <rdf:li rdf:parseType="Resource">
-                  <stEvt:action>saved</stEvt:action>
-                  <stEvt:instanceID>xmp.iid:1db6872b-833a-fa4f-bb52-019476161077</stEvt:instanceID>
-                  <stEvt:when>2026-07-15T02:43:51+09:00</stEvt:when>
+                  <stEvt:instanceID>xmp.iid:7d6e5a63-1057-b147-b57b-911a6834ebbc</stEvt:instanceID>
+                  <stEvt:when>2026-07-15T18:10:45+09:00</stEvt:when>
                   <stEvt:softwareAgent>Adobe Audition 25.6 (Windows)</stEvt:softwareAgent>
                   <stEvt:changed>/</stEvt:changed>
                </rdf:li>
             </rdf:Seq>
          </xmpMM:History>
          <xmpMM:DerivedFrom rdf:parseType="Resource">
-            <stRef:instanceID>xmp.iid:4a4ea036-a59f-0245-a687-c0ab8f933f0e</stRef:instanceID>
-            <stRef:documentID>xmp.did:2b90de62-cfee-8d48-abee-99564edc399f</stRef:documentID>
-            <stRef:originalDocumentID>xmp.did:2b90de62-cfee-8d48-abee-99564edc399f</stRef:originalDocumentID>
+            <stRef:instanceID>xmp.iid:0c696b13-318e-8e44-ba49-5559fefb28fd</stRef:instanceID>
+            <stRef:documentID>xmp.did:8155192f-828c-3145-afb1-ba6bea83394e</stRef:documentID>
+            <stRef:originalDocumentID>xmp.did:8155192f-828c-3145-afb1-ba6bea83394e</stRef:originalDocumentID>
          </xmpMM:DerivedFrom>
          <dc:format>application/xml</dc:format>
          <xmpDM:Tracks>
@@ -833,18 +723,18 @@
         <trackAudioParameters audioChannelType="mono" automationMode="1" monitoring="false" recordArmed="false" solo="false" soloSafe="true">
           <trackOutput outputID="10000" type="trackID"/>
           <trackInput inputID="-1"/>
-          <component componentGuid="14544e2f-e068-40e3-848c-155c6271a81e" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
+          <component componentGuid="0960816f-ec0c-46d9-b0aa-0984226d67ca" componentID="Audition.Fader" id="trackFader" name="volume" powered="true">
             <parameter index="0" name="volume" parameterValue="0.50118720531463623046875"/>
             <parameter index="1" name="static gain" parameterValue="1"/>
           </component>
-          <component componentGuid="0395d628-65d8-439f-a729-9454a7d33909" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
+          <component componentGuid="2b3c75ff-5d21-4804-b175-af407b0d487a" componentID="Audition.Mute" id="trackMute" name="Mute" powered="true">
             <parameter index="0" parameterValue="0"/>
             <parameter index="1" name="mute" parameterValue="0"/>
           </component>
-          <component componentGuid="9c551e14-a3d4-44ef-ae93-8b50083c2beb" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
+          <component componentGuid="8a97ec55-b54f-4aea-bbed-77f6d25a08f8" componentID="Audition.StereoPanner" id="trackPan" name="StereoPanner" powered="true">
             <parameter index="0" name="팬" parameterValue="0"/>
           </component>
-          <component componentGuid="e2bd3e06-2f26-40a2-8a3f-1010a2da5711" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
+          <component componentGuid="b0caf3b6-6343-4c93-a058-bb99d014a4b0" componentID="Audition.EQ" id="trackEQ" name="EQ" powered="false">
             <parameter index="0" name="로우 셸프 주파수" parameterValue="0.000834028352983295917510986328125"/>
             <parameter index="1" name="로우 셸프 게인" parameterValue="0.5"/>
             <parameter index="2" name="하이 셸프 주파수" parameterValue="0.74979150295257568359375"/>
@@ -901,8 +791,9 @@
   </session>
 
   <files>
-    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\CardHovered\Conformed Files\Objects, Misc, Credit Card, Swipe In Machine SND16889 48000 1.wav" id="0" mediaHandler="AmioWav" recoveryID="06404944-7d2f-4180-af7c-bc9c2a901ed5" relativePath="../Conformed Files/Objects, Misc, Credit Card, Swipe In Machine SND16889 48000 1.wav"/>
-    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\CardHovered\Conformed Files\Objects, Misc, Credit Card, Drop On Table Then Pick Up SND16901 48000 1.wav" id="1" mediaHandler="AmioWav" recoveryID="c755b66b-c64b-4da3-9db1-9e68898f8998" relativePath="../Conformed Files/Objects, Misc, Credit Card, Drop On Table Then Pick Up SND16901 48000 1.wav"/>
+    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\Draw\가져온 파일\Objects, Misc, Scissors, Cutting Cardboard SND3989 1_Seg 0 48000 1.wav" id="0" importerPrivateSettings="Compression:0:0;LargeFileSupport:0:0;SampleType:0:20;" mediaHandler="AmioWav" recoveryID="f620cd12-b6ed-4ff6-aa12-53327170a312" relativePath="../가져온 파일/Objects, Misc, Scissors, Cutting Cardboard SND3989 1_Seg 0 48000 1.wav"/>
+    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\Draw\Conformed Files\Objects, Misc, Credit Card, Swipe In Machine SND16889 1_Seg 0 48000 1.wav" id="1" importerPrivateSettings="Compression:0:0;LargeFileSupport:0:0;SampleType:0:20;" mediaHandler="AmioWav" recoveryID="d9a85533-ac98-40ce-977d-c373c6d36415" relativePath="../Conformed Files/Objects, Misc, Credit Card, Swipe In Machine SND16889 1_Seg 0 48000 1.wav"/>
+    <file absolutePath="C:\Users\Neeko-onTheRoad\source\repos\cranberryandmixnuts\2026-Summer-GameJam\Assets\_Shared\AudioControll\SFX\Projects\Draw\Conformed Files\Paper, Handle, Poster, Large, Movement SND20239_Seg 0 48000 1.wav" id="2" importerPrivateSettings="Compression:0:0;LargeFileSupport:0:0;SampleType:0:20;" mediaHandler="AmioWav" recoveryID="f1521b49-7e3c-4c3a-9f3e-bf2d82203860" relativePath="../Conformed Files/Paper, Handle, Poster, Large, Movement SND20239_Seg 0 48000 1.wav"/>
   </files>
 
   <audioDevice inputID="22222222-2222-2222-2222-22222222" outputID="11111111-1111-1111-1111-11111111">
@@ -911,10 +802,10 @@
     <inputPort id="3" name="[02M] 시스템 초기화 - 마이크 배열(디지털 마이크용 인텔® 스마트 사운드 기술) 2"/>
     <inputPort id="4" name="[01S] 시스템 초기화 - 마이크 배열(디지털 마이크용 인텔® 스마트 사운드 기술) 1"/>
     <outputPort id="1" name="기본 출력"/>
-    <outputPort id="2" name="[01M] 시스템 초기화 - 헤드폰(Realtek(R) Audio) 1"/>
-    <outputPort id="3" name="[02M] 시스템 초기화 - 헤드폰(Realtek(R) Audio) 2"/>
+    <outputPort id="2" name="[01M] 시스템 초기화 - 스피커(Realtek(R) Audio) 1"/>
+    <outputPort id="3" name="[02M] 시스템 초기화 - 스피커(Realtek(R) Audio) 2"/>
     <outputPort id="4" name="기본 스테레오 출력"/>
-    <outputPort id="5" name="[01S] 시스템 초기화 - 헤드폰(Realtek(R) Audio) 1"/>
+    <outputPort id="5" name="[01S] 시스템 초기화 - 스피커(Realtek(R) Audio) 1"/>
     <outputPort id="6" name="기본 서라운드 출력"/>
   </audioDevice>
 

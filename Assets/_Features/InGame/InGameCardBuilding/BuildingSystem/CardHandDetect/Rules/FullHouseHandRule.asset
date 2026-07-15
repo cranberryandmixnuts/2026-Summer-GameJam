@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe696e80bd31f547a53f4c0e70a9a21, type: 3}
   m_Name: FullHouseHandRule
   m_EditorClassIdentifier: Assembly-CSharp::FullHouseHandRule
-  _fullHouseBonus: 0
+  _fullHouseBonus: 150
   _fullHousePlusBonus: 0
   _fullHousePlusPlusBonus: 0
   _perfectFullHouseBonus: 0

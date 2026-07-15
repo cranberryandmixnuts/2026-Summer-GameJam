@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 566c88bb68c8d44448a345aeee421c15, type: 3}
   m_Name: PairHandRule
   m_EditorClassIdentifier: Assembly-CSharp::PairHandRule
-  _pairBonus: 0
-  _pairPlusBonus: 0
+  _pairBonus: 0.13
+  _pairPlusBonus: 0.52

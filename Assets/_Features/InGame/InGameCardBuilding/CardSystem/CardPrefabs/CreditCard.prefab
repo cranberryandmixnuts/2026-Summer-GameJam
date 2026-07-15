@@ -134,4 +134,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab75561bcc66df43bda0229664a83d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreditCard
-  _baseStatus: {fileID: 11400000, guid: 0a869c82b350b594b968f5ca397e3911, type: 2}
+  _baseStatus: {fileID: 11400000, guid: 5814e6b8026380742a9d18cf709d1cc0, type: 2}
