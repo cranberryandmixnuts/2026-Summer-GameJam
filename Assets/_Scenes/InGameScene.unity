@@ -1184,6 +1184,8 @@ MonoBehaviour:
   combatBridge: {fileID: 813994829}
   combatBounds: {fileID: 493820818}
   despawnBounds: {fileID: 1349808646}
+  timerFillImage: {fileID: 0}
+  completionPrefab: {fileID: 0}
   spawnEntries:
   - Prefab: {fileID: 8775158816998203423, guid: 34f68240febe14a4998ff890cef4d180, type: 3}
     Weight: 1
@@ -1194,7 +1196,9 @@ MonoBehaviour:
   - Prefab: {fileID: 6790217317713472905, guid: 6a5c14d332ea99844a3c6f210f41b004, type: 3}
     Weight: 1
   initialDelay: 0
-  spawnInterval: 3
+  spawnDuration: 30
+  minimumSpawnInterval: 1
+  maximumSpawnInterval: 2
   spawnOnEnable: 1
 --- !u!4 &614515215
 Transform:
