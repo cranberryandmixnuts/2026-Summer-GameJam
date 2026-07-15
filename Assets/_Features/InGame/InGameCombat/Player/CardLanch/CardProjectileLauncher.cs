@@ -22,7 +22,7 @@ public sealed class CardProjectileLauncher : MonoBehaviour
 
     private void HandleCardThrow(CardThrowArgs args)
     {
-        Debug.Log($"CardProjectileLauncher.HandleCardThrow: {args.FinalDamage}, {args.Speed}, {args.Effect}");
+        Debug.Log($"CardProjectileLauncher.HandleCardThrow: {args.FinalDamage}, {args.Speed}, {args.Effects}");
         GameObject cards = args.Cards;
         Transform cardsTransform = cards.transform;
         cardsTransform.SetParent(Canvas.gameObject.transform, true);
@@ -41,7 +41,7 @@ public sealed class CardProjectileLauncher : MonoBehaviour
             body,
             damage,
             speed,
-            args.Effect,
+            args.Effects,
             settings,
             poisonAreaPool,
             enemyLayers,

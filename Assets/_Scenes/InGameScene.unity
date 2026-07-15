@@ -512,7 +512,6 @@ GameObject:
   m_Component:
   - component: {fileID: 476660899}
   - component: {fileID: 476660900}
-  - component: {fileID: 476660901}
   m_Layer: 0
   m_Name: CardHandDetector
   m_TagString: Untagged
@@ -549,18 +548,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardHandDetector
   _cardField: {fileID: 1061635685}
   _ruleCatalog: {fileID: 11400000, guid: 1ae2726c103223849bd8830c22833c62, type: 2}
---- !u!114 &476660901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 476660898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef6c0e5cb9b5178499b03b0227bc9dd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CardHandLineVisualizer
 --- !u!1 &492045090
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,7 +797,7 @@ MonoBehaviour:
   - Prefab: {fileID: 6790217317713472905, guid: 6a5c14d332ea99844a3c6f210f41b004, type: 3}
     Weight: 1
   initialDelay: 0
-  spawnInterval: 9
+  spawnInterval: 3
   spawnOnEnable: 1
 --- !u!4 &614515215
 Transform:
@@ -1079,7 +1066,7 @@ SpriteRenderer:
   m_Size: {x: 10.24, y: 15.36}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &862285468
@@ -1376,7 +1363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281f6cc2024612549b1ba354599dd137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardProvider
-  _database: {fileID: 11400000, guid: 39ef3ac3ce536a246bf2cfd7b2cc4925, type: 2}
+  _database: {fileID: 11400000, guid: f7e19e4f8967e2e44bd5189080c5d0e5, type: 2}
 --- !u!1 &1061635680
 GameObject:
   m_ObjectHideFlags: 0

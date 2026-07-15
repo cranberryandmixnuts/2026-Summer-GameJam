@@ -73,7 +73,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 		in float FinalDamage,
 		in float Speed,
 		in GameObject Cards,
-		in CardEffect Effect
+		in CardEffect Effects
 	);
 
 	//======================================================================| Unity Methods
