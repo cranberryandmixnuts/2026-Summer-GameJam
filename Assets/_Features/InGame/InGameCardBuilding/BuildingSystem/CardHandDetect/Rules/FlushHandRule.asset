@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56d41a44e08d9ae46a7a63750b65a431, type: 3}
   m_Name: FlushHandRule
   m_EditorClassIdentifier: Assembly-CSharp::FlushHandRule
-  _flushBonus: 75
-  _flushPlusBonus: 0
-  _flushPlusPlusBonus: 0
-  _flushPlusPlusPlusBonus: 0
-  _yachtBonus: 0
+  _flushBonus: 100
+  _flushPlusBonus: 520
+  _flushPlusPlusBonus: 2500
+  _flushPlusPlusPlusBonus: 19960
+  _yachtBonus: 5555555

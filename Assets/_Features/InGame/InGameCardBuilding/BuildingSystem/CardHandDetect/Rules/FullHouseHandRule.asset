@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FullHouseHandRule
   m_EditorClassIdentifier: Assembly-CSharp::FullHouseHandRule
   _fullHouseBonus: 150
-  _fullHousePlusBonus: 0
-  _fullHousePlusPlusBonus: 0
-  _perfectFullHouseBonus: 0
-  _perfectFullHousePlusBonus: 0
+  _fullHousePlusBonus: 175
+  _fullHousePlusPlusBonus: 520
+  _perfectFullHouseBonus: 1680
+  _perfectFullHousePlusBonus: 8200
