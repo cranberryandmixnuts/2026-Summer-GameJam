@@ -2248,6 +2248,7 @@ GameObject:
   - component: {fileID: 977107249}
   - component: {fileID: 977107248}
   - component: {fileID: 977107250}
+  - component: {fileID: 977107251}
   m_Layer: 0
   m_Name: DrawManager
   m_TagString: Untagged
@@ -2308,6 +2309,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardProvider
   _database: {fileID: 11400000, guid: f7e19e4f8967e2e44bd5189080c5d0e5, type: 2}
+--- !u!114 &977107251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977107246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2af44491081ae2442a60690d8af131b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardBuildingManager
 --- !u!1 &984657184
 GameObject:
   m_ObjectHideFlags: 0
