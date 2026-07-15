@@ -4,7 +4,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public sealed class ArmedSpadeSoldier : MonoBehaviour, IEnemyRuntimeInitializable
+public sealed class ArmedSpadeSoldier : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
 {
     private const int BurstCount = 2;
     private const int ProjectileCountPerBurst = 3;
@@ -63,6 +63,7 @@ public sealed class ArmedSpadeSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
     private float remainingPhaseTime;
     private float remainingBurstCooldown;
     private float transitionDelay;
+    private float difficultyFactor = 1f;
     private float movementSpeedMultiplier = 1f;
     private int remainingBurstCount;
     private int currentAnimationHash;
@@ -71,6 +72,11 @@ public sealed class ArmedSpadeSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
     private bool isRunning;
 
     public EnemyRuntimeContext RuntimeContext { get; private set; }
+
+    public float DifficultyFactor => difficultyFactor;
+
+    public void InitializeDifficulty(float value) =>
+        difficultyFactor = EnemyDifficultyUtility.ClampFactor(value);
 
     public float TransitionDelay
     {
@@ -243,7 +249,7 @@ public sealed class ArmedSpadeSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
             muzzle.position,
             direction,
             projectileSpeed,
-            projectileDamage,
+            ScaleDamage(projectileDamage),
             gameObject,
             RuntimeContext,
             RuntimeContext.Player);
@@ -313,6 +319,9 @@ public sealed class ArmedSpadeSoldier : MonoBehaviour, IEnemyRuntimeInitializabl
         animator = GetComponent<Animator>();
         muzzle = transform;
     }
+
+    private int ScaleDamage(int baseDamage) =>
+        EnemyDifficultyUtility.ScaleStat(baseDamage, difficultyFactor);
 
     private void HandlePlayerDied() => StopBehavior();
 }

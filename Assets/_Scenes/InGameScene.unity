@@ -1588,6 +1588,8 @@ MonoBehaviour:
   spawnDuration: 360
   minimumSpawnInterval: 3
   maximumSpawnInterval: 6
+  minimumInternalDifficultyFactor: 1
+  maximumInternalDifficultyFactor: 3
   spawnOnEnable: 1
 --- !u!4 &614515215
 Transform:
@@ -2065,6 +2067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9916fe56ad71b0746a73f76975adffb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatBridge
+  externalDifficultyFactor: 1
 --- !u!4 &813994830
 Transform:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public sealed class HeartSoldier : MonoBehaviour, IEnemyRuntimeInitializable
+public sealed class HeartSoldier : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
 {
     private static readonly int MoveAnimationHash = Animator.StringToHash("Move");
     private static readonly int ReadyAnimationHash = Animator.StringToHash("ready");
@@ -50,12 +50,18 @@ public sealed class HeartSoldier : MonoBehaviour, IEnemyRuntimeInitializable
     private Phase phase;
     private float remainingPhaseTime;
     private float transitionDelay;
+    private float difficultyFactor = 1f;
     private float movementSpeedMultiplier = 1f;
     private int currentAnimationHash;
     private bool isInitialized;
     private bool isRunning;
 
     public EnemyRuntimeContext RuntimeContext { get; private set; }
+
+    public float DifficultyFactor => difficultyFactor;
+
+    public void InitializeDifficulty(float value) =>
+        difficultyFactor = EnemyDifficultyUtility.ClampFactor(value);
 
     public float TransitionDelay
     {
@@ -157,7 +163,7 @@ public sealed class HeartSoldier : MonoBehaviour, IEnemyRuntimeInitializable
             muzzle.position,
             direction,
             projectileSpeed,
-            projectileDamage,
+            ScaleDamage(projectileDamage),
             gameObject,
             RuntimeContext,
             RuntimeContext.Player);
@@ -225,6 +231,9 @@ public sealed class HeartSoldier : MonoBehaviour, IEnemyRuntimeInitializable
         animator = GetComponent<Animator>();
         muzzle = transform;
     }
+
+    private int ScaleDamage(int baseDamage) =>
+        EnemyDifficultyUtility.ScaleStat(baseDamage, difficultyFactor);
 
     private void HandlePlayerDied() => StopBehavior();
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
-public sealed class EnemySpawner : MonoBehaviour
+public sealed class GameManager : MonoBehaviour
 {
     [Serializable]
     private sealed class SpawnEntry
@@ -36,9 +36,19 @@ public sealed class EnemySpawner : MonoBehaviour
     [SerializeField, MinValue(0.01f)] private float minimumSpawnInterval = 1f;
     [SerializeField, MinValue(0.01f), ValidateInput(nameof(IsValidMaximumSpawnInterval), "최대 스폰 간격은 최소 스폰 간격 이상이어야 합니다.")]
     private float maximumSpawnInterval = 2f;
+    [TitleGroup("난이도")]
+    [SerializeField, MinValue(EnemyDifficultyUtility.MinimumDifficultyFactor), LabelText("최소 내부 난이도 인수")]
+    private float minimumInternalDifficultyFactor = 1f;
+    [TitleGroup("난이도")]
+    [SerializeField, MinValue(EnemyDifficultyUtility.MinimumDifficultyFactor), LabelText("최대 내부 난이도 인수"), ValidateInput(nameof(IsValidMaximumInternalDifficulty), "최대 내부 난이도 인수는 최소 내부 난이도 인수 이상이어야 합니다.")]
+    private float maximumInternalDifficultyFactor = 1f;
     [SerializeField] private bool spawnOnEnable = true;
 
     public bool IsSpawning => spawnRoutine != null;
+    [TitleGroup("난이도"), ShowInInspector, ReadOnly, LabelText("현재 내부 난이도 인수")]
+    public float InternalDifficultyFactor { get; private set; } = 1f;
+    public float FinalDifficultyFactor =>
+        InternalDifficultyFactor * combatBridge.ExternalDifficultyFactor;
 
     private readonly List<MonoBehaviour> initializationBuffer = new();
 
@@ -59,6 +69,7 @@ public sealed class EnemySpawner : MonoBehaviour
 
         for (int i = 0; i < spawnEntries.Length; i++) totalWeight += spawnEntries[i].Weight;
 
+        InternalDifficultyFactor = minimumInternalDifficultyFactor;
         timerFillImage.fillAmount = 0f;
         combatBridge.PlayerDied += HandlePlayerDied;
     }
@@ -102,6 +113,7 @@ public sealed class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnSequence()
     {
+        InternalDifficultyFactor = minimumInternalDifficultyFactor;
         timerFillImage.fillAmount = 0f;
 
         if (initialDelay > 0f) yield return new WaitForSeconds(initialDelay);
@@ -111,12 +123,16 @@ public sealed class EnemySpawner : MonoBehaviour
 
         while (elapsedTime < spawnDuration)
         {
+            float progress = Mathf.Clamp01(elapsedTime / spawnDuration);
+            InternalDifficultyFactor = Mathf.Lerp(
+                minimumInternalDifficultyFactor,
+                maximumInternalDifficultyFactor,
+                progress);
+
             if (elapsedTime >= nextSpawnTime)
             {
                 SpawnImmediately();
-                nextSpawnTime = elapsedTime + UnityEngine.Random.Range(
-                    minimumSpawnInterval,
-                    maximumSpawnInterval);
+                nextSpawnTime = elapsedTime + GetRandomSpawnInterval();
             }
 
             elapsedTime += Time.deltaTime;
@@ -124,6 +140,7 @@ public sealed class EnemySpawner : MonoBehaviour
             yield return null;
         }
 
+        InternalDifficultyFactor = maximumInternalDifficultyFactor;
         timerFillImage.fillAmount = 1f;
         SpawnCompletionPrefab();
         spawnRoutine = null;
@@ -166,10 +183,19 @@ public sealed class EnemySpawner : MonoBehaviour
         initializationBuffer.Clear();
         enemy.GetComponentsInChildren(true, initializationBuffer);
 
-        for (int i = 0; i < initializationBuffer.Count; i++) InitializeComponent(initializationBuffer[i]);
+        float difficultyFactor = FinalDifficultyFactor;
+
+        for (int i = 0; i < initializationBuffer.Count; i++)
+        {
+            if (initializationBuffer[i] is IEnemyDifficultyInitializable difficultyInitializable)
+                difficultyInitializable.InitializeDifficulty(difficultyFactor);
+        }
+
+        for (int i = 0; i < initializationBuffer.Count; i++)
+            InitializeRuntimeComponent(initializationBuffer[i]);
     }
 
-    private void InitializeComponent(MonoBehaviour component)
+    private void InitializeRuntimeComponent(MonoBehaviour component)
     {
         if (component is IEnemyRuntimeInitializable initializable) initializable.Initialize(runtimeContext);
     }
@@ -185,6 +211,10 @@ public sealed class EnemySpawner : MonoBehaviour
         healthBar.Initialize(enemyHealth, healthBarsRoot, worldCamera, healthBarOffset);
     }
 
+    private float GetRandomSpawnInterval() =>
+        UnityEngine.Random.Range(minimumSpawnInterval, maximumSpawnInterval) /
+        EnemyDifficultyUtility.ClampFactor(FinalDifficultyFactor);
+
     private void HandlePlayerDied()
     {
         hasPlayerDied = true;
@@ -194,4 +224,16 @@ public sealed class EnemySpawner : MonoBehaviour
     private bool HasSpawnEntries(SpawnEntry[] value) => value != null && value.Length > 0;
 
     private bool IsValidMaximumSpawnInterval(float value) => value >= minimumSpawnInterval;
+
+    private bool IsValidMaximumInternalDifficulty(float value) =>
+        value >= minimumInternalDifficultyFactor;
+
+    private void OnValidate()
+    {
+        minimumInternalDifficultyFactor = EnemyDifficultyUtility.ClampFactor(
+            minimumInternalDifficultyFactor);
+        maximumInternalDifficultyFactor = Mathf.Max(
+            minimumInternalDifficultyFactor,
+            maximumInternalDifficultyFactor);
+    }
 }

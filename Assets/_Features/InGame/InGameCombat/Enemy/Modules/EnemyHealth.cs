@@ -3,9 +3,12 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public sealed class EnemyHealth : MonoBehaviour, IDamageable
+public sealed class EnemyHealth : MonoBehaviour, IDamageable, IEnemyDifficultyInitializable
 {
     [SerializeField, MinValue(1)] private int maxHealth = 10;
+
+    private int baseMaxHealth;
+    private bool hasCapturedBaseMaxHealth;
 
     public int MaxHealth => maxHealth;
     public int CurrentHealth { get; private set; }
@@ -17,8 +20,15 @@ public sealed class EnemyHealth : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        CurrentHealth = MaxHealth;
-        IsDead = false;
+        CaptureBaseMaxHealth();
+        ResetHealth();
+    }
+
+    public void InitializeDifficulty(float difficultyFactor)
+    {
+        CaptureBaseMaxHealth();
+        maxHealth = EnemyDifficultyUtility.ScaleStat(baseMaxHealth, difficultyFactor);
+        ResetHealth();
     }
 
     public bool TryTakeDamage(in DamageInfo damageInfo)
@@ -44,5 +54,19 @@ public sealed class EnemyHealth : MonoBehaviour, IDamageable
         CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
         Healed?.Invoke(CurrentHealth - previousHealth);
         return true;
+    }
+
+    private void CaptureBaseMaxHealth()
+    {
+        if (hasCapturedBaseMaxHealth) return;
+
+        baseMaxHealth = maxHealth;
+        hasCapturedBaseMaxHealth = true;
+    }
+
+    private void ResetHealth()
+    {
+        CurrentHealth = MaxHealth;
+        IsDead = false;
     }
 }

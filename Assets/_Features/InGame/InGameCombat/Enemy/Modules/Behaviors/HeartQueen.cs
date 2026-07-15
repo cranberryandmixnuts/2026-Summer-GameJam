@@ -5,7 +5,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public sealed class HeartQueen : MonoBehaviour, IEnemyRuntimeInitializable
+public sealed class HeartQueen : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
 {
     private const float PositionToleranceSquared = 0.000001f;
 
@@ -113,6 +113,7 @@ public sealed class HeartQueen : MonoBehaviour, IEnemyRuntimeInitializable
     private float remainingPhaseTime;
     private float travelledDashDistance;
     private float transitionDelay;
+    private float difficultyFactor = 1f;
     private float movementSpeedMultiplier = 1f;
     private bool hasHitPlayerDuringDash;
     private bool playerCollisionWasIgnored;
@@ -121,6 +122,11 @@ public sealed class HeartQueen : MonoBehaviour, IEnemyRuntimeInitializable
     private bool isRunning;
 
     public EnemyRuntimeContext RuntimeContext { get; private set; }
+    public float DifficultyFactor => difficultyFactor;
+
+    public void InitializeDifficulty(float value) =>
+        difficultyFactor = EnemyDifficultyUtility.ClampFactor(value);
+
     public IReadOnlyList<Vector2> SplitAttackCenters => splitAttackCenters;
     public float AreaAttackRadius => areaAttackRadius;
     public float SplitAreaAttackRadius => splitAreaAttackRadius;
@@ -243,7 +249,7 @@ public sealed class HeartQueen : MonoBehaviour, IEnemyRuntimeInitializable
             spinningAttackOrigin.position,
             direction,
             projectileSpeed,
-            spinningProjectileDamage,
+            ScaleDamage(spinningProjectileDamage),
             gameObject,
             RuntimeContext,
             RuntimeContext.Player);
@@ -308,7 +314,7 @@ public sealed class HeartQueen : MonoBehaviour, IEnemyRuntimeInitializable
         if (direction.sqrMagnitude <= Mathf.Epsilon) direction = areaAttackOrigin.right;
 
         DamageInfo damageInfo = new(
-            areaAttackDamage,
+            ScaleDamage(areaAttackDamage),
             gameObject,
             hitPoint,
             direction.normalized);
@@ -356,7 +362,7 @@ public sealed class HeartQueen : MonoBehaviour, IEnemyRuntimeInitializable
             if (direction.sqrMagnitude <= Mathf.Epsilon) direction = transform.up;
 
             DamageInfo damageInfo = new(
-                splitAreaAttackDamage,
+                ScaleDamage(splitAreaAttackDamage),
                 gameObject,
                 hitPoint,
                 direction.normalized);
@@ -437,7 +443,7 @@ public sealed class HeartQueen : MonoBehaviour, IEnemyRuntimeInitializable
         if (!hasHit) return false;
 
         hasHitPlayerDuringDash = true;
-        DamageInfo damageInfo = new(closeAttackDamage, gameObject, hitPoint, dashDirection);
+        DamageInfo damageInfo = new(ScaleDamage(closeAttackDamage), gameObject, hitPoint, dashDirection);
         RuntimeContext.PlayerHealth.TryTakeDamage(damageInfo);
         return true;
     }
@@ -612,6 +618,9 @@ public sealed class HeartQueen : MonoBehaviour, IEnemyRuntimeInitializable
         areaAttackOrigin = transform;
         spinningAttackOrigin = transform;
     }
+
+    private int ScaleDamage(int baseDamage) =>
+        EnemyDifficultyUtility.ScaleStat(baseDamage, difficultyFactor);
 
     private void HandlePlayerDied() => StopBehavior();
 }
