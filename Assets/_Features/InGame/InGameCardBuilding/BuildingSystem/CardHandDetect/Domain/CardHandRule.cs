@@ -11,7 +11,7 @@ public abstract class CardHandRule : ScriptableObject
         string id,
         string displayName,
         int priority,
-        Color lineColor,
+        Color displayColor,
         float bonus,
         CardLine line,
         IReadOnlyList<CardLineCard> cards,
@@ -23,7 +23,7 @@ public abstract class CardHandRule : ScriptableObject
             id,
             displayName,
             priority,
-            lineColor,
+            displayColor,
             bonus,
             line,
             cards

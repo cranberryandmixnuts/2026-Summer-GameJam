@@ -2,8 +2,7 @@ public class CardEffect {
 
 	//======================================================================| Properties
 
-	public bool IsPoison { get; init; } = false;
-    public int FireLevel { get; init; } = 0;
+	public int FireLevel { get; init; } = 0;
 	public int WaterLevel { get; init; } = 0;
 	public int ElectricLevel { get; init;  } = 0;
 	public int HealLevel { get; init; } = 0;
@@ -18,8 +17,7 @@ public class CardEffect {
 	public static CardEffect operator+(CardEffect left, CardEffect right) {
 		return new CardEffect() {
 
-			IsPoison = left.IsPoison || right.IsPoison,
-            FireLevel = left.FireLevel + right.FireLevel,
+			FireLevel = left.FireLevel + right.FireLevel,
 			WaterLevel = left.WaterLevel + right.WaterLevel,
 			ElectricLevel = left.ElectricLevel + right.ElectricLevel,
 			HealLevel = left.HealLevel + right.HealLevel,

@@ -14,7 +14,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 	[SerializeField]
 	private GameObject _specialSlotPrefab;
-	
+
 	[SerializeField]
 	private Transform _slotField;
 
@@ -47,6 +47,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 	private readonly Dictionary<Image, SpecialCardSlot> _specialSlotInstances = new();
 	private readonly HashSet<Card> _specialPlacedCards = new();
+	private CardHandDetector _handDetector;
 
 	//======================================================================| Properties
 
@@ -63,28 +64,32 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 	public IEnumerable<SpecialCardSlot> SpecialSlotInstances => _specialSlotInstances.Values;
 
 	public IEnumerable<Card> TotalCards => PlacedCards.Values.Concat(_specialPlacedCards);
-	
+
 	//======================================================================| Event
 
 	public event Action CardsChanged;
+	public event Action<float, float> StatusChanged;
 	public event Action<CardThrowArgs> OnCardThrow;
 
 	public record CardThrowArgs(
 		in float FinalDamage,
 		in float Speed,
 		in GameObject Cards,
-		in CardEffect Effects
+		in CardEffect Effect
 	);
 
 	//======================================================================| Unity Methods
 
-	private void Start() {
-        CalculateSlotPositions();
-        RedrawSlots();
-        CardsChanged?.Invoke();
-    }
+	private void Start()
+	{
+		_handDetector = CardHandDetector.Instance;
+		_handDetector.MatchesChanged += HandleMatchesChanged;
+		CalculateSlotPositions();
+		RedrawSlots();
+		CardsChanged?.Invoke();
+	}
 
-	private void Update() {		
+	private void Update() {
 		SyncSpecialSlotTransforms();
 	}
 
@@ -100,6 +105,11 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
         CardBuildingManager.OnRestarted -= OnReset;
     }
 
+	protected override void SingletonOnDestroy()
+	{
+		if (_handDetector != null) _handDetector.MatchesChanged -= HandleMatchesChanged;
+	}
+
 	//======================================================================| Methods
 
 	public bool PlaceCard(GameObject target, Card card) {
@@ -108,7 +118,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 		var targetLocalPosition = target.transform.localPosition;
 
 		card.transform.DOKill();
-		
+
 		if (!target.TryGetComponent<SpecialCardSlot>(out var special)) {
 
 			_placedCards[_slotInstances[target]] = card;
@@ -150,31 +160,27 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 			.SetEase(_cardPlacingEase);
 
 		CardsChanged?.Invoke();
-
-		UpdateStatus();
-		CardStatusTextDisplay.Instance.UpdateMatches();
-
 		return true;
 
 	}
 
-	public void UpdateStatus() {
-		
+	private void HandleMatchesChanged(IReadOnlyList<CardHandMatch> matches)
+	{
+
 		FinalBaseDamage = TotalCards.Sum(card => card.CalculateDamage());
 		FinalMultiplier = TotalCards.Sum(card => card.CalculateAdditionalMultiplier()) + 1f;
-		FinalMultiplier += CardHandDetector.Instance.CurrentMatches
+		FinalMultiplier += matches
 			.Select(match => match.Bonus)
 			.Sum();
 
-		CardStatusTextDisplay.Instance.UpdateBaseDamage(FinalBaseDamage);
-		CardStatusTextDisplay.Instance.UpdateMultiplier(FinalMultiplier);
+		StatusChanged?.Invoke(FinalBaseDamage, FinalMultiplier);
 
 	}
 
 	public void SpawnSpecialSlots(Card card) {
 
 		foreach (var slot in card.SpecialCardSlots) {
-			
+
 			GameObject instance = Instantiate(_specialSlotPrefab);
 			instance.transform.SetParent(_specialSlotField);
 			instance.transform.localScale = Vector3.one;
@@ -189,26 +195,23 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 	}
 
-	public void Shoot() {
+	public void Shoot()
+	{
 
 		if (_placedCards.Count + _specialPlacedCards.Count == 0)  return;
 
-		var multiplier = FinalMultiplier + CardHandDetector.Instance.CurrentMatches.Sum(m => m.Bonus);
+		var multiplier = FinalMultiplier;
+		var cards = TotalCards.ToArray();
 		CardEffect effect = new();
 
-		foreach (var card in TotalCards) {
+		foreach (var card in cards)
+		{
 			effect += card.Effect;
 		}
-		
-		GameObject parent = new("CardBullet");
-		parent.transform.position = (_cardField.transform as RectTransform).GetGlobalBounds().center;
 
-		foreach (var card in TotalCards) {
-			card.GetComponent<CardAnimator>().RemoveAngle();
-			card.transform.SetParent(parent.transform, false);
-		}
+		GameObject parent = CardProjectileGroupBuilder.Build(cards);
 
-		OnCardThrow.Invoke(new(
+		OnCardThrow?.Invoke(new(
 			FinalBaseDamage * multiplier,
 			1f,
 			parent,
@@ -219,22 +222,10 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 	}
 
-    private void OnReset()  {
+	private void OnReset() => Initialize();
 
-        _placedCards.Clear();
-
-        CalculateSlotPositions();
-        RedrawSlots();
-        CardsChanged?.Invoke();
-
-		RescaleAndMove();
-		Initialize();
-
-		UpdateStatus();
-
-    }
-
-	private void Initialize() {
+	private void Initialize()
+	{
 
 		FinalBaseDamage = 0f;
 		FinalMultiplier = 1f;
@@ -249,9 +240,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
 		RescaleAndMove();
 
-		CardStatusTextDisplay.Instance.UpdateBaseDamage(0f);
-		CardStatusTextDisplay.Instance.UpdateMultiplier(1f);
-		CardStatusTextDisplay.Instance.RemoveMatches();
+		CardsChanged?.Invoke();
 
 	}
 

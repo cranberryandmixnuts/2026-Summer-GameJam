@@ -22,10 +22,9 @@ public sealed class CardProjectileLauncher : MonoBehaviour
 
     private void HandleCardThrow(CardThrowArgs args)
     {
-        Debug.Log($"CardProjectileLauncher.HandleCardThrow: {args.FinalDamage}, {args.Speed}, {args.Effects}");
         GameObject cards = args.Cards;
         Transform cardsTransform = cards.transform;
-        cardsTransform.SetParent(target.transform, true);
+        cardsTransform.SetParent(target, true);
         cardsTransform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         cardsTransform.position = transform.position;
 
@@ -41,12 +40,14 @@ public sealed class CardProjectileLauncher : MonoBehaviour
             body,
             damage,
             speed,
-            args.Effects,
+            args.Effect,
             settings,
-            poisonAreaPool,
             enemyLayers,
             gameObject
         );
+
+        PoisonCardTrailEmitter poisonTrailEmitter = GetOrAddPoisonTrailEmitter(cards);
+        poisonTrailEmitter.Initialize(poisonAreaPool, settings, enemyLayers, gameObject);
     }
 
     private static Rigidbody2D GetOrAddBody(GameObject cards)
@@ -61,6 +62,13 @@ public sealed class CardProjectileLauncher : MonoBehaviour
         if (cards.TryGetComponent(out CardProjectile projectile)) return projectile;
 
         return cards.AddComponent<CardProjectile>();
+    }
+
+    private static PoisonCardTrailEmitter GetOrAddPoisonTrailEmitter(GameObject cards)
+    {
+        if (cards.TryGetComponent(out PoisonCardTrailEmitter emitter)) return emitter;
+
+        return cards.AddComponent<PoisonCardTrailEmitter>();
     }
 
     private static void ConfigureBody(Rigidbody2D body)

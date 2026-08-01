@@ -143,7 +143,7 @@ public sealed class PoisonArea : MonoBehaviour
                 target.DamageTimeRemaining += settings.PoisonDamageInterval;
             }
 
-            if (target.Health.IsDead) targets.RemoveAt(index);
+            if (target.Health.IsDead) targets.Remove(target);
         }
     }
 

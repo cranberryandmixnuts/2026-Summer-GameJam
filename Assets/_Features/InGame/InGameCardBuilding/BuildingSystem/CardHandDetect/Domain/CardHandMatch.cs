@@ -10,7 +10,7 @@ public sealed class CardHandMatch
     public string Id { get; }
     public string DisplayName { get; }
     public int Priority { get; }
-    public Color LineColor { get; }
+    public Color DisplayColor { get; }
     public float Bonus { get; }
     public CardLine Line { get; }
     public IReadOnlyList<CardLineCard> Cards => _cards;
@@ -20,7 +20,7 @@ public sealed class CardHandMatch
         string id,
         string displayName,
         int priority,
-        Color lineColor,
+        Color displayColor,
         float bonus,
         CardLine line,
         IReadOnlyList<CardLineCard> cards
@@ -30,7 +30,7 @@ public sealed class CardHandMatch
         Id = id;
         DisplayName = displayName;
         Priority = priority;
-        LineColor = lineColor;
+        DisplayColor = displayColor;
         Bonus = bonus;
         Line = line;
         _cards = new CardLineCard[cards.Count];

@@ -1,123 +1,179 @@
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
+using UnityEngine;
 
-public class CardStatusTextDisplay : SingletonBehaviour<CardStatusTextDisplay, SceneScope> {
+[RequireComponent(typeof(TMP_Text))]
+public sealed class CardStatusTextDisplay : SingletonBehaviour<CardStatusTextDisplay, SceneScope>
+{
+    private const string LevelColor = "FFCE7A";
 
-	//======================================================================| Constants
+    private sealed class MatchSummary
+    {
+        public string DisplayName { get; }
+        public Color DisplayColor { get; }
+        public int Count { get; set; }
 
-	private readonly Dictionary<string, string> _textOfMatches = new() {
+        public MatchSummary(string displayName, Color displayColor)
+        {
+            DisplayName = displayName;
+            DisplayColor = displayColor;
+            Count = 1;
+        }
+    }
 
-		{ "Æä¾î", "<color=White>Æä¾î</color>" },
-		{ "Æä¾î+", "<color=#ffffff>Æä¾î</color><color=#FFCE7A>+</color>" },
-		{ "Æ®¸®ÇÃ", "<color=#99CCFF>Æ®¸®ÇÃ</color>" },
-		{ "Æ®¸®ÇÃ+", "<color=#99CCFF>Æ®¸®ÇÃ</color><color=#FFCE7A>+</color>" },
-		{ "Æ®¸®ÇÃ++", "<color=#78A3FA>Æ®¸®ÇÃ</color><color=#FFCE7A>++</color>" },
-		{ "Æ÷Ä«µå", "<color=#FFFF99>Æ÷Ä«µå</color>" },
-		{ "Æ÷Ä«µå+", "<color=#FFFF99>Æ÷Ä«µå</color><color=#FFCE7A>+</color>" },
-		{ "Æ÷Ä«µå++", "<color=#FFB47A>Æ÷Ä«µå</color><color=#FFCE7A>++</color>" },
-		{ "Æ÷Ä«µå+++", "<color=#FF844F>Æ÷Ä«µå</color><color=#FFCE7A>+++</color>" },
-		{ "ÇÃ·¯½Ã", "<color=#E5CCFF>ÇÃ·¯½Ã</color>" },
-		{ "ÇÃ·¯½Ã+", "<color=#E5CCFF>ÇÃ·¯½Ã</color><color=#FFCE7A>++</color>" },
-		{ "ÇÃ·¯½Ã++", "<color=#B296FF>ÇÃ·¯½Ã</color><color=#FFCE7A>++</color>" },
-		{ "ÇÃ·¯½Ã+++", "<color=#8C75FF>ÇÃ·¯½Ã</color><color=#FFCE7A>++</color>" },
-		{ "¾ßÃß", "<color=#4F4FFF>¾ßÃß</color>" },
-		{ "Ç®ÇÏ¿ì½º", "<color=#CCFFCC>Ç®ÇÏ¿ì½º</color>" },
-		{ "Ç®ÇÏ¿ì½º+", "<color=#CCFFCC>Ç®ÇÏ¿ì½º</color><color=#FFCE7A>+</color>" },
-		{ "Ç®ÇÏ¿ì½º++", "<color=#BAFF8C>Ç®ÇÏ¿ì½º</color><color=#FFCE7A>++</color>" },
-		{ "ÆÛÆåÆ® Ç®ÇÏ¿ì½º", "<color=#FFCE7A>ÆÛÆåÆ®</color><color=#BAFF8C>Ç®ÇÏ¿ì½º</color>" },
-		{ "ÆÛÆåÆ® Ç®ÇÏ¿ì½º+", "<color=#FFCE7A>ÆÛÆåÆ®</color><color=#BAFF8C>Ç®ÇÏ¿ì½º</color><color=#FFCE7A>+</color>" },
-		{ "½ºÆ®·¹ÀÌÆ®", "<color=#FFABAB>½ºÆ®·¹ÀÌÆ®</color>" },
-		{ "½ºÆ®·¹ÀÌÆ® ÇÃ·¯½Ã", "<color=#FF6B8E>½ºÆ®·¹ÀÌÆ®</color><color=#B296FF>ÇÃ·¯½Ã</color>" },
-		{ "·Î¿­ ½ºÆ®·¹ÀÌÆ®", "<color=#FFCE7A>·Î¿­</color><color=#FF6B8E>½ºÆ®·¹ÀÌÆ®</color>" },
-		{ "·Î¿­ ½ºÆ®·¹ÀÌÆ® ÇÃ·¯½Ã", "<color=#FFCE7A>·Î¿­</color><color=#FF6B8E>½ºÆ®·¹ÀÌÆ®</color><color=#B296FF>ÇÃ·¯½Ã</color>" },
+    private readonly Dictionary<string, int> matchIndices = new();
+    private readonly List<MatchSummary> matchSummaries = new();
+    private readonly StringBuilder textBuilder = new();
 
-	};
+    private TMP_Text text;
+    private CardField cardField;
+    private CardHandDetector handDetector;
+    private PlayerHand playerHand;
+    private float baseDamage;
+    private float multiplier = 1f;
+    private int remainingHandCapacity;
+    private int handCardLimit;
+    private Tween baseDamageTween;
+    private Tween multiplierTween;
 
-	//======================================================================| Fields
+    protected override void SingletonAwake() => text = GetComponent<TMP_Text>();
 
-	private TMP_Text _text;
+    private void Start()
+    {
+        cardField = CardField.Instance;
+        handDetector = CardHandDetector.Instance;
+        playerHand = PlayerHand.Instance;
 
-	private float _baseDamage;
-	private float _multiplier = 1f;
+        cardField.StatusChanged += HandleStatusChanged;
+        handDetector.MatchesChanged += HandleMatchesChanged;
+        playerHand.CapacityChanged += HandleCapacityChanged;
 
-	private Tween _baseDamageTween;
-	private Tween _multiplierTween;
-	private readonly Dictionary<string, int> _matches = new();
-	private string _matchText;
+        baseDamage = cardField.FinalBaseDamage;
+        multiplier = cardField.FinalMultiplier;
+        HandleMatchesChanged(handDetector.CurrentMatches);
+        HandleCapacityChanged(playerHand.RemainingCapacity, playerHand.HandCardLimit);
+    }
 
-	//======================================================================| Unity Methods
+    protected override void SingletonOnDestroy()
+    {
+        if (cardField != null) cardField.StatusChanged -= HandleStatusChanged;
+        if (handDetector != null) handDetector.MatchesChanged -= HandleMatchesChanged;
+        if (playerHand != null) playerHand.CapacityChanged -= HandleCapacityChanged;
 
-	protected override void SingletonAwake() {
-		_text = GetComponent<TMP_Text>();
-	}
+        baseDamageTween?.Kill();
+        multiplierTween?.Kill();
+    }
 
-	private void Update() {
-		
-		_text.text =
-			$"µ¥¹ÌÁö: {_baseDamage:0.00}\n" +
-			$"¹è¼ö: {_multiplier:0.00}\n";
+    private void HandleStatusChanged(float targetBaseDamage, float targetMultiplier)
+    {
+        baseDamageTween?.Kill();
+        multiplierTween?.Kill();
 
-		if (!string.IsNullOrEmpty(_matchText)) {
-			_text.text += "\nÁ·º¸ º¸³Ê½º";
-			_text.text += _matchText;
-		}
+        baseDamageTween = DOTween.To(
+            () => baseDamage,
+            value => baseDamage = value,
+            targetBaseDamage,
+            0.5f
+        )
+        .SetEase(Ease.OutQuad)
+        .OnUpdate(RefreshText);
 
-	}
+        multiplierTween = DOTween.To(
+            () => multiplier,
+            value => multiplier = value,
+            targetMultiplier,
+            0.5f
+        )
+        .SetEase(Ease.OutQuad)
+        .OnUpdate(RefreshText);
+    }
 
-	//======================================================================| Methods
+    private void HandleMatchesChanged(IReadOnlyList<CardHandMatch> matches)
+    {
+        matchIndices.Clear();
+        matchSummaries.Clear();
 
-	public void UpdateBaseDamage(float value) {
-		_baseDamageTween?.Kill();
-		_baseDamageTween = DOTween.To(
-			() => _baseDamage,
-			x => _baseDamage = x,
-			value, 0.5f
-		).SetEase(Ease.OutQuad);
-	}
+        foreach (CardHandMatch match in matches)
+        {
+            if (matchIndices.TryGetValue(match.Id, out int summaryIndex))
+            {
+                matchSummaries[summaryIndex].Count++;
+                continue;
+            }
 
-	public void UpdateMultiplier(float value) {
-		_multiplierTween?.Kill();
-		_multiplierTween = DOTween.To(
-			() => _multiplier,
-			x => _multiplier = x,
-			value, 0.5f
-		).SetEase(Ease.OutQuad);
-	}
+            matchIndices.Add(match.Id, matchSummaries.Count);
+            matchSummaries.Add(new MatchSummary(match.DisplayName, match.DisplayColor));
+        }
 
-	public void RemoveMatches() {
-		_matchText = "";
-	}
+        RefreshText();
+    }
 
-	public void UpdateMatches() {
+    private void HandleCapacityChanged(int remainingCapacity, int maximumCapacity)
+    {
+        remainingHandCapacity = remainingCapacity;
+        handCardLimit = maximumCapacity;
+        RefreshText();
+    }
 
-		var matches = CardHandDetector.Instance.CurrentMatches;
-		_matches.Clear();
+    private void RefreshText()
+    {
+        textBuilder.Clear();
+        textBuilder
+            .Append("ë°ë¯¸ì§€: ")
+            .Append(baseDamage.ToString("0.00"))
+            .Append('\n')
+            .Append("ë°°ìˆ˜: ")
+            .Append(multiplier.ToString("0.00"))
+            .Append('\n')
+            .Append("ë‚¨ì€ ì†íŒ¨: ")
+            .Append(remainingHandCapacity)
+            .Append('/')
+            .Append(handCardLimit);
 
-		foreach (var matche in matches) {
+        if (matchSummaries.Count > 0)
+        {
+            textBuilder.Append("\n\nì¡±ë³´ ë³´ë„ˆìŠ¤");
 
-			UnityEngine.Debug.Log(
-				$"Rule Type: {matche.DisplayName}, Rule Id: {matche.Rule.Id}, Name: {matche.Rule.name}"
-			);
+            foreach (MatchSummary summary in matchSummaries)
+            {
+                textBuilder.Append("\n  - ");
+                AppendDisplayName(summary);
 
+                if (summary.Count > 1)
+                    textBuilder.Append(" (").Append(summary.Count).Append(')');
+            }
+        }
 
-			if (_matches.ContainsKey(matche.DisplayName)) {
-				_matches[matche.DisplayName]++;
-			}
-			else {
-				_matches[matche.DisplayName] = 1;
-			}
+        text.text = textBuilder.ToString();
+    }
 
-		}
+    private void AppendDisplayName(MatchSummary summary)
+    {
+        int baseNameLength = summary.DisplayName.Length;
 
-		_matchText = "";
+        while (baseNameLength > 0 && summary.DisplayName[baseNameLength - 1] == '+')
+            baseNameLength--;
 
-		foreach (var (id, count) in _matches) {
-			_matchText += $"\n  - {_textOfMatches[id]}";
-			if (count == 1) continue;
-			_matchText += $" ({count})";
-		}
+        textBuilder
+            .Append("<color=#")
+            .Append(ColorUtility.ToHtmlStringRGB(summary.DisplayColor))
+            .Append('>')
+            .Append(summary.DisplayName, 0, baseNameLength)
+            .Append("</color>");
 
-	}
+        if (baseNameLength == summary.DisplayName.Length) return;
 
+        textBuilder
+            .Append("<color=#")
+            .Append(LevelColor)
+            .Append('>')
+            .Append(
+                summary.DisplayName,
+                baseNameLength,
+                summary.DisplayName.Length - baseNameLength
+            )
+            .Append("</color>");
+    }
 }

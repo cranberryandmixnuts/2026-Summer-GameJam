@@ -8,11 +8,9 @@ public sealed class CardProjectile : MonoBehaviour
 
     private CardEffect effect;
     private CardProjectileSettings settings;
-    private PoisonAreaPool poisonAreaPool;
     private LayerMask enemyLayers;
     private GameObject source;
     private int damage;
-    private float poisonDropElapsedTime;
 
     public void Initialize(
         Rigidbody2D body,
@@ -20,7 +18,6 @@ public sealed class CardProjectile : MonoBehaviour
         float speed,
         CardEffect effect,
         CardProjectileSettings settings,
-        PoisonAreaPool poisonAreaPool,
         LayerMask enemyLayers,
         GameObject source
     )
@@ -28,29 +25,14 @@ public sealed class CardProjectile : MonoBehaviour
         this.damage = damage;
         this.effect = effect;
         this.settings = settings;
-        this.poisonAreaPool = poisonAreaPool;
         this.enemyLayers = enemyLayers;
         this.source = source;
-        poisonDropElapsedTime = 0f;
         hitEnemies.Clear();
 
         foreach (Collider2D cardCollider in GetComponentsInChildren<Collider2D>(true)) cardCollider.isTrigger = true;
 
         body.linearVelocity = 30 * speed * Vector2.up;
         Destroy(gameObject, settings.ProjectileLifetime);
-    }
-
-    private void Update()
-    {
-        if (!effect.IsPoison) return;
-
-        poisonDropElapsedTime += Time.deltaTime;
-
-        while (poisonDropElapsedTime >= settings.PoisonDropInterval)
-        {
-            poisonDropElapsedTime -= settings.PoisonDropInterval;
-            poisonAreaPool.Spawn(transform.position, settings, enemyLayers, source);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

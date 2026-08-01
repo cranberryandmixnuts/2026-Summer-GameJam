@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,10 +47,13 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope>
     //======================================================================| Properties
 
     public int HandCardLimit => _handCardLimit;
+    public int RemainingCapacity => HandCardLimit - _cards.Count;
     public IReadOnlyList<Card> Cards => _cards;
 
     public int HoveredCardIndex { get; private set; } = -1;
     public Card HoveredCard { get; private set; } = null;
+
+    public event Action<int, int> CapacityChanged;
 
     //======================================================================| Unity Methods
 
@@ -151,9 +155,10 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope>
         _cardPosition.Add(card, default);
         _hoverRaycastAreas.Add(card, CreateHoverRaycastArea(card));
 
-        CalculateCardPosition();
-        MoveCards(_cards.Count - 1, 0f);
+		CalculateCardPosition();
+		MoveCards(_cards.Count - 1, 0f);
 		card.PlayDrawSound();
+		CapacityChanged?.Invoke(RemainingCapacity, HandCardLimit);
 
     }
 
@@ -199,6 +204,8 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope>
                 _hoverAnimationSpreadingDuration / _cards.Count
             );
         }
+
+        CapacityChanged?.Invoke(RemainingCapacity, HandCardLimit);
 
     }
 
