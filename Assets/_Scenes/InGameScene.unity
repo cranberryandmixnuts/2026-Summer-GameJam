@@ -5670,9 +5670,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB370\uBBF8\uC9C0 : 50 \n\uBC30\uC218 : x3.53\n\n\uC871\uBCF4 :\n  -
-    <color=#11ffff>\uD2B8\uB9AC\uD50C</color><color=#ffaa00>++</color>\n  - <color=#ffff00>\uD37C\uD399\uD2B8</color>
-    \uD480\uD558\uC6B0\uC2A4 "
+  m_text: ' '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 010fa0fcc7cb94647967a45a9aa72799, type: 2}
   m_sharedMaterial: {fileID: 4427854510054463112, guid: 010fa0fcc7cb94647967a45a9aa72799, type: 2}
