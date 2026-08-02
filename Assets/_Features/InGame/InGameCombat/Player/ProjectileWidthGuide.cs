@@ -7,10 +7,10 @@ using UnityEngine;
 public sealed class ProjectileWidthGuide : MonoBehaviour
 {
     [Title("Projectile")]
-    [SerializeField, MinValue(0f)] private float projectileScale = 0.3f;
+    [SerializeField, MinValue(0f)] private float projectileScale = 0.016f;
 
     [Title("Guide")]
-    [SerializeField, MinValue(0f)] private float guideLength = 50f;
+    [SerializeField, MinValue(0f)] private float guideLength = 10f;
     [SerializeField, MinValue(0f)] private float lineWidth = 0.1f;
     [SerializeField, MinValue(0f)] private float startDistance;
     [SerializeField, Range(0f, 0.99f)] private float fadeStart = 0.7f;
