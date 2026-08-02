@@ -623,7 +623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoadButton
   reloadCurrentScene: 1
-  scene: 0
+  sceneName: 
 --- !u!1 &409334147
 GameObject:
   m_ObjectHideFlags: 0
@@ -3558,7 +3558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoadButton
   reloadCurrentScene: 0
-  scene: 1
+  sceneName: MainScreen
 --- !u!1 &1349808645
 GameObject:
   m_ObjectHideFlags: 0
@@ -4858,7 +4858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoadButton
   reloadCurrentScene: 1
-  scene: 0
+  sceneName: 
 --- !u!1 &1875532684
 GameObject:
   m_ObjectHideFlags: 0
@@ -5382,7 +5382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoadButton
   reloadCurrentScene: 0
-  scene: 1
+  sceneName: MainScreen
 --- !u!1 &1937666620
 GameObject:
   m_ObjectHideFlags: 0

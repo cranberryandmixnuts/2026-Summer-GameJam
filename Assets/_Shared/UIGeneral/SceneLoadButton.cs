@@ -1,30 +1,33 @@
-using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public sealed class SceneLoadButton : MonoBehaviour
 {
     [SerializeField]
-    private bool reloadCurrentScene = false;
+    private bool reloadCurrentScene;
 
     [HideIf(nameof(reloadCurrentScene))]
-    [ValidateInput(nameof(IsValidScene), "SceneType이 None이면 로드할 수 없습니다!"), SerializeField]
-    private SceneType scene = SceneType.None;
+    [ValidateInput(nameof(IsValidSceneName), "씬 이름을 입력해야 합니다!")]
+    [SerializeField]
+    private string sceneName;
 
-    private bool Loaded = false;
+    private bool loaded;
 
     public void Load()
     {
-        if (Loaded) return;
+        if (loaded) return;
 
-        SceneType targetScene = reloadCurrentScene
-            ? SceneLoader.Instance.CurrentSceneType
-            : scene;
+        string targetSceneName = reloadCurrentScene
+            ? SceneManager.GetActiveScene().name
+            : sceneName;
 
-        if (targetScene == SceneType.None) return;
+        if (string.IsNullOrWhiteSpace(targetSceneName)) return;
 
-        Loaded = true;
-        SceneLoader.Instance.LoadScene(targetScene);
+        loaded = true;
+        SceneManager.LoadScene(targetSceneName);
     }
 
-    private bool IsValidScene(SceneType value) => reloadCurrentScene || value != SceneType.None;
+    private bool IsValidSceneName(string value) =>
+        reloadCurrentScene || !string.IsNullOrWhiteSpace(value);
 }
