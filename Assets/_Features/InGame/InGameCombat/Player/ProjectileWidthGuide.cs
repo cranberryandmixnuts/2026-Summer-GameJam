@@ -12,7 +12,7 @@ public sealed class ProjectileWidthGuide : MonoBehaviour
     [Title("Guide")]
     [SerializeField, MinValue(0f)] private float guideLength = 10f;
     [SerializeField, MinValue(0f)] private float lineWidth = 0.1f;
-    [SerializeField, MinValue(0f)] private float startDistance;
+    [SerializeField, MinValue(0f)] private float startDistance = 0;
     [SerializeField, Range(0f, 0.99f)] private float fadeStart = 0.7f;
     [SerializeField, Range(0f, 1f)] private float opacity = 0.8f;
     [SerializeField] private int sortingOrder = 100;
