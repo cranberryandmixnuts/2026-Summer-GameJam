@@ -29,11 +29,12 @@ public sealed class CardProjectileLauncher : MonoBehaviour
         CardProjectileGroupBuilder.AttachCards(args.Cards, projectileTransform);
 
         projectileTransform.SetParent(target, true);
-        projectileTransform.localScale = Vector3.one * projectileScale;
+        projectileTransform.localScale =
+            Vector3.one * projectileScale * args.Effect.SizeMultiplier;
         projectileTransform.position = transform.position;
 
         int finalDamage = Mathf.Max(0, Mathf.RoundToInt(args.FinalDamage));
-        float speed = Mathf.Max(0f, args.Speed);
+        float speed = Mathf.Max(0f, args.Speed * args.Effect.SpeedMutliplier);
 
         projectile.Initialize(
             finalDamage,

@@ -55,6 +55,14 @@ public abstract class EnemyProjectile : MonoBehaviour
 
     protected abstract void StopMovement();
 
+    public bool TryIntercept()
+    {
+        if (!IsActive) return false;
+
+        DestroyProjectile();
+        return true;
+    }
+
     protected bool TryDamageTarget(Collider2D other, LayerMask targetLayers, Vector2 projectilePosition)
     {
         if (!IsActive || !targetLayers.Contains(other.gameObject.layer)) return false;

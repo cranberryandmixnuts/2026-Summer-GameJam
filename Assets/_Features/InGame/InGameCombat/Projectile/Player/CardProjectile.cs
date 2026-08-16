@@ -14,6 +14,8 @@ public sealed class CardProjectile : MonoBehaviour
     private LayerMask enemyLayers;
     private GameObject source;
     private int damage;
+    private Vector2 direction;
+    private bool isActive;
 
     public void Initialize(
         int finalDamage,
@@ -30,13 +32,15 @@ public sealed class CardProjectile : MonoBehaviour
         this.settings = settings;
         this.enemyLayers = enemyLayers;
         this.source = source;
+        direction = Vector2.up;
+        isActive = true;
         hitEnemies.Clear();
 
         foreach (Collider2D cardCollider in GetComponentsInChildren<Collider2D>(true)) cardCollider.isTrigger = true;
 
         body.position = transform.position;
         body.rotation = transform.eulerAngles.z;
-        body.linearVelocity = 30f * speed * Vector2.up;
+        body.linearVelocity = 30f * speed * direction;
 
         poisonTrailEmitter.Initialize(
             poisonAreaPool,
@@ -51,16 +55,35 @@ public sealed class CardProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!isActive) return;
+        if (TryDestroyEnemyProjectile(other)) return;
         if (!EnemyCollisionResolver.TryResolve(other, enemyLayers, out EnemyHealth enemyHealth)) return;
         if (!hitEnemies.Add(enemyHealth)) return;
 
         Vector2 hitPoint = other.ClosestPoint(transform.position);
-        DamageInfo damageInfo = new(damage, source, hitPoint, Vector2.up);
+        DamageInfo damageInfo = new(damage, source, hitPoint, direction);
         enemyHealth.TryTakeDamage(damageInfo);
 
-        if (enemyHealth.IsDead) return;
+        if (!enemyHealth.IsDead) CardEffectApplicator.Apply(enemyHealth, effect, settings, source, direction);
 
-        CardEffectApplicator.Apply(enemyHealth, effect, settings, source);
+        if (effect.DestroyOnEnemyHit) DestroyProjectile();
+    }
+
+    private bool TryDestroyEnemyProjectile(Collider2D other)
+    {
+        if (!effect.DestroysEnemyProjectiles) return false;
+
+        EnemyProjectile enemyProjectile = other.GetComponentInParent<EnemyProjectile>();
+        return enemyProjectile != null && enemyProjectile.TryIntercept();
+    }
+
+    private void DestroyProjectile()
+    {
+        if (!isActive) return;
+
+        isActive = false;
+        body.simulated = false;
+        Destroy(gameObject);
     }
 
     private void Reset()

@@ -116,9 +116,11 @@ public sealed class ProjectileWidthGuide : MonoBehaviour
         Transform layoutTransform = cards[0].transform.parent;
         float minX = float.PositiveInfinity;
         float maxX = float.NegativeInfinity;
+        float sizeMultiplier = 1f;
 
         foreach (Card card in cards)
         {
+            sizeMultiplier *= card.Effect.SizeMultiplier;
             RectTransform rectTransform = (RectTransform)card.transform;
             rectTransform.GetWorldCorners(corners);
 
@@ -132,7 +134,7 @@ public sealed class ProjectileWidthGuide : MonoBehaviour
             }
         }
 
-        return maxX - minX;
+        return (maxX - minX) * sizeMultiplier;
     }
 
     private LineRenderer CreateLine(string objectName)

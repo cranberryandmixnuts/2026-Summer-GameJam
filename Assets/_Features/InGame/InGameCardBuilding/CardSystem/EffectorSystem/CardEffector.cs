@@ -1,35 +1,34 @@
-public class CardEffect {
+public class CardEffect
+{
+    public int FireLevel { get; init; }
+    public int WaterLevel { get; init; }
+    public int ElectricLevel { get; init; }
+    public int HealLevel { get; init; }
 
-	//======================================================================| Properties
+    public float SizeMultiplier { get; init; } = 1f;
+    public float SpeedMutliplier { get; init; } = 1f;
+    public float KnockbackDistance { get; init; }
 
-	public int FireLevel { get; init; } = 0;
-	public int WaterLevel { get; init; } = 0;
-	public int ElectricLevel { get; init;  } = 0;
-	public int HealLevel { get; init; } = 0;
+    public float AdditionalMultiplier { get; init; }
 
-    public float SizeMultiplier { get; init; } = 0f;
-	public float SpeedMutliplier { get; init; } = 0f;
+    public bool DestroyOnEnemyHit { get; init; }
+    public bool DestroysEnemyProjectiles { get; init; }
 
-	public float AdditionalMultiplier { get; init; } = 0f;
-
-	//======================================================================| Operators
-
-	public static CardEffect operator+(CardEffect left, CardEffect right) {
-		return new CardEffect() {
-
-			FireLevel = left.FireLevel + right.FireLevel,
-			WaterLevel = left.WaterLevel + right.WaterLevel,
-			ElectricLevel = left.ElectricLevel + right.ElectricLevel,
-			HealLevel = left.HealLevel + right.HealLevel,
-
+    public static CardEffect operator +(CardEffect left, CardEffect right) =>
+        new()
+        {
+            FireLevel = left.FireLevel + right.FireLevel,
+            WaterLevel = left.WaterLevel + right.WaterLevel,
+            ElectricLevel = left.ElectricLevel + right.ElectricLevel,
+            HealLevel = left.HealLevel + right.HealLevel,
             SizeMultiplier = left.SizeMultiplier * right.SizeMultiplier,
-			SpeedMutliplier = left.SpeedMutliplier * right.SpeedMutliplier,
+            SpeedMutliplier = left.SpeedMutliplier * right.SpeedMutliplier,
+            KnockbackDistance = left.KnockbackDistance + right.KnockbackDistance,
+            AdditionalMultiplier = left.AdditionalMultiplier + right.AdditionalMultiplier,
+            DestroyOnEnemyHit = left.DestroyOnEnemyHit || right.DestroyOnEnemyHit,
+            DestroysEnemyProjectiles =
+                left.DestroysEnemyProjectiles || right.DestroysEnemyProjectiles
+        };
 
-			AdditionalMultiplier = left.AdditionalMultiplier + right.AdditionalMultiplier
-
-		};
-	}
-
-	public virtual void OnAttached(Card card) {}
-
+    public virtual void OnAttached(Card card) { }
 }
