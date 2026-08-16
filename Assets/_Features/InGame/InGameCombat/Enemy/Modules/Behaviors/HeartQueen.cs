@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 public sealed class HeartQueen : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable

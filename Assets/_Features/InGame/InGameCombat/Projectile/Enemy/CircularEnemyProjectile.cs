@@ -1,7 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 public sealed class CircularEnemyProjectile : EnemyProjectile
 {

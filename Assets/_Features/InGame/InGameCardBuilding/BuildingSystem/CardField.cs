@@ -71,12 +71,26 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 	public event Action<float, float> StatusChanged;
 	public event Action<CardThrowArgs> OnCardThrow;
 
-	public record CardThrowArgs(
-		in float FinalDamage,
-		in float Speed,
-		in GameObject Cards,
-		in CardEffect Effect
-	);
+	public readonly struct CardThrowArgs
+	{
+		public float FinalDamage { get; }
+		public float Speed { get; }
+		public IReadOnlyList<Card> Cards { get; }
+		public CardEffect Effect { get; }
+
+		public CardThrowArgs(
+			float finalDamage,
+			float speed,
+			IReadOnlyList<Card> cards,
+			CardEffect effect
+		)
+		{
+			FinalDamage = finalDamage;
+			Speed = speed;
+			Cards = cards;
+			Effect = effect;
+		}
+	}
 
 	//======================================================================| Unity Methods
 
@@ -170,8 +184,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 		FinalBaseDamage = TotalCards.Sum(card => card.CalculateDamage());
 		FinalMultiplier = TotalCards.Sum(card => card.CalculateAdditionalMultiplier()) + 1f;
 		FinalMultiplier += matches
-			.Select(match => match.Bonus)
-			.Sum();
+			.Sum(match => match.Bonus);
 
 		StatusChanged?.Invoke(FinalBaseDamage, FinalMultiplier);
 
@@ -209,12 +222,10 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 			effect += card.Effect;
 		}
 
-		GameObject parent = CardProjectileGroupBuilder.Build(cards);
-
 		OnCardThrow?.Invoke(new(
 			FinalBaseDamage * multiplier,
 			1f,
-			parent,
+			cards,
 			effect
 		));
 
@@ -273,7 +284,7 @@ public class CardField : SingletonBehaviour<CardField, SceneScope> {
 
         foreach (KeyValuePair<Vector2Int, Card> pair in _placedCards) {
 
-            if (pair.Value.BaseStatus.IsBlockingAttachment) continue;
+            if (pair.Value.IsBlockingAttachment) continue;
 
             AddSlotIfAvailable(pair.Key + Vector2Int.up);
             AddSlotIfAvailable(pair.Key + Vector2Int.down);

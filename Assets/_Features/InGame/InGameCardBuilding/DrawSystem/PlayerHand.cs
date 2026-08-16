@@ -54,6 +54,7 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope>
     public Card HoveredCard { get; private set; } = null;
 
     public event Action<int, int> CapacityChanged;
+    public event Action<Card> HoveredCardChanged;
 
     //======================================================================| Unity Methods
 
@@ -128,6 +129,7 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope>
             }
 
             _previousHoveredCard = HoveredCard;
+            HoveredCardChanged?.Invoke(HoveredCard);
 
         }
 
@@ -166,6 +168,7 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope>
     {
 
         var removedIndex = _cards.IndexOf(card);
+        var wasHovered = HoveredCard == card || _previousHoveredCard == card;
         card.PreviousIndex = removedIndex;
 
         if (_moveCardsCoroutine != null)
@@ -194,6 +197,8 @@ public class PlayerHand : SingletonBehaviour<PlayerHand, SceneScope>
         HoveredCardIndex = HoveredCard != null
             ? _cards.IndexOf(HoveredCard)
             : -1;
+
+        if (wasHovered) HoveredCardChanged?.Invoke(null);
 
         CalculateCardPosition();
 

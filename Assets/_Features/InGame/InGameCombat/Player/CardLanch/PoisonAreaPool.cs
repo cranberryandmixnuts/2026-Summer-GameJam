@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 public sealed class PoisonAreaPool : MonoBehaviour
 {
     [SerializeField, Required, AssetsOnly] private PoisonArea prefab;
@@ -20,7 +19,8 @@ public sealed class PoisonAreaPool : MonoBehaviour
         Vector3 position,
         CardProjectileSettings settings,
         LayerMask enemyLayers,
-        GameObject source
+        GameObject source,
+        int finalProjectileDamage
     )
     {
         PoisonArea area = availableAreas.Count > 0
@@ -28,7 +28,14 @@ public sealed class PoisonAreaPool : MonoBehaviour
             : CreateArea();
 
         area.transform.SetParent(null, true);
-        area.Activate(position, settings, enemyLayers, source, Release);
+        area.Activate(
+            position,
+            settings,
+            enemyLayers,
+            source,
+            finalProjectileDamage,
+            Release
+        );
     }
 
     private PoisonArea CreateArea()

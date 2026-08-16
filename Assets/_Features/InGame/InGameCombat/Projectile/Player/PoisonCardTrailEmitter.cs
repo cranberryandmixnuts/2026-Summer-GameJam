@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[DisallowMultipleComponent]
 public sealed class PoisonCardTrailEmitter : MonoBehaviour
 {
     private Transform[] poisonCardTransforms;
@@ -8,25 +7,27 @@ public sealed class PoisonCardTrailEmitter : MonoBehaviour
     private CardProjectileSettings settings;
     private LayerMask enemyLayers;
     private GameObject source;
+    private int finalProjectileDamage;
     private float dropElapsedTime;
 
     public void Initialize(
         PoisonAreaPool poisonAreaPool,
         CardProjectileSettings settings,
         LayerMask enemyLayers,
-        GameObject source
+        GameObject source,
+        int finalProjectileDamage
     )
     {
         PoisonCard[] poisonCards = GetComponentsInChildren<PoisonCard>(true);
         poisonCardTransforms = new Transform[poisonCards.Length];
 
-        for (int index = 0; index < poisonCards.Length; index++)
-            poisonCardTransforms[index] = poisonCards[index].transform;
+        for (int index = 0; index < poisonCards.Length; index++) poisonCardTransforms[index] = poisonCards[index].transform;
 
         this.poisonAreaPool = poisonAreaPool;
         this.settings = settings;
         this.enemyLayers = enemyLayers;
         this.source = source;
+        this.finalProjectileDamage = finalProjectileDamage;
         dropElapsedTime = 0f;
         enabled = poisonCardTransforms.Length > 0;
     }
@@ -40,7 +41,15 @@ public sealed class PoisonCardTrailEmitter : MonoBehaviour
             dropElapsedTime -= settings.PoisonDropInterval;
 
             foreach (Transform poisonCardTransform in poisonCardTransforms)
-                poisonAreaPool.Spawn(poisonCardTransform.position, settings, enemyLayers, source);
+            {
+                poisonAreaPool.Spawn(
+                    poisonCardTransform.position,
+                    settings,
+                    enemyLayers,
+                    source,
+                    finalProjectileDamage
+                );
+            }
         }
     }
 }

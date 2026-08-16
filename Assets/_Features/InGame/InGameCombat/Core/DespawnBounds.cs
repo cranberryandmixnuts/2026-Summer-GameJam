@@ -1,7 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 [RequireComponent(typeof(BoxCollider2D))]
 public sealed class DespawnBounds : MonoBehaviour
 {

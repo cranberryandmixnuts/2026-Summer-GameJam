@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
 [MovedFrom(false, sourceClassName: "MovementBounds2D")]
-[DisallowMultipleComponent]
 [RequireComponent(typeof(BoxCollider2D))]
 public sealed class CombatBounds : MonoBehaviour
 {

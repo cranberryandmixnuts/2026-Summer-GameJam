@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3462357667494208416, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       propertyPath: m_Name
-      value: PoisonCard
+      value: VortexCard
       objectReference: {fileID: 0}
     - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       propertyPath: m_Pivot.x
@@ -99,7 +99,7 @@ PrefabInstance:
     - target: {fileID: 6459619390146358190, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 5805361847939041946, guid: ac6697e3adad7f340b315bc067c517dd, type: 3}
+      objectReference: {fileID: 8260389724759304331, guid: 382987e59a7bd95499aa3bea0c7b9689, type: 3}
     - target: {fileID: 6459619390146358190, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       propertyPath: m_Material
       value: 
@@ -115,14 +115,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3462357667494208416, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       insertIndex: 2
-      addedObject: {fileID: 2082507449539737109}
+      addedObject: {fileID: 2918038444514818267}
   m_SourcePrefab: {fileID: 100100000, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
 --- !u!1 &4986063864687161717 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3462357667494208416, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
   m_PrefabInstance: {fileID: 8448415757326439125}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2082507449539737109
+--- !u!114 &2918038444514818267
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +131,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 4986063864687161717}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e861a11db1f88c348a03a910ee92a758, type: 3}
+  m_Script: {fileID: 11500000, guid: e8b0453df2f367d42a7792417c9e6088, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PoisonCard
-  _baseStatus: {fileID: 11400000, guid: 0a869c82b350b594b968f5ca397e3911, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::VortexCard
+  _baseDamage: 0
+  _additionalMultiplier: 0
+  _explanation: "\uBC30\uCE58 \uC2DC, 5\uAC1C\uC758 \uCD94\uAC00 \uC2AC\uB86F\uC744
+    \uD65C\uC131\uD654\uD569\uB2C8\uB2E4. \uCD94\uAC00 \uC2AC\uB86F\uC5D0 \uBC30\uCE58\uD560\uC218\uB85D,
+    \uC774 \uCE74\uB4DC\uC5D0 \uACE0\uC815 \uB370\uBBF8\uC9C0\uC640 \uBC30\uC218\uB97C
+    \uCD94\uAC00\uD569\uB2C8\uB2E4."
+  _isJoker: 0
+  _isSpecial: 1
+  _isBlockingAttachment: 1
+  _additionalDamageOverSlots:
+  - 10
+  - 25
+  - 40
+  - 80
+  - 100
+  _additionalMultiplierOverSlots:
+  - 10
+  - 50
+  - 100
+  - 200
+  - 300
+  _slotRadius: 250
+  _spiningSpeed: 3

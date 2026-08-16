@@ -4,6 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CardProjectileSettings", menuName = "Game/Card/Card Projectile Settings")]
 public sealed class CardProjectileSettings : ScriptableObject
 {
+    private const float PercentFactor = 0.01f;
+
     [Header("Projectile")]
     [SerializeField, MinValue(0.1f)] private float projectileLifetime = 10f;
 
@@ -21,7 +23,7 @@ public sealed class CardProjectileSettings : ScriptableObject
 
     [Header("Poison")]
     [SerializeField, MinValue(0.01f)] private float poisonDropInterval = 0.5f;
-    [SerializeField, MinValue(0)] private int poisonAreaDamage = 1;
+    [SerializeField, MinValue(0f), SuffixLabel("%")] private float poisonTickDamagePercent = 10f;
     [SerializeField, MinValue(0.01f)] private float poisonDamageInterval = 1f;
     [SerializeField, MinValue(0f)] private float poisonAreaDuration = 3f;
 
@@ -36,8 +38,14 @@ public sealed class CardProjectileSettings : ScriptableObject
     public float ElectricSlowPercentPerLevel => electricSlowPercentPerLevel;
     public float ElectricDurationPerLevel => electricDurationPerLevel;
     public float PoisonDropInterval => poisonDropInterval;
-    public int PoisonAreaDamage => poisonAreaDamage;
+    public float PoisonTickDamagePercent => poisonTickDamagePercent;
     public float PoisonDamageInterval => poisonDamageInterval;
     public float PoisonAreaDuration => poisonAreaDuration;
     public float HealPercentPerLevel => healPercentPerLevel;
+
+    public int CalculatePoisonTickDamage(int finalProjectileDamage) =>
+        Mathf.Max(
+            0,
+            Mathf.RoundToInt(finalProjectileDamage * PoisonTickDamagePercent * PercentFactor)
+        );
 }

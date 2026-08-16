@@ -135,9 +135,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82a5fa7d406fd18448d14d15f9366dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NormalCard
-  _baseStatus: {fileID: 0}
+  _baseDamage: 0
+  _additionalMultiplier: 0
+  _explanation: 
+  _isJoker: 0
+  _isSpecial: 0
+  _isBlockingAttachment: 0
   _pattern: 0
-  _number: 0
+  _number: 1
 --- !u!61 &8406690229607155170
 BoxCollider2D:
   m_ObjectHideFlags: 0

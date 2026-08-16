@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
 [MovedFrom(false, sourceClassName: "DestroyBelowWorldY")]
-[DisallowMultipleComponent]
 public sealed class EnemyDespawnOnExit : MonoBehaviour, IEnemyRuntimeInitializable
 {
     [SerializeField, Required] private Collider2D bodyCollider;

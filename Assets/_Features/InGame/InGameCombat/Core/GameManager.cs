@@ -5,7 +5,6 @@ using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 public sealed class GameManager : MonoBehaviour
 {
     [Serializable]

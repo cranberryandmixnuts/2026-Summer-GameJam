@@ -2,7 +2,6 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 public sealed class PlayerMovement : MonoBehaviour
 {

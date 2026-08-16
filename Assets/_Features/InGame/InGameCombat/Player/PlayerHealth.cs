@@ -2,7 +2,6 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 public sealed class PlayerHealth : MonoBehaviour, IDamageable
 {
     [SerializeField, MinValue(1)] private int maxHealth = 3;

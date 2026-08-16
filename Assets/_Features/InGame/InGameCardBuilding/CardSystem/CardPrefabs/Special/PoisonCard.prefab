@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3462357667494208416, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       propertyPath: m_Name
-      value: StoneCard
+      value: PoisonCard
       objectReference: {fileID: 0}
     - target: {fileID: 6219986558041568947, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       propertyPath: m_Pivot.x
@@ -99,11 +99,11 @@ PrefabInstance:
     - target: {fileID: 6459619390146358190, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -5494428816626338724, guid: f7d0a7ba11fb43f40b0e9b177b8ca6a3, type: 3}
+      objectReference: {fileID: 5805361847939041946, guid: ac6697e3adad7f340b315bc067c517dd, type: 3}
     - target: {fileID: 6459619390146358190, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: 6a7856bb0a746ee449086ec87d5f3f7b, type: 2}
     - target: {fileID: 8406690229607155170, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -115,14 +115,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3462357667494208416, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       insertIndex: 2
-      addedObject: {fileID: 928399901809824425}
+      addedObject: {fileID: 2082507449539737109}
   m_SourcePrefab: {fileID: 100100000, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
 --- !u!1 &4986063864687161717 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3462357667494208416, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
   m_PrefabInstance: {fileID: 8448415757326439125}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &928399901809824425
+--- !u!114 &2082507449539737109
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +131,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4986063864687161717}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd3b64cd0e05ddf4ebb57643eac76348, type: 3}
+  m_Script: {fileID: 11500000, guid: e861a11db1f88c348a03a910ee92a758, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GeneralSpecialCard
-  _baseStatus: {fileID: 11400000, guid: 0ec43b5d3ab2a7f4b85070edcbded4af, type: 2}
+  m_EditorClassIdentifier: Assembly-CSharp::PoisonCard
+  _baseDamage: 10
+  _additionalMultiplier: 0
+  _explanation: "\uC774 \uCE74\uB4DC\uAC00 \uC9C0\uB098\uAC00\uB294 \uAE38\uC5D0
+    \uB370\uBBF8\uC9C0\uB97C \uC8FC\uB294 \uB3C5 \uC7A5\uD310\uC744 \uB0A8\uAE41\uB2C8\uB2E4."
+  _isJoker: 0
+  _isSpecial: 1
+  _isBlockingAttachment: 1

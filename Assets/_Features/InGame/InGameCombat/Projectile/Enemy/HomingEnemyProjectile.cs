@@ -1,8 +1,8 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
 public sealed class HomingEnemyProjectile : EnemyProjectile
 {
     [SerializeField, Required] private Rigidbody2D body;

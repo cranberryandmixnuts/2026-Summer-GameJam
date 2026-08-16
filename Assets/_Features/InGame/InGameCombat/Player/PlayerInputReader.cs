@@ -2,7 +2,6 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[DisallowMultipleComponent]
 public sealed class PlayerInputReader : MonoBehaviour
 {
     [SerializeField, Required] private InputActionReference moveAction;

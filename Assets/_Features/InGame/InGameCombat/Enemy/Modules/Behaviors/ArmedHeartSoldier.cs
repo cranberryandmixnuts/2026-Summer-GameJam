@@ -1,7 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable

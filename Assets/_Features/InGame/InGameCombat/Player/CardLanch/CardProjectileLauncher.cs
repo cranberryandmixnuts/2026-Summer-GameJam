@@ -2,13 +2,14 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using static CardField;
 
-[DisallowMultipleComponent]
 public sealed class CardProjectileLauncher : MonoBehaviour
 {
+    [SerializeField, Required, AssetsOnly] private CardProjectile projectilePrefab;
     [SerializeField, Required, InlineEditor] private CardProjectileSettings settings;
     [SerializeField, Required] private PoisonAreaPool poisonAreaPool;
     [SerializeField] private LayerMask enemyLayers;
-    [SerializeField] private Transform target;
+    [SerializeField, Required] private Transform target;
+    [SerializeField, MinValue(0f)] private float projectileScale = 0.3f;
 
     private void OnEnable()
     {
@@ -22,67 +23,27 @@ public sealed class CardProjectileLauncher : MonoBehaviour
 
     private void HandleCardThrow(CardThrowArgs args)
     {
-        GameObject cards = args.Cards;
-        Transform cardsTransform = cards.transform;
-        cardsTransform.SetParent(target, true);
-        cardsTransform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-        cardsTransform.position = transform.position;
+        CardProjectile projectile = Instantiate(projectilePrefab);
+        Transform projectileTransform = projectile.transform;
 
-        Rigidbody2D body = GetOrAddBody(cards);
-        ConfigureBody(body);
-        body.position = transform.position;
+        CardProjectileGroupBuilder.AttachCards(args.Cards, projectileTransform);
 
-        CardProjectile projectile = GetOrAddProjectile(cards);
-        int damage = Mathf.Max(0, Mathf.RoundToInt(args.FinalDamage));
+        projectileTransform.SetParent(target, true);
+        projectileTransform.localScale = Vector3.one * projectileScale;
+        projectileTransform.position = transform.position;
+
+        int finalDamage = Mathf.Max(0, Mathf.RoundToInt(args.FinalDamage));
         float speed = Mathf.Max(0f, args.Speed);
 
         projectile.Initialize(
-            body,
-            damage,
+            finalDamage,
             speed,
             args.Effect,
             settings,
+            poisonAreaPool,
             enemyLayers,
             gameObject
         );
-
-        PoisonCardTrailEmitter poisonTrailEmitter = GetOrAddPoisonTrailEmitter(cards);
-        poisonTrailEmitter.Initialize(poisonAreaPool, settings, enemyLayers, gameObject);
-    }
-
-    private static Rigidbody2D GetOrAddBody(GameObject cards)
-    {
-        if (cards.TryGetComponent(out Rigidbody2D body)) return body;
-
-        return cards.AddComponent<Rigidbody2D>();
-    }
-
-    private static CardProjectile GetOrAddProjectile(GameObject cards)
-    {
-        if (cards.TryGetComponent(out CardProjectile projectile)) return projectile;
-
-        return cards.AddComponent<CardProjectile>();
-    }
-
-    private static PoisonCardTrailEmitter GetOrAddPoisonTrailEmitter(GameObject cards)
-    {
-        if (cards.TryGetComponent(out PoisonCardTrailEmitter emitter)) return emitter;
-
-        return cards.AddComponent<PoisonCardTrailEmitter>();
-    }
-
-    private static void ConfigureBody(Rigidbody2D body)
-    {
-        body.bodyType = RigidbodyType2D.Dynamic;
-        body.simulated = true;
-        body.gravityScale = 0f;
-        body.linearDamping = 0f;
-        body.angularDamping = 0f;
-        body.constraints = RigidbodyConstraints2D.FreezeRotation;
-        body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        body.interpolation = RigidbodyInterpolation2D.Interpolate;
-        body.linearVelocity = Vector2.zero;
-        body.angularVelocity = 0f;
     }
 
     private void Reset()

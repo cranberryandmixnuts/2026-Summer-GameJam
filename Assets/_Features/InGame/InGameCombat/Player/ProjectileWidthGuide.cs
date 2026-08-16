@@ -3,7 +3,6 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 public sealed class ProjectileWidthGuide : MonoBehaviour
 {
     [Title("Projectile")]

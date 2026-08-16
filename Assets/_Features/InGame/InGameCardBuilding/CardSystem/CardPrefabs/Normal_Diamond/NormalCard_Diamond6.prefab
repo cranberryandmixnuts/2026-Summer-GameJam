@@ -17,6 +17,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2886948533877787642, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
+      propertyPath: _baseDamage
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2886948533877787642, guid: e6cd6dbb20ddd0d4c9bc115f4a3ca6d7, type: 3}
       propertyPath: _baseStatus
       value: 
       objectReference: {fileID: 11400000, guid: 8db8052cd8a3ea64da563fa6625eb24f, type: 2}

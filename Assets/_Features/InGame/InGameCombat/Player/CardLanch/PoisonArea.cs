@@ -4,7 +4,6 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 [RequireComponent(typeof(Collider2D))]
 public sealed class PoisonArea : MonoBehaviour
 {
@@ -23,33 +22,35 @@ public sealed class PoisonArea : MonoBehaviour
     }
 
     [SerializeField, Required] private Collider2D areaCollider;
-	[SerializeField] private float _startingAnimationDuration;
-	[SerializeField] private Ease _startingAnimationEase;
-	[SerializeField] private float _removeingAnimationDuration;
-	[SerializeField] private Ease _removeingAnimationEase;
-
-	private Tween tween;
+    [SerializeField] private float _startingAnimationDuration;
+    [SerializeField] private Ease _startingAnimationEase;
+    [SerializeField] private float _removeingAnimationDuration;
+    [SerializeField] private Ease _removeingAnimationEase;
 
     private readonly List<Target> targets = new();
 
-	private Material material;
+    private Tween tween;
+    private Material material;
     private CardProjectileSettings settings;
     private LayerMask enemyLayers;
     private GameObject source;
     private Action<PoisonArea> releaseAction;
+    private int tickDamage;
     private float remainingLifetime;
     private bool isActive;
 
-    private void Awake() {
-		areaCollider.isTrigger = true;
-		material = GetComponent<SpriteRenderer>().material;
-	}
+    private void Awake()
+    {
+        areaCollider.isTrigger = true;
+        material = GetComponent<SpriteRenderer>().material;
+    }
 
     public void Activate(
         Vector3 position,
         CardProjectileSettings settings,
         LayerMask enemyLayers,
         GameObject source,
+        int finalProjectileDamage,
         Action<PoisonArea> releaseAction
     )
     {
@@ -57,20 +58,22 @@ public sealed class PoisonArea : MonoBehaviour
         this.enemyLayers = enemyLayers;
         this.source = source;
         this.releaseAction = releaseAction;
+        tickDamage = settings.CalculatePoisonTickDamage(finalProjectileDamage);
         remainingLifetime = settings.PoisonAreaDuration;
         isActive = true;
         targets.Clear();
+
         transform.SetPositionAndRotation(position, Quaternion.identity);
         gameObject.SetActive(true);
 
-		tween?.Kill();
-		material.SetFloat("_Display", 0f);
-		tween = DOTween.To(
-			() => material.GetFloat("_Display"),
-			x => material.SetFloat("_Display", x),
-			1f, _startingAnimationDuration
-		).SetEase(_startingAnimationEase);
-
+        tween?.Kill();
+        material.SetFloat("_Display", 0f);
+        tween = DOTween.To(
+            () => material.GetFloat("_Display"),
+            value => material.SetFloat("_Display", value),
+            1f,
+            _startingAnimationDuration
+        ).SetEase(_startingAnimationEase);
     }
 
     private void Update()
@@ -82,13 +85,15 @@ public sealed class PoisonArea : MonoBehaviour
 
         if (remainingLifetime <= _removeingAnimationDuration)
         {
-			remainingLifetime = float.MaxValue;
-			tween = DOTween.To(
-				() => material.GetFloat("_Display"),
-				x => material.SetFloat("_Display", x),
-				0f, _removeingAnimationDuration
-			).SetEase(_removeingAnimationEase)
-			.OnComplete(() => Release());
+            remainingLifetime = float.MaxValue;
+            tween = DOTween.To(
+                () => material.GetFloat("_Display"),
+                value => material.SetFloat("_Display", value),
+                0f,
+                _removeingAnimationDuration
+            )
+            .SetEase(_removeingAnimationEase)
+            .OnComplete(Release);
         }
 
         UpdateTargets(deltaTime);
@@ -120,6 +125,7 @@ public sealed class PoisonArea : MonoBehaviour
         if (target == null) return;
 
         target.OverlapCount--;
+
         if (target.OverlapCount <= 0) targets.Remove(target);
     }
 
@@ -150,7 +156,7 @@ public sealed class PoisonArea : MonoBehaviour
     private void DealDamage(EnemyHealth enemyHealth)
     {
         DamageInfo damageInfo = new(
-            settings.PoisonAreaDamage,
+            tickDamage,
             source,
             enemyHealth.transform.position,
             Vector2.zero
@@ -173,7 +179,7 @@ public sealed class PoisonArea : MonoBehaviour
     {
         isActive = false;
         releaseAction(this);
-		tween?.Kill();
+        tween?.Kill();
     }
 
     private void OnDisable()
@@ -184,6 +190,7 @@ public sealed class PoisonArea : MonoBehaviour
         source = null;
         releaseAction = null;
         enemyLayers = default;
+        tickDamage = 0;
     }
 
     private void Reset() => areaCollider = GetComponent<Collider2D>();

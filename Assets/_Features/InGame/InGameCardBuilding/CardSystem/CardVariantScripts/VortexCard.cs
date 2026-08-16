@@ -62,7 +62,7 @@ public class VortexCard : Card {
 
 	public override float CalculateDamage() {
 
-		var damage = base.CalculateDamage();
+        float damage = base.CalculateDamage();
 
 		if (_cardOnSpecialSlot.Count != 0) {
 			damage += _additionalDamageOverSlots[_cardOnSpecialSlot.Count - 1];
@@ -74,10 +74,10 @@ public class VortexCard : Card {
 
 	public override float CalculateAdditionalMultiplier() {
 
-		var multiplier = base.CalculateAdditionalMultiplier();
+        float multiplier = base.CalculateAdditionalMultiplier();
 
 		if (_cardOnSpecialSlot.Count != 0) {
-			multiplier += _additionalDamageOverSlots[_cardOnSpecialSlot.Count - 1];
+			multiplier += _additionalMultiplierOverSlots[_cardOnSpecialSlot.Count - 1];
 		}
 
 		return multiplier;

@@ -6,162 +6,138 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public abstract class Card : MonoBehaviour,
-	IPointerEnterHandler,
-	IPointerExitHandler,
-	IPointerDownHandler,
-	IPointerUpHandler {
+    IPointerEnterHandler,
+    IPointerExitHandler,
+    IPointerDownHandler,
+    IPointerUpHandler
+{
+    private const float SlotReactiveRange = 7.5f;
 
-	//======================================================================| Fields
+    [Header("Status")]
+    [SerializeField] private float _baseDamage;
+    [SerializeField] private float _additionalMultiplier;
+    [SerializeField, TextArea] private string _explanation;
+    [SerializeField] private bool _isJoker;
+    [SerializeField] private bool _isSpecial;
+    [SerializeField] private bool _isBlockingAttachment;
 
-	[SerializeField]
-	private CardBaseStatus _baseStatus;
+    private GameObject _currentTargetSlot;
+    protected readonly Dictionary<int, Card> _cardOnSpecialSlot = new();
 
-	private const float _slotReactiveRange = 7.5f;
-	private GameObject _curentTargetSlot;
-	protected readonly Dictionary<int, Card> _cardOnSpecialSlot = new();
+    public float BaseDamage => _baseDamage;
+    public float AdditionalMultiplier => _additionalMultiplier;
+    public string Explanation => _explanation;
+    public bool IsJoker => _isJoker;
+    public bool IsSpecial => _isSpecial;
+    public bool IsBlockingAttachment => _isBlockingAttachment;
+    public bool IsHovered { get; private set; }
+    public bool IsGrabed { get; private set; }
+    public bool IsAttached { get; private set; }
+    public int? PreviousIndex { get; set; }
+    public GameObject AttachedSlot { get; private set; }
+    public CardEffect Effect { get; private set; } = new();
+    public virtual IReadOnlyList<SpecialCardSlot> SpecialCardSlots => Array.Empty<SpecialCardSlot>();
 
-	//======================================================================| Properties
+    public event Action<Card> OnUpdate;
 
-	public CardBaseStatus BaseStatus => _baseStatus;
-	public bool IsHovered { get; private set; }
-	public bool IsGrabed { get; private set; }
-	public bool IsAttached { get; private set; }
+    protected virtual void Update()
+    {
+        if (AttachedSlot == null)
+        {
+            if (IsGrabed)
+            {
+                transform.position = Camera.main
+                    .ScreenToWorldPoint(Mouse.current.position.ReadValue().ToVector3WithZ(100f))
+                    .WithZ(transform.position.z);
 
-	public int? PreviousIndex { get; set; } = null;
-	public GameObject AttachedSlot { get; private set; } = null;
+                _currentTargetSlot = GetAttachSlot();
+            }
 
-	public CardEffect Effect { get; private set; } = new();
+            OnUpdate?.Invoke(this);
+        }
 
-	public virtual IReadOnlyList<SpecialCardSlot> SpecialCardSlots => Array.Empty<SpecialCardSlot>();
-
-	//======================================================================| Events
-
-	public event Action<Card> OnUpdate;
-
-	//======================================================================| Unity Methods
-
-	protected virtual void Update() {
-
-		if (AttachedSlot == null) {
-
-			if (IsGrabed) {
-
-				transform.position = Camera.main
-					.ScreenToWorldPoint(Mouse.current.position.ReadValue().ToVector3WithZ(100f))
-					.WithZ(transform.position.z);
-
-				_curentTargetSlot = GetAttachSlot();
-
-			}
-
-			OnUpdate?.Invoke(this);
-
-		}
-
-		foreach (var (index, card) in _cardOnSpecialSlot) {
-			card.transform.SetPositionAndRotation(
-				SpecialCardSlots[index].transform.position,
-				SpecialCardSlots[index].transform.rotation
-			);
-		}
-
-	}
-
-	//======================================================================| Methods
-
-	public virtual float CalculateDamage() => _baseStatus.BaseDamage;
-	public virtual float CalculateAdditionalMultiplier() => _baseStatus.AdditionalMultiplier;
-
-	public void PlayDrawSound() {
-		AudioManager.Instance.PlayOneShotSFX("CardDraw", gameObject);
-	}
-
-	public void PlayHoverSound() {
-        AudioManager.Instance.PlayOneShotSFX("CardHovered", gameObject);
+        foreach ((int index, Card card) in _cardOnSpecialSlot)
+        {
+            card.transform.SetPositionAndRotation(
+                SpecialCardSlots[index].transform.position,
+                SpecialCardSlots[index].transform.rotation
+            );
+        }
     }
 
-	public void PlayPlaceSound() {
-        AudioManager.Instance.PlayOneShotSFX("CardPlace", gameObject);
+    public virtual float CalculateDamage() => BaseDamage;
+    public virtual float CalculateAdditionalMultiplier() => AdditionalMultiplier;
+
+    public void PlayDrawSound() => AudioManager.Instance.PlayOneShotSFX("CardDraw", gameObject);
+    public void PlayHoverSound() => AudioManager.Instance.PlayOneShotSFX("CardHovered", gameObject);
+    public void PlayPlaceSound() => AudioManager.Instance.PlayOneShotSFX("CardPlace", gameObject);
+
+    public void AddCardOnSpecialSlot(Card target, int index) => _cardOnSpecialSlot.Add(index, target);
+
+    public void AddCardOnSpecialSlot(Card target, SpecialCardSlot slot) =>
+        _cardOnSpecialSlot.Add(SpecialCardSlots.IndexOf(slot), target);
+
+    public void AddEffect(CardEffect effect) => Effect += effect;
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (IsAttached) return;
+
+        IsHovered = true;
     }
 
-	public void AddCardOnSpecialSlot(Card target, int index) {
-		_cardOnSpecialSlot.Add(index, target);
-	}
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!IsGrabed) IsHovered = false;
+    }
 
-	public void AddCardOnSpecialSlot(Card target, SpecialCardSlot slot) {
-		_cardOnSpecialSlot.Add(SpecialCardSlots.IndexOf(slot), target);
-	}
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (IsAttached) return;
 
-	public void AddEffect(CardEffect effect) {
-		Effect += effect;
-	}
+        IsGrabed = true;
+    }
 
-	public void OnPointerEnter(PointerEventData eventData) {
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (AttachedSlot != null) return;
 
-		if (IsAttached) return;
-		IsHovered = true;
+        IsGrabed = false;
+        IsHovered = false;
 
-	}
+        if (_currentTargetSlot == null) return;
 
-	public void OnPointerExit(PointerEventData eventData) {
-		if (!IsGrabed) IsHovered = false;
-	}
+        IsAttached = true;
+        AttachedSlot = _currentTargetSlot;
 
-	public void OnPointerDown(PointerEventData eventData) {
-		if (IsAttached) return;
-		IsGrabed = true;
-	}
+        PlayerHand.Instance.RemoveCard(this);
+        CardField.Instance.PlaceCard(AttachedSlot, this);
+    }
 
-	public void OnPointerUp(PointerEventData eventData) {
+    private GameObject GetAttachSlot()
+    {
+        IEnumerable<GameObject> slots = CardField.Instance.SlotInstances.Keys
+            .Concat(CardField.Instance.SpecialSlotInstances
+                .Where(slot => slot.PlacedCard == null)
+                .Select(slot => slot.gameObject)
+            )
+            .Where(slot => Vector2.Distance(slot.transform.position, transform.position) <= SlotReactiveRange);
 
-		if (AttachedSlot != null)
-			return;
+        if (!slots.Any()) return null;
 
-		IsGrabed = false;
-		IsHovered = false;
+        float minimumDistance = float.MaxValue;
+        GameObject result = null;
 
-		if (_curentTargetSlot != null) {
-		
-			IsAttached = true;
-			AttachedSlot = _curentTargetSlot;
+        foreach (GameObject slot in slots)
+        {
+            float distance = Vector2.Distance(slot.transform.position, transform.position);
 
-			PlayerHand.Instance.RemoveCard(this);
-			CardField.Instance.PlaceCard(AttachedSlot, this);
+            if (distance >= minimumDistance) continue;
 
-		}
+            minimumDistance = distance;
+            result = slot;
+        }
 
-	}
-
-	private GameObject GetAttachSlot() {
-
-		var slots = CardField.Instance.SlotInstances.Keys
-			.Concat(CardField.Instance.SpecialSlotInstances
-				.Where(s => s.PlacedCard == null)
-				.Select(s => s.gameObject)
-			)
-			.Where(obj => Vector2.Distance(obj.transform.position, transform.position) <= _slotReactiveRange);
-
-		if (!slots.Any()) {
-			return null;
-		}
-
-		var minDistance = float.MaxValue;
-		GameObject result = null;
-
-		foreach (var slot in slots) {
-			
-			var distance = Vector2.Distance(slot.transform.position, transform.position);
-
-			if (distance < minDistance) {
-				minDistance = distance;
-				result = slot;
-			}
-
-		}
-
-		return result;
-
-	}
-
-
+        return result;
+    }
 }

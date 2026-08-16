@@ -4,23 +4,20 @@ using UnityEngine;
 
 public static class CardProjectileGroupBuilder
 {
-    public static GameObject Build(IReadOnlyList<Card> cards)
+    public static void AttachCards(IReadOnlyList<Card> cards, Transform projectileTransform)
     {
         Bounds bounds = GetWorldBounds(cards);
         Transform layoutTransform = cards[0].transform.parent;
-        GameObject group = new("CardBullet");
-        Transform groupTransform = group.transform;
-        groupTransform.SetPositionAndRotation(bounds.center, layoutTransform.rotation);
-        groupTransform.localScale = layoutTransform.lossyScale;
+
+        projectileTransform.SetPositionAndRotation(bounds.center, layoutTransform.rotation);
+        projectileTransform.localScale = layoutTransform.lossyScale;
 
         foreach (Card card in cards)
         {
             card.transform.DOKill();
             card.GetComponent<CardAnimator>().RemoveAngle();
-            card.transform.SetParent(groupTransform, true);
+            card.transform.SetParent(projectileTransform, true);
         }
-
-        return group;
     }
 
     private static Bounds GetWorldBounds(IReadOnlyList<Card> cards)

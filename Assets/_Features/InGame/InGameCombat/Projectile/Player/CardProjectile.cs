@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-[DisallowMultipleComponent]
 public sealed class CardProjectile : MonoBehaviour
 {
+    [SerializeField, Required] private Rigidbody2D body;
+    [SerializeField, Required] private PoisonCardTrailEmitter poisonTrailEmitter;
+
     private readonly HashSet<EnemyHealth> hitEnemies = new();
 
     private CardEffect effect;
@@ -13,16 +16,16 @@ public sealed class CardProjectile : MonoBehaviour
     private int damage;
 
     public void Initialize(
-        Rigidbody2D body,
-        int damage,
+        int finalDamage,
         float speed,
         CardEffect effect,
         CardProjectileSettings settings,
+        PoisonAreaPool poisonAreaPool,
         LayerMask enemyLayers,
         GameObject source
     )
     {
-        this.damage = damage;
+        damage = finalDamage;
         this.effect = effect;
         this.settings = settings;
         this.enemyLayers = enemyLayers;
@@ -31,7 +34,18 @@ public sealed class CardProjectile : MonoBehaviour
 
         foreach (Collider2D cardCollider in GetComponentsInChildren<Collider2D>(true)) cardCollider.isTrigger = true;
 
-        body.linearVelocity = 30 * speed * Vector2.up;
+        body.position = transform.position;
+        body.rotation = transform.eulerAngles.z;
+        body.linearVelocity = 30f * speed * Vector2.up;
+
+        poisonTrailEmitter.Initialize(
+            poisonAreaPool,
+            settings,
+            enemyLayers,
+            source,
+            finalDamage
+        );
+
         Destroy(gameObject, settings.ProjectileLifetime);
     }
 
@@ -47,5 +61,11 @@ public sealed class CardProjectile : MonoBehaviour
         if (enemyHealth.IsDead) return;
 
         CardEffectApplicator.Apply(enemyHealth, effect, settings, source);
+    }
+
+    private void Reset()
+    {
+        body = GetComponent<Rigidbody2D>();
+        poisonTrailEmitter = GetComponent<PoisonCardTrailEmitter>();
     }
 }

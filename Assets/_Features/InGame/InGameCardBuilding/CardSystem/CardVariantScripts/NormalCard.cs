@@ -13,6 +13,4 @@ public class NormalCard : Card, IPokerHandCard
     public int Number => _number;
     public PokerHandParticipationMode PokerHandParticipation => PokerHandParticipationMode.Participant;
     public PokerCardProfile PokerProfile => PokerCardProfile.CreateStandard(_number, _pattern);
-
-    public override float CalculateDamage() => base.CalculateDamage() * (1 + _number / 13f);
 }

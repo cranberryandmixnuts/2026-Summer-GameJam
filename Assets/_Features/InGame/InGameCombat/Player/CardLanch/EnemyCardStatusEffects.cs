@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[DisallowMultipleComponent]
 [RequireComponent(typeof(EnemyHealth))]
 [RequireComponent(typeof(Enemy))]
 public sealed class EnemyCardStatusEffects : MonoBehaviour
