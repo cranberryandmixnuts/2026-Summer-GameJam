@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 432efd527ab6ea041bc589bca30d8dfd, type: 3}
   m_Name: StraightHandRule
   m_EditorClassIdentifier: Assembly-CSharp::StraightHandRule
-  _straightBonus: 290
-  _straightFlushBonus: 7200
-  _royalStraightBonus: 12570
-  _royalStraightFlushBonus: 28000
+  _straightBonus: 30
+  _straightFlushBonus: 160
+  _royalStraightBonus: 60
+  _royalStraightFlushBonus: 360

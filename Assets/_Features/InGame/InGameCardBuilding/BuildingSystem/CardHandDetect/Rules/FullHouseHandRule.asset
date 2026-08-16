@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe696e80bd31f547a53f4c0e70a9a21, type: 3}
   m_Name: FullHouseHandRule
   m_EditorClassIdentifier: Assembly-CSharp::FullHouseHandRule
-  _fullHouseBonus: 150
-  _fullHousePlusBonus: 175
-  _fullHousePlusPlusBonus: 520
-  _perfectFullHouseBonus: 1680
-  _perfectFullHousePlusBonus: 8200
+  _fullHouseBonus: 50
+  _fullHousePlusBonus: 40
+  _fullHousePlusPlusBonus: 60
+  _perfectFullHouseBonus: 90
+  _perfectFullHousePlusBonus: 140
