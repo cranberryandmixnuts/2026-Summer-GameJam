@@ -1,51 +1,41 @@
 using UnityEngine;
 
-public static class RectTransformExtensions {
+public static class RectTransformExtensions
+{
+    public static Bounds GetWorldBounds(this RectTransform rectTransform)
+    {
+        Vector3[] corners = new Vector3[4];
+        rectTransform.GetWorldCorners(corners);
 
-	public static Bounds GetWorldBounds(this RectTransform rectTransform) {
+        Bounds bounds = new(corners[0], Vector3.zero);
 
-		var corners = new Vector3[4];
-		rectTransform.GetWorldCorners(corners);
+        for (int i = 1; i < corners.Length; i++) bounds.Encapsulate(corners[i]);
 
-		var bounds = new Bounds(corners[0], Vector3.zero);
+        return bounds;
+    }
 
-		for (int i = 1; i < corners.Length; i++) {
-			bounds.Encapsulate(corners[i]);
-		}
+    public static Bounds GetGlobalBounds(this RectTransform rectTransform)
+    {
+        RectTransform[] rects = rectTransform.GetComponentsInChildren<RectTransform>();
+        bool initialized = false;
+        Bounds bounds = default;
+        Vector3[] corners = new Vector3[4];
 
-		return bounds;
+        foreach (RectTransform rect in rects)
+        {
+            rect.GetWorldCorners(corners);
 
-	}
+            foreach (Vector3 corner in corners)
+            {
+                if (!initialized)
+                {
+                    bounds = new Bounds(corner, Vector3.zero);
+                    initialized = true;
+                }
+                else bounds.Encapsulate(corner);
+            }
+        }
 
-	public static Bounds GetGlobalBounds(this RectTransform rectTransform) {
-
-		var rects = rectTransform.GetComponentsInChildren<RectTransform>(true);
-
-		bool initialized = false;
-		Bounds bounds = default;
-
-		Vector3[] corners = new Vector3[4];
-
-		foreach (var rect in rects) {
-
-			rect.GetWorldCorners(corners);
-
-			foreach (var corner in corners) {
-
-				if (!initialized) {
-					bounds = new Bounds(corner, Vector3.zero);
-					initialized = true;
-				}
-				else {
-					bounds.Encapsulate(corner);
-				}
-
-			}
-
-		}
-
-		return bounds;
-
-	}
-
+        return bounds;
+    }
 }
