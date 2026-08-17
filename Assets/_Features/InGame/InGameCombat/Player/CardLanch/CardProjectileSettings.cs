@@ -45,15 +45,13 @@ public sealed class CardProjectileSettings : ScriptableObject
 
     public int CalculateFireTickDamage(int finalProjectileDamage, int fireLevel) =>
         Mathf.Max(
-            0,
-            Mathf.RoundToInt(
+            0, Mathf.RoundToInt(
                 finalProjectileDamage * FireDamagePercentPerLevel * PercentFactor * fireLevel
             )
         );
 
     public int CalculatePoisonTickDamage(int finalProjectileDamage) =>
         Mathf.Max(
-            0,
-            Mathf.RoundToInt(finalProjectileDamage * PoisonTickDamagePercent * PercentFactor)
+            0, Mathf.RoundToInt(finalProjectileDamage * PoisonTickDamagePercent * PercentFactor)
         );
 }
