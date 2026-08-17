@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: CardProjectileSettings
   m_EditorClassIdentifier: Assembly-CSharp::CardProjectileSettings
   projectileLifetime: 6
-  fireDamagePerLevel: 1
+  fireDamagePercentPerLevel: 10
   fireDurationPerLevel: 3
   waterTransitionDelayPerLevel: 0.1
   waterDurationPerLevel: 3
   electricSlowPercentPerLevel: 10
   electricDurationPerLevel: 3
-  poisonDropInterval: 0.25
-  poisonAreaDamage: 20
+  poisonDropInterval: 0.1
+  poisonTickDamagePercent: 10
   poisonDamageInterval: 1
   poisonAreaDuration: 15
   healPercentPerLevel: 5

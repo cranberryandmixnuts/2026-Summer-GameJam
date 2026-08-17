@@ -10,7 +10,7 @@ public sealed class EnemyCardStatusEffects : MonoBehaviour
     private Enemy enemy;
 
     private int fireLevel;
-    private int fireDamagePerSecond;
+    private int fireTickDamage;
     private float fireRemainingDuration;
     private float fireTickRemaining;
     private GameObject fireSource;
@@ -27,9 +27,14 @@ public sealed class EnemyCardStatusEffects : MonoBehaviour
         enemy = GetComponent<Enemy>();
     }
 
-    public void Apply(CardEffect effect, CardProjectileSettings settings, GameObject source)
+    public void Apply(
+        CardEffect effect,
+        CardProjectileSettings settings,
+        GameObject source,
+        int finalProjectileDamage
+    )
     {
-        if (effect.FireLevel > 0) ApplyFire(effect.FireLevel, settings, source);
+        if (effect.FireLevel > 0) ApplyFire(effect.FireLevel, settings, source, finalProjectileDamage);
 
         if (effect.WaterLevel > 0) ApplyWater(effect.WaterLevel, settings);
 
@@ -44,11 +49,19 @@ public sealed class EnemyCardStatusEffects : MonoBehaviour
         UpdateElectric(deltaTime);
     }
 
-    private void ApplyFire(int addedLevel, CardProjectileSettings settings, GameObject source)
+    private void ApplyFire(
+        int addedLevel,
+        CardProjectileSettings settings,
+        GameObject source,
+        int finalProjectileDamage
+    )
     {
         bool isActive = fireRemainingDuration > 0f;
         fireLevel = isActive ? fireLevel + addedLevel : addedLevel;
-        fireDamagePerSecond = settings.FireDamagePerLevel * fireLevel;
+        int addedTickDamage = settings.CalculateFireTickDamage(
+            finalProjectileDamage,
+            addedLevel);
+        fireTickDamage = isActive ? fireTickDamage + addedTickDamage : addedTickDamage;
         fireRemainingDuration = settings.FireDurationPerLevel * fireLevel;
         fireSource = source;
 
@@ -83,7 +96,11 @@ public sealed class EnemyCardStatusEffects : MonoBehaviour
 
         while (fireTickRemaining <= 0f && !health.IsDead)
         {
-            DamageInfo damageInfo = new(fireDamagePerSecond, fireSource, transform.position, Vector2.zero);
+            DamageInfo damageInfo = new(
+                fireTickDamage,
+                fireSource,
+                transform.position,
+                Vector2.zero);
             health.TryTakeDamage(damageInfo);
             fireTickRemaining += FireTickInterval;
         }
@@ -91,7 +108,7 @@ public sealed class EnemyCardStatusEffects : MonoBehaviour
         if (fireRemainingDuration > 0f && !health.IsDead) return;
 
         fireLevel = 0;
-        fireDamagePerSecond = 0;
+        fireTickDamage = 0;
         fireRemainingDuration = 0f;
         fireTickRemaining = 0f;
         fireSource = null;
@@ -138,7 +155,7 @@ public sealed class EnemyCardStatusEffects : MonoBehaviour
     private void OnDisable()
     {
         fireLevel = 0;
-        fireDamagePerSecond = 0;
+        fireTickDamage = 0;
         fireRemainingDuration = 0f;
         fireTickRemaining = 0f;
         fireSource = null;

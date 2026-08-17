@@ -10,7 +10,7 @@ public sealed class CardProjectileSettings : ScriptableObject
     [SerializeField, MinValue(0.1f)] private float projectileLifetime = 10f;
 
     [Header("Fire")]
-    [SerializeField, MinValue(0)] private int fireDamagePerLevel = 1;
+    [SerializeField, MinValue(0f), SuffixLabel("%")] private float fireDamagePercentPerLevel = 10f;
     [SerializeField, MinValue(0f)] private float fireDurationPerLevel = 3f;
 
     [Header("Water")]
@@ -22,7 +22,7 @@ public sealed class CardProjectileSettings : ScriptableObject
     [SerializeField, MinValue(0f)] private float electricDurationPerLevel = 3f;
 
     [Header("Poison")]
-    [SerializeField, MinValue(0.01f)] private float poisonDropInterval = 0.5f;
+    [SerializeField, MinValue(0.01f)] private float poisonDropInterval = 0.1f;
     [SerializeField, MinValue(0f), SuffixLabel("%")] private float poisonTickDamagePercent = 10f;
     [SerializeField, MinValue(0.01f)] private float poisonDamageInterval = 1f;
     [SerializeField, MinValue(0f)] private float poisonAreaDuration = 3f;
@@ -31,7 +31,7 @@ public sealed class CardProjectileSettings : ScriptableObject
     [SerializeField, Range(0f, 100f)] private float healPercentPerLevel = 5f;
 
     public float ProjectileLifetime => projectileLifetime;
-    public int FireDamagePerLevel => fireDamagePerLevel;
+    public float FireDamagePercentPerLevel => fireDamagePercentPerLevel;
     public float FireDurationPerLevel => fireDurationPerLevel;
     public float WaterTransitionDelayPerLevel => waterTransitionDelayPerLevel;
     public float WaterDurationPerLevel => waterDurationPerLevel;
@@ -42,6 +42,14 @@ public sealed class CardProjectileSettings : ScriptableObject
     public float PoisonDamageInterval => poisonDamageInterval;
     public float PoisonAreaDuration => poisonAreaDuration;
     public float HealPercentPerLevel => healPercentPerLevel;
+
+    public int CalculateFireTickDamage(int finalProjectileDamage, int fireLevel) =>
+        Mathf.Max(
+            0,
+            Mathf.RoundToInt(
+                finalProjectileDamage * FireDamagePercentPerLevel * PercentFactor * fireLevel
+            )
+        );
 
     public int CalculatePoisonTickDamage(int finalProjectileDamage) =>
         Mathf.Max(

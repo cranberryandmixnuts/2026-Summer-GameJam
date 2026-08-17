@@ -152,4 +152,4 @@ MonoBehaviour:
   _isJoker: 0
   _isSpecial: 1
   _isBlockingAttachment: 0
-  knockbackDistance: 1
+  knockbackDistance: 3

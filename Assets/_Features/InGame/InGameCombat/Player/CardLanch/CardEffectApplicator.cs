@@ -7,7 +7,8 @@ public static class CardEffectApplicator
         CardEffect effect,
         CardProjectileSettings settings,
         GameObject source,
-        Vector2 direction
+        Vector2 direction,
+        int finalProjectileDamage
     )
     {
         ApplyHeal(enemyHealth, effect.HealLevel, settings.HealPercentPerLevel);
@@ -17,7 +18,7 @@ public static class CardEffectApplicator
 
         if (!enemyHealth.TryGetComponent(out EnemyCardStatusEffects statusEffects)) statusEffects = enemyHealth.gameObject.AddComponent<EnemyCardStatusEffects>();
 
-        statusEffects.Apply(effect, settings, source);
+        statusEffects.Apply(effect, settings, source, finalProjectileDamage);
     }
 
     private static void ApplyHeal(EnemyHealth enemyHealth, int level, float percentPerLevel)

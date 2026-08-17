@@ -1,11 +1,16 @@
+using UnityEngine;
+
 public class CardEffect
 {
+    private const float PercentFactor = 0.01f;
+
     public int FireLevel { get; init; }
     public int WaterLevel { get; init; }
     public int ElectricLevel { get; init; }
     public int HealLevel { get; init; }
 
-    public float SizeMultiplier { get; init; } = 1f;
+    public float SizeChangePercent { get; init; }
+    public float SizeMultiplier => CalculateSizeMultiplier(SizeChangePercent);
     public float SpeedMutliplier { get; init; } = 1f;
     public float KnockbackDistance { get; init; }
 
@@ -21,7 +26,7 @@ public class CardEffect
             WaterLevel = left.WaterLevel + right.WaterLevel,
             ElectricLevel = left.ElectricLevel + right.ElectricLevel,
             HealLevel = left.HealLevel + right.HealLevel,
-            SizeMultiplier = left.SizeMultiplier * right.SizeMultiplier,
+            SizeChangePercent = left.SizeChangePercent + right.SizeChangePercent,
             SpeedMutliplier = left.SpeedMutliplier * right.SpeedMutliplier,
             KnockbackDistance = left.KnockbackDistance + right.KnockbackDistance,
             AdditionalMultiplier = left.AdditionalMultiplier + right.AdditionalMultiplier,
@@ -29,6 +34,9 @@ public class CardEffect
             DestroysEnemyProjectiles =
                 left.DestroysEnemyProjectiles || right.DestroysEnemyProjectiles
         };
+
+    public static float CalculateSizeMultiplier(float sizeChangePercent) =>
+        Mathf.Max(0f, 1f + sizeChangePercent * PercentFactor);
 
     public virtual void OnAttached(Card card) { }
 }

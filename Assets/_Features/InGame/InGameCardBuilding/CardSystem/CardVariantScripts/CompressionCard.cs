@@ -3,11 +3,11 @@ using UnityEngine;
 
 public sealed class CompressionCard : Card
 {
-    [SerializeField, MinValue(0.01f), MaxValue(1f)] private float sizeMultiplier = 0.5f;
+    [SerializeField, MinValue(-100f), MaxValue(0f), SuffixLabel("%")] private float sizeChangePercent = -50f;
 
     private void Awake() =>
         AddEffect(new CardEffect
         {
-            SizeMultiplier = sizeMultiplier
+            SizeChangePercent = sizeChangePercent
         });
 }

@@ -64,7 +64,7 @@ public sealed class CardProjectile : MonoBehaviour
         DamageInfo damageInfo = new(damage, source, hitPoint, direction);
         enemyHealth.TryTakeDamage(damageInfo);
 
-        if (!enemyHealth.IsDead) CardEffectApplicator.Apply(enemyHealth, effect, settings, source, direction);
+        if (!enemyHealth.IsDead) CardEffectApplicator.Apply(enemyHealth, effect, settings, source, direction, damage);
 
         if (effect.DestroyOnEnemyHit) DestroyProjectile();
     }

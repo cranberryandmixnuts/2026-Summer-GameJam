@@ -3,7 +3,7 @@ using UnityEngine;
 
 public sealed class WallCard : Card
 {
-    [SerializeField, MinValue(0f)] private float knockbackDistance = 1f;
+    [SerializeField, MinValue(0f)] private float knockbackDistance = 3f;
 
     private void Awake() =>
         AddEffect(new CardEffect

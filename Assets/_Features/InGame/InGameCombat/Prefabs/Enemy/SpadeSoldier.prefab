@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: -6101563096352399920}
   - component: {fileID: 8307588638512882946}
   - component: {fileID: 1749633957643232912}
+  - component: {fileID: 5677426881781262948}
   m_Layer: 6
   m_Name: SpadeSoldier
   m_TagString: Untagged
@@ -338,3 +339,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5677426881781262948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7952293206075562448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64554add4980c64491733ec6917db23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoisonAreaDamageReceiver

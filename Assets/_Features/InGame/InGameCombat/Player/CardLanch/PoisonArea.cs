@@ -10,13 +10,13 @@ public sealed class PoisonArea : MonoBehaviour
     private sealed class Target
     {
         public EnemyHealth Health { get; }
-        public float DamageTimeRemaining { get; set; }
+        public PoisonAreaDamageReceiver DamageReceiver { get; }
         public int OverlapCount { get; set; }
 
-        public Target(EnemyHealth health, float damageTimeRemaining)
+        public Target(EnemyHealth health, PoisonAreaDamageReceiver damageReceiver)
         {
             Health = health;
-            DamageTimeRemaining = damageTimeRemaining;
+            DamageReceiver = damageReceiver;
             OverlapCount = 1;
         }
     }
@@ -95,8 +95,6 @@ public sealed class PoisonArea : MonoBehaviour
             .SetEase(_removeingAnimationEase)
             .OnComplete(Release);
         }
-
-        UpdateTargets(deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -112,9 +110,15 @@ public sealed class PoisonArea : MonoBehaviour
             return;
         }
 
-        DealDamage(enemyHealth);
+        PoisonAreaDamageReceiver damageReceiver = enemyHealth.GetComponent<PoisonAreaDamageReceiver>();
 
-        if (!enemyHealth.IsDead) targets.Add(new Target(enemyHealth, settings.PoisonDamageInterval));
+        damageReceiver.Register(
+            this,
+            tickDamage,
+            settings.PoisonDamageInterval,
+            source);
+
+        if (!enemyHealth.IsDead) targets.Add(new Target(enemyHealth, damageReceiver));
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -126,43 +130,10 @@ public sealed class PoisonArea : MonoBehaviour
 
         target.OverlapCount--;
 
-        if (target.OverlapCount <= 0) targets.Remove(target);
-    }
+        if (target.OverlapCount > 0) return;
 
-    private void UpdateTargets(float deltaTime)
-    {
-        for (int index = targets.Count - 1; index >= 0; index--)
-        {
-            Target target = targets[index];
-
-            if (target.Health == null || target.Health.IsDead)
-            {
-                targets.RemoveAt(index);
-                continue;
-            }
-
-            target.DamageTimeRemaining -= deltaTime;
-
-            while (target.DamageTimeRemaining <= 0f && !target.Health.IsDead)
-            {
-                DealDamage(target.Health);
-                target.DamageTimeRemaining += settings.PoisonDamageInterval;
-            }
-
-            if (target.Health.IsDead) targets.Remove(target);
-        }
-    }
-
-    private void DealDamage(EnemyHealth enemyHealth)
-    {
-        DamageInfo damageInfo = new(
-            tickDamage,
-            source,
-            enemyHealth.transform.position,
-            Vector2.zero
-        );
-
-        enemyHealth.TryTakeDamage(damageInfo);
+        if (target.DamageReceiver != null) target.DamageReceiver.Unregister(this);
+        targets.Remove(target);
     }
 
     private Target FindTarget(EnemyHealth enemyHealth)
@@ -177,15 +148,26 @@ public sealed class PoisonArea : MonoBehaviour
 
     private void Release()
     {
+        UnregisterTargets();
         isActive = false;
-        releaseAction(this);
         tween?.Kill();
+        releaseAction(this);
+    }
+
+    private void UnregisterTargets()
+    {
+        foreach (Target target in targets)
+        {
+            if (target.DamageReceiver != null) target.DamageReceiver.Unregister(this);
+        }
+
+        targets.Clear();
     }
 
     private void OnDisable()
     {
         isActive = false;
-        targets.Clear();
+        UnregisterTargets();
         settings = null;
         source = null;
         releaseAction = null;

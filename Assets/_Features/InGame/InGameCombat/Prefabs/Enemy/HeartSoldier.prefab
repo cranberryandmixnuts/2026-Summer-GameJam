@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 4919383621556059498}
   - component: {fileID: 5171296244792463833}
   - component: {fileID: 1125213392490763358}
+  - component: {fileID: 8243218405568334165}
   m_Layer: 6
   m_Name: HeartSoldier
   m_TagString: Untagged
@@ -337,3 +338,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8243218405568334165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8775158816998203423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c64554add4980c64491733ec6917db23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoisonAreaDamageReceiver
