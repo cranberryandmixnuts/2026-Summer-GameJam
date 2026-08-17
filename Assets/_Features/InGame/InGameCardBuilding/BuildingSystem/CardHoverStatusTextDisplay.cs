@@ -34,20 +34,21 @@ public sealed class CardHoverStatusTextDisplay : SingletonBehaviour<CardHoverSta
         }
 
         textBuilder.Clear();
+
+        if (!string.IsNullOrWhiteSpace(card.Explanation))
+        {
+            textBuilder
+                .Append(card.Explanation)
+                .Append('\n')
+                .Append("\n");
+        }
+
         textBuilder
             .Append("기본 데미지: ")
             .Append(card.BaseDamage.ToString("0.00"))
             .Append('\n')
             .Append("추가 배수: ")
             .Append(card.AdditionalMultiplier.ToString("0.00"));
-
-        if (!string.IsNullOrWhiteSpace(card.Explanation))
-        {
-            textBuilder
-                .Append('\n')
-                .Append("\n")
-                .Append(card.Explanation);
-        }
 
         text.text = textBuilder.ToString();
     }
