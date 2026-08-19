@@ -1,15 +1,14 @@
+using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(PooledObject))]
 [CanEditMultipleObjects]
-internal sealed class PooledObjectEditor : UnityEditor.Editor
+internal sealed class PooledObjectEditor : OdinEditor
 {
     public override void OnInspectorGUI()
     {
-        serializedObject.Update();
-        DrawDefaultInspector();
-        serializedObject.ApplyModifiedProperties();
+        base.OnInspectorGUI();
 
         EditorGUILayout.Space();
         DrawRootValidation();

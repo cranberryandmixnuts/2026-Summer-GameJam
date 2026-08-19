@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -7,34 +8,28 @@ using UnityEngine;
 public sealed class PooledObject : BaseBehaviour
 {
     [Header("Capacity")]
-    [SerializeField, Min(0)]
-    [Tooltip("Number of inactive instances created when the pool is first registered.")]
+    [SerializeField, MinValue(0), MaxValue(nameof(maxRetainedSize))]
     private int initialPoolSize;
 
-    [SerializeField, Min(0)]
-    [Tooltip("Maximum number of inactive instances retained. Zero means unlimited. Spawn is never capped.")]
+    [SerializeField, MinValue(1)]
     private int maxRetainedSize;
 
-    [Header("Automatic Unity State Reset")]
-
-    [SerializeField]
-    [Tooltip("Restore the original local position, rotation, and scale of this hierarchy on every spawn.")]
+    [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
     private bool restoreTransformHierarchy = true;
 
-    [SerializeField]
-    [Tooltip("Restore each child GameObject's original activeSelf state on every spawn.")]
+    [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
     private bool restoreChildActiveStates = true;
 
-    [SerializeField]
+    [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
     private bool resetRigidbodies = true;
 
-    [SerializeField]
+    [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
     private bool clearTrailRenderers = true;
 
-    [SerializeField]
+    [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
     private bool clearParticleSystems = true;
 
-    [SerializeField]
+    [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
     private bool stopAudioSources = true;
 
     [NonSerialized]
@@ -180,7 +175,7 @@ public sealed class PooledObject : BaseBehaviour
 
     private void OnValidate()
     {
-        initialPoolSize = Mathf.Max(0, initialPoolSize);
-        maxRetainedSize = Mathf.Max(0, maxRetainedSize);
+        maxRetainedSize = Mathf.Max(1, maxRetainedSize);
+        initialPoolSize = Mathf.Clamp(initialPoolSize, 1, maxRetainedSize);
     }
 }

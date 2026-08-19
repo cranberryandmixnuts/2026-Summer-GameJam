@@ -137,7 +137,7 @@ internal sealed class ObjectPool : IDisposable
         ReturnToContainer(instance.gameObject);
         instance.CompleteReturn();
 
-        if (maxRetainedSize > 0 && validAvailableCount >= maxRetainedSize)
+        if (validAvailableCount >= maxRetainedSize)
         {
             tracked.Remove(instance);
             instance.MarkDestroyed();
