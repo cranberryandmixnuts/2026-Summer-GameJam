@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public sealed class ProjectileWidthGuide : MonoBehaviour
+public sealed class ProjectileWidthGuide : BaseBehaviour
 {
     [Title("Projectile")]
     [SerializeField, MinValue(0f)] private float projectileScale = 0.016f;

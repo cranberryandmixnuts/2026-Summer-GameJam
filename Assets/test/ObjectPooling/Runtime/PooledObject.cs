@@ -4,7 +4,7 @@ using UnityEngine;
 
 [DisallowMultipleComponent]
 [AddComponentMenu("Object Pooling/Pooled Object")]
-public sealed class PooledObject : MonoBehaviour
+public sealed class PooledObject : BaseBehaviour
 {
     [Header("Capacity")]
     [SerializeField, Min(0)]

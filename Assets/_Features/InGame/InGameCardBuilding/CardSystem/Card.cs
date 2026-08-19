@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public abstract class Card : MonoBehaviour,
+public abstract class Card : BaseBehaviour,
     IPointerEnterHandler,
     IPointerExitHandler,
     IPointerDownHandler,

@@ -2,7 +2,7 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public sealed class PlayerHealth : MonoBehaviour, IDamageable
+public sealed class PlayerHealth : BaseBehaviour, IDamageable
 {
     [SerializeField, MinValue(1)] private int maxHealth = 3;
     [SerializeField, MinValue(0f)] private float invulnerabilityDuration = 0.6f;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public sealed class MouseInverseParallax : MonoBehaviour
+public sealed class MouseInverseParallax : BaseBehaviour
 {
     [SerializeField] private float maxMoveDistance = 20f;
     [SerializeField] private float smoothSpeed = 8f;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public sealed class HeartQueen : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
+public sealed class HeartQueen : BaseBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
 {
     private const float PositionToleranceSquared = 0.000001f;
 

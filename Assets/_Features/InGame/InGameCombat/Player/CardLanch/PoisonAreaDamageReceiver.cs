@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyHealth))]
-public sealed class PoisonAreaDamageReceiver : MonoBehaviour
+public sealed class PoisonAreaDamageReceiver : BaseBehaviour
 {
     private sealed class Contribution
     {

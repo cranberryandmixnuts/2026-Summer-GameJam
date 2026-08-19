@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public sealed class SinHover : MonoBehaviour
+public sealed class SinHover : BaseBehaviour
 {
     [SerializeField]
     private Transform target;

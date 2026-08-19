@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public sealed class HeartSoldier : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
+public sealed class HeartSoldier : BaseBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
 {
     private static readonly int MoveAnimationHash = Animator.StringToHash("Move");
     private static readonly int ReadyAnimationHash = Animator.StringToHash("ready");

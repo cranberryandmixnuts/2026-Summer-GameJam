@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public sealed class AudioVolumeController : MonoBehaviour
+public sealed class AudioVolumeController : BaseBehaviour
 {
     [Header("Sliders")]
     [SerializeField, Required] private CustomSlider masterSlider;

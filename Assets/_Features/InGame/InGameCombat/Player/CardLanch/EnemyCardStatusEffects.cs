@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(EnemyHealth))]
 [RequireComponent(typeof(Enemy))]
-public sealed class EnemyCardStatusEffects : MonoBehaviour
+public sealed class EnemyCardStatusEffects : BaseBehaviour
 {
     private const float FireTickInterval = 1f;
 

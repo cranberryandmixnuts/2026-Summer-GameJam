@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public sealed class PlayerMovement : MonoBehaviour
+public sealed class PlayerMovement : BaseBehaviour
 {
     private enum FacingDirection
     {

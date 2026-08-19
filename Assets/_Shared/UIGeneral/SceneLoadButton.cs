@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public sealed class SceneLoadButton : MonoBehaviour
+public sealed class SceneLoadButton : BaseBehaviour
 {
     [SerializeField]
     private bool reloadCurrentScene;

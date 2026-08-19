@@ -2,7 +2,7 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public sealed class EnemyHealth : MonoBehaviour, IDamageable, IEnemyDifficultyInitializable
+public sealed class EnemyHealth : BaseBehaviour, IDamageable, IEnemyDifficultyInitializable
 {
     [SerializeField, MinValue(1)] private int maxHealth = 10;
 

@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(TMP_Text))]
-public sealed class RunStatisticsTextDisplay : MonoBehaviour
+public sealed class RunStatisticsTextDisplay : BaseBehaviour
 {
     private TMP_Text text;
 

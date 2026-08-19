@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class EnemyProjectile : MonoBehaviour
+public abstract class EnemyProjectile : BaseBehaviour
 {
     private CombatBridge combatBridge;
     private GameObject source;

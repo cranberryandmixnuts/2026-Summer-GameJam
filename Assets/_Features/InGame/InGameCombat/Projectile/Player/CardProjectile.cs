@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public sealed class CardProjectile : MonoBehaviour
+public sealed class CardProjectile : BaseBehaviour
 {
     [SerializeField, Required] private Rigidbody2D body;
     [SerializeField, Required] private PoisonCardTrailEmitter poisonTrailEmitter;

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
 [MovedFrom(false, sourceClassName: "DestroyBelowWorldY")]
-public sealed class EnemyDespawnOnExit : MonoBehaviour,
+public sealed class EnemyDespawnOnExit : BaseBehaviour,
     IEnemyRuntimeInitializable,
     IEnemyDifficultyInitializable
 {

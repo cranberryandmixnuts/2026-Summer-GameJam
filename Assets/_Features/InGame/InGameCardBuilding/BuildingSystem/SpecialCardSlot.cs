@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpecialCardSlot : MonoBehaviour {
+public class SpecialCardSlot : BaseBehaviour {
 
 	public Card BaseCard { get; private set; }
 	public int Index { get; private set; }

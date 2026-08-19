@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class PoisonCardTrailEmitter : MonoBehaviour
+public sealed class PoisonCardTrailEmitter : BaseBehaviour
 {
     private Transform[] poisonCardTransforms;
     private PoisonAreaSpawner poisonAreaSpawner;

@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public sealed class PoisonAreaSpawner : MonoBehaviour
+public sealed class PoisonAreaSpawner : BaseBehaviour
 {
     [SerializeField, Required, AssetsOnly] private PoisonArea prefab;
 

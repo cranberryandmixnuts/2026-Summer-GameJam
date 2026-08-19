@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class DeathEffect : MonoBehaviour {
+public class DeathEffect : BaseBehaviour {
 
 	public Volume _volume;
 	public Vignette _vignette;

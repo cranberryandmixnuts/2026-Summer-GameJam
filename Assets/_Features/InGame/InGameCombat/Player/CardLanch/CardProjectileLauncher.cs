@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using static CardField;
 
-public sealed class CardProjectileLauncher : MonoBehaviour
+public sealed class CardProjectileLauncher : BaseBehaviour
 {
     [SerializeField, Required, AssetsOnly] private CardProjectile projectilePrefab;
     [SerializeField, Required, InlineEditor] private CardProjectileSettings settings;

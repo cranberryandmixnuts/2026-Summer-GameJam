@@ -15,7 +15,7 @@ public static class SingletonRuntimeBridge
 }
 
 [DefaultExecutionOrder(-30000)]
-public abstract class SingletonBehaviour<T, TScope> : MonoBehaviour where T : MonoBehaviour where TScope : struct, ISingletonScope
+public abstract class SingletonBehaviour<T, TScope> : BaseBehaviour where T : MonoBehaviour where TScope : struct, ISingletonScope
 {
     public static T Instance { get; private set; }
 

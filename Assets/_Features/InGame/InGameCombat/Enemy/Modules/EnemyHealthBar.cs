@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class EnemyHealthBar : MonoBehaviour
+public sealed class EnemyHealthBar : BaseBehaviour
 {
     [SerializeField, Required] private Image fillImage;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public sealed class ButtonHotkey : MonoBehaviour
+public sealed class ButtonHotkey : BaseBehaviour
 {
     [SerializeField, Required] private Button button;
     [SerializeField] private Key key = Key.Space;

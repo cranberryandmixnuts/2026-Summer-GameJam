@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public sealed class ArmedSpadeSoldier : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
+public sealed class ArmedSpadeSoldier : BaseBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
 {
     private const int BurstCount = 2;
     private const int ProjectileCountPerBurst = 3;

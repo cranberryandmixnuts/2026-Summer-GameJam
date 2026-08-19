@@ -4,7 +4,7 @@ using UnityEngine.Scripting.APIUpdating;
 
 [MovedFrom(false, sourceClassName: "MovementBounds2D")]
 [RequireComponent(typeof(BoxCollider2D))]
-public sealed class CombatBounds : MonoBehaviour
+public sealed class CombatBounds : BaseBehaviour
 {
     [SerializeField, Required] private BoxCollider2D area;
 

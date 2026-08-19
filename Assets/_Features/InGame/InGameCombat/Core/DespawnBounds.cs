@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public sealed class DespawnBounds : MonoBehaviour
+public sealed class DespawnBounds : BaseBehaviour
 {
     [SerializeField, Required] private BoxCollider2D area;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public sealed class ArmedHeartSoldier : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
+public sealed class ArmedHeartSoldier : BaseBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
 {
     private const float PositionToleranceSquared = 0.000001f;
     private const int ProjectileCount = 4;

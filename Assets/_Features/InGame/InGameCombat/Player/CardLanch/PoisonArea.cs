@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public sealed class PoisonArea : MonoBehaviour
+public sealed class PoisonArea : BaseBehaviour
 {
     private sealed class Target
     {

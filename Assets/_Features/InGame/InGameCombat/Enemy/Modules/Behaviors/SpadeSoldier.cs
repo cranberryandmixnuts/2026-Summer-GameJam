@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public sealed class SpadeSoldier : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
+public sealed class SpadeSoldier : BaseBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
 {
     private const int ProjectileCount = 3;
 

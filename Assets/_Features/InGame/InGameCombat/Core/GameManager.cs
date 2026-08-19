@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-public sealed class GameManager : MonoBehaviour
+public sealed class GameManager : BaseBehaviour
 {
     [Serializable]
     private sealed class SpawnEntry

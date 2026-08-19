@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public abstract class Enemy : MonoBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
+public abstract class Enemy : BaseBehaviour, IEnemyRuntimeInitializable, IEnemyDifficultyInitializable
 {
     [TitleGroup("공통 참조")]
     [SerializeField, Required] private Rigidbody2D body;

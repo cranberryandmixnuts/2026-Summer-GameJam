@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Canvas))]
-public class CombatScreenCenterAlignment : MonoBehaviour {
+public class CombatScreenCenterAlignment : BaseBehaviour {
 
 	//======================================================================| Fields
 	 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CardAnimator : MonoBehaviour {
+public class CardAnimator : BaseBehaviour {
 
 	//======================================================================| Fields
 
