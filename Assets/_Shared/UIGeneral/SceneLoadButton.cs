@@ -25,7 +25,7 @@ public sealed class SceneLoadButton : MonoBehaviour
         if (string.IsNullOrWhiteSpace(targetSceneName)) return;
 
         loaded = true;
-        SceneManager.LoadScene(targetSceneName);
+        SceneLoader.Instance.LoadScene(targetSceneName);
     }
 
     private bool IsValidSceneName(string value) =>
