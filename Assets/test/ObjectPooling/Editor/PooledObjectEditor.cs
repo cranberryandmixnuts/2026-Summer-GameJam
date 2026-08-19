@@ -12,9 +12,6 @@ internal sealed class PooledObjectEditor : OdinEditor
 
         EditorGUILayout.Space();
         DrawRootValidation();
-
-        if (GUILayout.Button("Rebuild Pool Registry"))
-            PoolRegistryBuilder.RebuildFromMenu();
     }
 
     private void DrawRootValidation()
