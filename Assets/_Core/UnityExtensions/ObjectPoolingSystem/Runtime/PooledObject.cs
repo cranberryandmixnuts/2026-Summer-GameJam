@@ -9,10 +9,10 @@ public sealed class PooledObject : BaseBehaviour
 {
     [Header("Capacity")]
     [SerializeField, MinValue(0), MaxValue(nameof(maxRetainedSize))]
-    private int initialPoolSize;
+    private int initialPoolSize = 10;
 
     [SerializeField, MinValue(1)]
-    private int maxRetainedSize;
+    private int maxRetainedSize = 10;
 
     [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
     private bool restoreTransformHierarchy = true;
@@ -21,7 +21,19 @@ public sealed class PooledObject : BaseBehaviour
     private bool restoreChildActiveStates = true;
 
     [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
+    private bool restoreGameObjectLayers = true;
+
+    [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
     private bool resetRigidbodies = true;
+
+    [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
+    private bool resetAnimators = true;
+
+    [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
+    private bool restoreColliderStates = true;
+
+    [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
+    private bool restoreRendererStates = true;
 
     [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
     private bool clearTrailRenderers = true;
@@ -59,7 +71,11 @@ public sealed class PooledObject : BaseBehaviour
     internal PoolResetState ResetState => resetState;
     internal bool RestoreTransformHierarchy => restoreTransformHierarchy;
     internal bool RestoreChildActiveStates => restoreChildActiveStates;
+    internal bool RestoreGameObjectLayers => restoreGameObjectLayers;
     internal bool ResetRigidbodies => resetRigidbodies;
+    internal bool ResetAnimators => resetAnimators;
+    internal bool RestoreColliderStates => restoreColliderStates;
+    internal bool RestoreRendererStates => restoreRendererStates;
     internal bool ClearTrailRenderers => clearTrailRenderers;
     internal bool ClearParticleSystems => clearParticleSystems;
     internal bool StopAudioSources => stopAudioSources;
