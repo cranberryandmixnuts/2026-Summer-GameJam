@@ -16,6 +16,7 @@ public sealed class PooledObject : BaseBehaviour
     private int maxRetainedSize;
 
     [Header("Automatic Unity State Reset")]
+
     [SerializeField]
     [Tooltip("Restore the original local position, rotation, and scale of this hierarchy on every spawn.")]
     private bool restoreTransformHierarchy = true;
