@@ -3,7 +3,7 @@ using UnityEngine;
 public sealed class PoisonCardTrailEmitter : MonoBehaviour
 {
     private Transform[] poisonCardTransforms;
-    private PoisonAreaPool poisonAreaPool;
+    private PoisonAreaSpawner poisonAreaSpawner;
     private CardProjectileSettings settings;
     private LayerMask enemyLayers;
     private GameObject source;
@@ -11,7 +11,7 @@ public sealed class PoisonCardTrailEmitter : MonoBehaviour
     private float dropElapsedTime;
 
     public void Initialize(
-        PoisonAreaPool poisonAreaPool,
+        PoisonAreaSpawner poisonAreaSpawner,
         CardProjectileSettings settings,
         LayerMask enemyLayers,
         GameObject source,
@@ -23,7 +23,7 @@ public sealed class PoisonCardTrailEmitter : MonoBehaviour
 
         for (int index = 0; index < poisonCards.Length; index++) poisonCardTransforms[index] = poisonCards[index].transform;
 
-        this.poisonAreaPool = poisonAreaPool;
+        this.poisonAreaSpawner = poisonAreaSpawner;
         this.settings = settings;
         this.enemyLayers = enemyLayers;
         this.source = source;
@@ -42,7 +42,7 @@ public sealed class PoisonCardTrailEmitter : MonoBehaviour
 
             foreach (Transform poisonCardTransform in poisonCardTransforms)
             {
-                poisonAreaPool.Spawn(
+                poisonAreaSpawner.Spawn(
                     poisonCardTransform.position,
                     settings,
                     enemyLayers,

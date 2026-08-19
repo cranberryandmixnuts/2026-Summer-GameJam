@@ -2972,7 +2972,7 @@ GameObject:
   - component: {fileID: 1157531431}
   - component: {fileID: 1157531430}
   m_Layer: 0
-  m_Name: PoisonAreaPool
+  m_Name: PoisonAreaSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2989,10 +2989,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b957c11dd4bd64141aeed850a74366bf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PoisonAreaPool
+  m_EditorClassIdentifier: Assembly-CSharp::PoisonAreaSpawner
   prefab: {fileID: 4705658112776693599, guid: 299cf162667b97547a286f48eacdcc77, type: 3}
-  poolRoot: {fileID: 1157531431}
-  preloadCount: 16
 --- !u!4 &1157531431
 Transform:
   m_ObjectHideFlags: 0
@@ -4042,7 +4040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardProjectileLauncher
   projectilePrefab: {fileID: 5233999668984327089, guid: 3d3f2577f30708746b182981a6d30658, type: 3}
   settings: {fileID: 11400000, guid: 36956b20f9393a04d89456b54785bae8, type: 2}
-  poisonAreaPool: {fileID: 1157531430}
+  poisonAreaSpawner: {fileID: 1157531430}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64

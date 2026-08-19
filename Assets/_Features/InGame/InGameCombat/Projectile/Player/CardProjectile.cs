@@ -22,7 +22,7 @@ public sealed class CardProjectile : MonoBehaviour
         float speed,
         CardEffect effect,
         CardProjectileSettings settings,
-        PoisonAreaPool poisonAreaPool,
+        PoisonAreaSpawner poisonAreaSpawner,
         LayerMask enemyLayers,
         GameObject source
     )
@@ -43,7 +43,7 @@ public sealed class CardProjectile : MonoBehaviour
         body.linearVelocity = 30f * speed * direction;
 
         poisonTrailEmitter.Initialize(
-            poisonAreaPool,
+            poisonAreaSpawner,
             settings,
             enemyLayers,
             source,

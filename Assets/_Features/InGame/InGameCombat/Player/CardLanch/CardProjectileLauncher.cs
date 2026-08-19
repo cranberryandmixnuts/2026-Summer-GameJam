@@ -6,7 +6,7 @@ public sealed class CardProjectileLauncher : MonoBehaviour
 {
     [SerializeField, Required, AssetsOnly] private CardProjectile projectilePrefab;
     [SerializeField, Required, InlineEditor] private CardProjectileSettings settings;
-    [SerializeField, Required] private PoisonAreaPool poisonAreaPool;
+    [SerializeField, Required] private PoisonAreaSpawner poisonAreaSpawner;
     [SerializeField] private LayerMask enemyLayers;
     [SerializeField, Required] private Transform target;
     [SerializeField, MinValue(0f)] private float projectileScale = 0.3f;
@@ -41,7 +41,7 @@ public sealed class CardProjectileLauncher : MonoBehaviour
             speed,
             args.Effect,
             settings,
-            poisonAreaPool,
+            poisonAreaSpawner,
             enemyLayers,
             gameObject
         );
@@ -51,7 +51,7 @@ public sealed class CardProjectileLauncher : MonoBehaviour
 
     private void Reset()
     {
-        poisonAreaPool = GetComponent<PoisonAreaPool>();
+        poisonAreaSpawner = GetComponent<PoisonAreaSpawner>();
         enemyLayers = LayerMask.GetMask("Enemy");
     }
 }

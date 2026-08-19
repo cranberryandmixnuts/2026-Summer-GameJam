@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
@@ -34,7 +33,6 @@ public sealed class PoisonArea : MonoBehaviour
     private CardProjectileSettings settings;
     private LayerMask enemyLayers;
     private GameObject source;
-    private Action<PoisonArea> releaseAction;
     private int tickDamage;
     private float remainingLifetime;
     private bool isActive;
@@ -50,14 +48,12 @@ public sealed class PoisonArea : MonoBehaviour
         CardProjectileSettings settings,
         LayerMask enemyLayers,
         GameObject source,
-        int finalProjectileDamage,
-        Action<PoisonArea> releaseAction
+        int finalProjectileDamage
     )
     {
         this.settings = settings;
         this.enemyLayers = enemyLayers;
         this.source = source;
-        this.releaseAction = releaseAction;
         tickDamage = settings.CalculatePoisonTickDamage(finalProjectileDamage);
         remainingLifetime = settings.PoisonAreaDuration;
         isActive = true;
@@ -93,7 +89,7 @@ public sealed class PoisonArea : MonoBehaviour
                 _removeingAnimationDuration
             )
             .SetEase(_removeingAnimationEase)
-            .OnComplete(Release);
+            .OnComplete(DestroyArea);
         }
     }
 
@@ -146,12 +142,12 @@ public sealed class PoisonArea : MonoBehaviour
         return null;
     }
 
-    private void Release()
+    private void DestroyArea()
     {
         UnregisterTargets();
         isActive = false;
-        tween?.Kill();
-        releaseAction(this);
+        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     private void UnregisterTargets()
@@ -167,12 +163,18 @@ public sealed class PoisonArea : MonoBehaviour
     private void OnDisable()
     {
         isActive = false;
+        tween?.Kill();
+        tween = null;
         UnregisterTargets();
         settings = null;
         source = null;
-        releaseAction = null;
         enemyLayers = default;
         tickDamage = 0;
+    }
+
+    private void OnDestroy()
+    {
+        if (material != null) Destroy(material);
     }
 
     private void Reset() => areaCollider = GetComponent<Collider2D>();
