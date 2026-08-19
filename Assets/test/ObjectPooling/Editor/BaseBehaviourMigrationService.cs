@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -45,7 +44,6 @@ internal sealed class MigrationCandidate
 
 internal static class BaseBehaviourMigrationService
 {
-        internal const string BackupAssetRoot = "Assets/BaseBehaviourMigrationBackups";
         internal const string ReplacementTypeName = "BaseBehaviour";
 
         private static readonly string[] ExcludedPathFragments =
@@ -60,8 +58,6 @@ internal static class BaseBehaviourMigrationService
             "/standard assets/",
             "/packages/",
             "/packagecache/",
-            "/objectpooling/",
-            "/basebehaviourmigrationbackups/",
             "/generated/"
         };
 
@@ -89,6 +85,11 @@ internal static class BaseBehaviourMigrationService
                 TextDocument document = TextDocument.Read(ToAbsolutePath(assetPath));
                 List<MigrationReplacement> replacements =
                     DirectMonoBehaviourScanner.FindReplacements(document.Text);
+                replacements.RemoveAll(replacement =>
+                    string.Equals(
+                        replacement.ClassName.TrimStart('@'),
+                        ReplacementTypeName,
+                        StringComparison.Ordinal));
                 if (replacements.Count == 0)
                     continue;
 
@@ -103,7 +104,7 @@ internal static class BaseBehaviourMigrationService
             return results;
         }
 
-        internal static string Apply(IReadOnlyList<MigrationCandidate> candidates)
+        internal static void Apply(IReadOnlyList<MigrationCandidate> candidates)
         {
             if (candidates == null || candidates.Count == 0)
                 throw new ArgumentException("No migration candidates were selected.");
@@ -126,34 +127,6 @@ internal static class BaseBehaviourMigrationService
                 currentDocuments.Add(candidate, current);
             }
 
-            string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss_fff");
-            string backupAssetFolder = BackupAssetRoot + "/" + timestamp;
-            string backupAbsoluteFolder = ToAbsolutePath(backupAssetFolder);
-            Directory.CreateDirectory(backupAbsoluteFolder);
-
-            var manifest = new MigrationManifest { timestamp = timestamp };
-            for (int i = 0; i < candidates.Count; i++)
-            {
-                MigrationCandidate candidate = candidates[i];
-                TextDocument current = currentDocuments[candidate];
-                string relative = candidate.AssetPath.Substring("Assets/".Length);
-                string backupFile = Path.Combine(
-                    backupAbsoluteFolder,
-                    relative.Replace('/', Path.DirectorySeparatorChar) + ".txt");
-
-                string backupDirectory = Path.GetDirectoryName(backupFile);
-                if (!string.IsNullOrEmpty(backupDirectory))
-                    Directory.CreateDirectory(backupDirectory);
-
-                File.WriteAllBytes(backupFile, current.Bytes);
-                manifest.assetPaths.Add(candidate.AssetPath);
-            }
-
-            File.WriteAllText(
-                Path.Combine(backupAbsoluteFolder, "manifest.json"),
-                JsonUtility.ToJson(manifest, true),
-                new UTF8Encoding(false));
-
             AssetDatabase.StartAssetEditing();
             try
             {
@@ -170,76 +143,6 @@ internal static class BaseBehaviourMigrationService
                 AssetDatabase.StopAssetEditing();
                 AssetDatabase.Refresh();
             }
-
-            return backupAssetFolder;
-        }
-
-        internal static string GetLatestBackupAssetFolder()
-        {
-            string absoluteRoot = ToAbsolutePath(BackupAssetRoot);
-            if (!Directory.Exists(absoluteRoot))
-                return null;
-
-            string latest = Directory.GetDirectories(absoluteRoot)
-                .OrderByDescending(path => Path.GetFileName(path), StringComparer.Ordinal)
-                .FirstOrDefault(path => File.Exists(Path.Combine(path, "manifest.json")));
-
-            if (string.IsNullOrEmpty(latest))
-                return null;
-
-            string projectRoot = ProjectRoot.TrimEnd(Path.DirectorySeparatorChar) +
-                                 Path.DirectorySeparatorChar;
-            string relative = latest.StartsWith(projectRoot, StringComparison.OrdinalIgnoreCase)
-                ? latest.Substring(projectRoot.Length)
-                : latest;
-            return relative.Replace('\\', '/');
-        }
-
-        internal static int RestoreBackup(string backupAssetFolder)
-        {
-            if (string.IsNullOrEmpty(backupAssetFolder))
-                throw new ArgumentException("A backup folder is required.");
-
-            string backupAbsoluteFolder = ToAbsolutePath(backupAssetFolder);
-            string manifestPath = Path.Combine(backupAbsoluteFolder, "manifest.json");
-            if (!File.Exists(manifestPath))
-                throw new FileNotFoundException("Migration manifest was not found.", manifestPath);
-
-            MigrationManifest manifest = JsonUtility.FromJson<MigrationManifest>(
-                File.ReadAllText(manifestPath));
-            if (manifest == null || manifest.assetPaths == null)
-                throw new InvalidDataException("Migration manifest is invalid.");
-
-            var restorePairs = new List<(string Backup, string Destination)>();
-            for (int i = 0; i < manifest.assetPaths.Count; i++)
-            {
-                string assetPath = manifest.assetPaths[i];
-                if (!assetPath.StartsWith("Assets/", StringComparison.Ordinal))
-                    throw new InvalidDataException($"Invalid asset path in backup: {assetPath}");
-
-                string relative = assetPath.Substring("Assets/".Length);
-                string backupFile = Path.Combine(
-                    backupAbsoluteFolder,
-                    relative.Replace('/', Path.DirectorySeparatorChar) + ".txt");
-                if (!File.Exists(backupFile))
-                    throw new FileNotFoundException("A backed-up script is missing.", backupFile);
-
-                restorePairs.Add((backupFile, ToAbsolutePath(assetPath)));
-            }
-
-            AssetDatabase.StartAssetEditing();
-            try
-            {
-                for (int i = 0; i < restorePairs.Count; i++)
-                    File.Copy(restorePairs[i].Backup, restorePairs[i].Destination, true);
-            }
-            finally
-            {
-                AssetDatabase.StopAssetEditing();
-                AssetDatabase.Refresh();
-            }
-
-            return restorePairs.Count;
         }
 
         private static bool IsExcluded(string assetPath)
@@ -286,13 +189,6 @@ internal static class BaseBehaviourMigrationService
             return Path.GetFullPath(Path.Combine(
                 ProjectRoot,
                 assetPath.Replace('/', Path.DirectorySeparatorChar)));
-        }
-
-        [Serializable]
-        private sealed class MigrationManifest
-        {
-            public string timestamp;
-            public List<string> assetPaths = new List<string>();
         }
 
         private sealed class TextDocument

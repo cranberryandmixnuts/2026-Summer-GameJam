@@ -19,48 +19,10 @@ internal sealed class BaseBehaviourMigrationWindow : EditorWindow
         window.Show();
     }
 
-    [MenuItem("Tools/Object Pooling/Restore Latest BaseBehaviour Migration Backup...", priority = 21)]
-    private static void RestoreLatestBackup()
-    {
-        string latest = BaseBehaviourMigrationService.GetLatestBackupAssetFolder();
-        if (string.IsNullOrEmpty(latest))
-        {
-            EditorUtility.DisplayDialog(
-                "Restore BaseBehaviour Migration",
-                "No migration backup was found.",
-                "OK");
-            return;
-        }
-
-        if (!EditorUtility.DisplayDialog(
-                "Restore BaseBehaviour Migration",
-                $"Restore every script from this backup?\n\n{latest}",
-                "Restore",
-                "Cancel"))
-        {
-            return;
-        }
-
-        try
-        {
-            int count = BaseBehaviourMigrationService.RestoreBackup(latest);
-            Debug.Log($"Restored {count} script(s) from '{latest}'.");
-        }
-        catch (Exception exception)
-        {
-            Debug.LogException(exception);
-            EditorUtility.DisplayDialog("Restore Failed", exception.Message, "OK");
-        }
-    }
-
     private void OnEnable()
     {
         if (string.IsNullOrEmpty(scanRoot))
-        {
-            scanRoot = AssetDatabase.IsValidFolder("Assets/Scripts")
-                ? "Assets/Scripts"
-                : "Assets";
-        }
+            scanRoot = "Assets";
     }
 
     private void OnGUI()
@@ -68,10 +30,9 @@ internal sealed class BaseBehaviourMigrationWindow : EditorWindow
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("User Script Migration", EditorStyles.boldLabel);
         EditorGUILayout.HelpBox(
-            "This explicit tool only previews direct ': MonoBehaviour' inheritance. " +
-            "Packages, common third-party/vendor folders, generated code, backups, and this " +
-            "pooling system are excluded. Review the list before applying. A byte-for-byte " +
-            "backup is created before any script is changed.",
+            "This explicit tool scans the selected Assets folder and only previews direct " +
+            "': MonoBehaviour' inheritance. Packages, common third-party/vendor folders, " +
+            "and generated code are excluded. Review the list before applying.",
             MessageType.Info);
 
         DrawFolderSelector();
@@ -179,7 +140,7 @@ internal sealed class BaseBehaviourMigrationWindow : EditorWindow
         using (new EditorGUI.DisabledScope(selected.Count == 0))
         {
             if (!GUILayout.Button(
-                    $"Back Up and Convert {selected.Count} Selected File(s)",
+                    $"Convert {selected.Count} Selected File(s)",
                     GUILayout.Height(32f)))
             {
                 return;
@@ -190,9 +151,8 @@ internal sealed class BaseBehaviourMigrationWindow : EditorWindow
             !EditorUtility.DisplayDialog(
                 "Convert to BaseBehaviour",
                 $"Convert direct MonoBehaviour inheritance in {selected.Count} file(s)?\n\n" +
-                "Original bytes will be saved under Assets/BaseBehaviourMigrationBackups. " +
                 "Unity will recompile scripts after the edit.",
-                "Back Up and Convert",
+                "Convert",
                 "Cancel"))
         {
             return;
@@ -200,10 +160,8 @@ internal sealed class BaseBehaviourMigrationWindow : EditorWindow
 
         try
         {
-            string backup = BaseBehaviourMigrationService.Apply(selected);
-            Debug.Log(
-                $"Converted {selected.Count} script file(s) to BaseBehaviour. " +
-                $"Backup: '{backup}'.");
+            BaseBehaviourMigrationService.Apply(selected);
+            Debug.Log($"Converted {selected.Count} script file(s) to BaseBehaviour.");
             candidates.Clear();
         }
         catch (Exception exception)
