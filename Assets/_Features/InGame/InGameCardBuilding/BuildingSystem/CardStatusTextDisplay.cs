@@ -123,10 +123,10 @@ public sealed class CardStatusTextDisplay : SingletonBehaviour<CardStatusTextDis
         textBuilder
             .Append("데미지: ")
             .Append(baseDamage.ToString("0.00"))
-            .Append('\n')
+            .AppendLine()
             .Append("배수: ")
             .Append(multiplier.ToString("0.00"))
-            .Append('\n')
+            .AppendLine()
             .Append("남은 손패: ")
             .Append(remainingHandCapacity)
             .Append('/')

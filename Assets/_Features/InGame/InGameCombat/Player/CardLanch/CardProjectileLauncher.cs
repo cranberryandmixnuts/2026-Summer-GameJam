@@ -45,6 +45,8 @@ public sealed class CardProjectileLauncher : MonoBehaviour
             enemyLayers,
             gameObject
         );
+
+        CombatBridge.Instance.PublishProjectileFired();
     }
 
     private void Reset()

@@ -9,6 +9,7 @@ public sealed class CombatBridge : SingletonBehaviour<CombatBridge, SceneScope>
     public static event Action<float> PlayerDamaged;
     public event Action PlayerDied;
     public event Action FireRequested;
+    public event Action ProjectileFired;
 
     public float ExternalDifficultyFactor
     {
@@ -33,6 +34,8 @@ public sealed class CombatBridge : SingletonBehaviour<CombatBridge, SceneScope>
         Debug.Log("발싸!!!!!!");
         FireRequested?.Invoke();
     }
+
+    public void PublishProjectileFired() => ProjectileFired?.Invoke();
 
     private void OnValidate() =>
         externalDifficultyFactor = EnemyDifficultyUtility.ClampFactor(externalDifficultyFactor);

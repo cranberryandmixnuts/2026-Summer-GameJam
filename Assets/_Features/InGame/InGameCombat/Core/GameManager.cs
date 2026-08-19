@@ -70,12 +70,18 @@ public sealed class GameManager : MonoBehaviour
 
     private Coroutine spawnRoutine;
     private EnemyRuntimeContext runtimeContext;
+    private RunStatisticsRepository runStatisticsRepository;
     private float totalWeight;
+    private float elapsedTime;
     private int displayedElapsedSeconds = -1;
+    private int firedProjectileCount;
     private bool hasGameEnded;
+    private bool hasRunStarted;
+    private bool hasRunBeenRecorded;
 
     private void Awake()
     {
+        runStatisticsRepository = new RunStatisticsRepository();
         runtimeContext = new EnemyRuntimeContext(
             player,
             playerCollider,
@@ -90,6 +96,7 @@ public sealed class GameManager : MonoBehaviour
         UpdateElapsedTimeText(0f);
         failureEndingObject.SetActive(false);
         combatBridge.PlayerDied += HandlePlayerDied;
+        combatBridge.ProjectileFired += HandleProjectileFired;
     }
 
     private void OnEnable()
@@ -99,11 +106,18 @@ public sealed class GameManager : MonoBehaviour
 
     private void OnDisable() => StopSpawning();
 
-    private void OnDestroy() => combatBridge.PlayerDied -= HandlePlayerDied;
+    private void OnDestroy()
+    {
+        RecordRun();
+        combatBridge.PlayerDied -= HandlePlayerDied;
+        combatBridge.ProjectileFired -= HandleProjectileFired;
+    }
 
     public void StartSpawning()
     {
         if (spawnRoutine != null || hasGameEnded) return;
+
+        if (!hasRunStarted) BeginRun();
 
         spawnRoutine = StartCoroutine(SpawnSequence());
     }
@@ -131,13 +145,9 @@ public sealed class GameManager : MonoBehaviour
 
     private IEnumerator SpawnSequence()
     {
-        InternalDifficultyFactor = minimumInternalDifficultyFactor;
-        UpdateElapsedTimeText(0f);
-
         if (initialDelay > 0f) yield return new WaitForSeconds(initialDelay);
 
-        float elapsedTime = 0f;
-        float nextSpawnTime = 0f;
+        float nextSpawnTime = elapsedTime;
 
         while (!hasGameEnded)
         {
@@ -250,6 +260,30 @@ public sealed class GameManager : MonoBehaviour
 
     private void HandlePlayerDied() => EndGame();
 
+    private void HandleProjectileFired()
+    {
+        if (!hasRunStarted || hasGameEnded) return;
+
+        firedProjectileCount++;
+    }
+
+    private void BeginRun()
+    {
+        hasRunStarted = true;
+        elapsedTime = 0f;
+        firedProjectileCount = 0;
+        InternalDifficultyFactor = minimumInternalDifficultyFactor;
+        UpdateElapsedTimeText(elapsedTime);
+    }
+
+    private void RecordRun()
+    {
+        if (!hasRunStarted || hasRunBeenRecorded) return;
+
+        runStatisticsRepository.AddRun(elapsedTime, firedProjectileCount);
+        hasRunBeenRecorded = true;
+    }
+
     private void EndGame()
     {
         if (hasGameEnded) return;
@@ -257,6 +291,7 @@ public sealed class GameManager : MonoBehaviour
         hasGameEnded = true;
         StopSpawning();
         settingsOpenObject.SetActive(false);
+        RecordRun();
         failureEndingObject.SetActive(true);
     }
 

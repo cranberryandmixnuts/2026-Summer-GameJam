@@ -39,14 +39,14 @@ public sealed class CardHoverStatusTextDisplay : SingletonBehaviour<CardHoverSta
         {
             textBuilder
                 .Append(card.Explanation)
-                .Append('\n')
-                .Append("\n");
+                .AppendLine()
+                .AppendLine();
         }
 
         textBuilder
             .Append("기본 데미지: ")
             .Append(card.BaseDamage.ToString("0.00"))
-            .Append('\n')
+            .AppendLine()
             .Append("추가 배수: ")
             .Append(card.AdditionalMultiplier.ToString("0.00"));
 
