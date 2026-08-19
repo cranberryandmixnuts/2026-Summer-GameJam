@@ -2761,7 +2761,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b150e0a8c44b6185339722042f07e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
-  fadeOverlay: {fileID: 1863438787}
+  fadeImage: {fileID: 1863438785}
+  fadeDuration: 0.5
 --- !u!224 &1448213259
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2804,7 +2805,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!1001 &1450199755
 PrefabInstance:
@@ -3711,14 +3712,13 @@ GameObject:
   - component: {fileID: 1863438784}
   - component: {fileID: 1863438786}
   - component: {fileID: 1863438785}
-  - component: {fileID: 1863438787}
   m_Layer: 0
   m_Name: FadeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1863438784
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3776,18 +3776,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863438783}
   m_CullTransparentMesh: 1
---- !u!225 &1863438787
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1863438783}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 0
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1001 &2061016352
 PrefabInstance:
   m_ObjectHideFlags: 0
