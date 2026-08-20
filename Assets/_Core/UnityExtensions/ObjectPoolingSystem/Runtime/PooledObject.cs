@@ -7,12 +7,11 @@ using UnityEngine;
 [AddComponentMenu("Object Pooling/Pooled Object")]
 public sealed class PooledObject : BaseBehaviour
 {
-    [Header("Capacity")]
+    [Header("Capacity"), SerializeField, MinValue(1)]
+    private int maxRetainedSize = 10;
+
     [SerializeField, MinValue(0), MaxValue(nameof(maxRetainedSize))]
     private int initialPoolSize = 10;
-
-    [SerializeField, MinValue(1)]
-    private int maxRetainedSize = 10;
 
     [SerializeField, FoldoutGroup("Automatic Unity State Reset", false)]
     private bool restoreTransformHierarchy = true;

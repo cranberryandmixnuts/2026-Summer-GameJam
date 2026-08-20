@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 116616928614884421}
   - component: {fileID: 5419971654352854959}
   - component: {fileID: 8098808558600551292}
+  - component: {fileID: -6357346861003684773}
   m_Layer: 7
   m_Name: HomingEnemyProjectile
   m_TagString: Untagged
@@ -186,3 +187,27 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.7, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &-6357346861003684773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7469019684357158142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa69fb503487c544bf69a04cefa2f38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PooledObject
+  initialPoolSize: 10
+  maxRetainedSize: 10
+  restoreTransformHierarchy: 1
+  restoreChildActiveStates: 1
+  restoreGameObjectLayers: 1
+  resetRigidbodies: 1
+  resetAnimators: 1
+  restoreColliderStates: 1
+  restoreRendererStates: 1
+  clearTrailRenderers: 1
+  clearParticleSystems: 1
+  stopAudioSources: 1
